@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     { name: 'Lenovo r19 mini', category: 'smartphone', price: 35000, brand: 'Lenovo', color: 'Ocean Blue', description: 'More long lasting battery introduced by lenovo than ever before ', imageURL: "https://images.fonearena.com/blog/wp-content/uploads/2018/06/Lenovo-Z5.jpg" }
   ]
 
-  res.render('index', { products })
+  res.render('index', { products, admin: true })
 })
 
 module.exports = router;
