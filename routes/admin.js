@@ -9,8 +9,21 @@ router.get('/', function (req, res, next) {
     { name: 'Motorola M15 pro', category: 'smartphone', price: 50000, brand: 'Moto', color: 'Black', description: 'This new devices is loved by most users in the nevada', imageURL: "https://m.media-amazon.com/images/I/51-uBr44u1L._AC_UF1000,1000_QL80_.jpg" },
     { name: 'Lenovo r19 mini', category: 'smartphone', price: 35000, brand: 'Lenovo', color: 'Ocean Blue', description: 'More long lasting battery introduced by lenovo than ever before ', imageURL: "https://images.fonearena.com/blog/wp-content/uploads/2018/06/Lenovo-Z5.jpg" }
   ]
-  
+
   res.render('admin/manage-products', { admin: true, products });
 });
+
+router.get('/add-product', (req, res) => {
+  res.render('admin/add-product')
+})
+
+router.post('/add-product', (req, res) => {
+  console.log(req.body)
+  console.log(req.files.image)
+
+  res.render('index', { admin: true })
+})
+
+
 
 module.exports = router;
