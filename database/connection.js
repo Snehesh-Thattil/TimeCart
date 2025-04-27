@@ -6,7 +6,7 @@ const state = {
 
 module.exports.connect = async (done) => {
     const url = 'mongodb://localhost:27017'
-    const dbname = 'products'
+    const dbname = 'timeCart'
 
     try {
         const client = await MongoClient.connect(url)

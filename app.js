@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var { engine } = require('express-handlebars')
 var fileUpload = require('express-fileupload')
-var db = require('./db-config/connection')
+var db = require('./database/connection')
 
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
