@@ -1,5 +1,5 @@
-const db = require('../database/connection')
-const collections = require('../database/collections')
+const db = require('./connection')
+const collections = require('./collections')
 
 module.exports = {
     addProduct: (product, callback) => {

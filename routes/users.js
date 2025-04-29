@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const productHelpers = require('../database/product-helpers')
+const userHelpers = require('../database/user-helpers')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -10,6 +11,24 @@ router.get('/', function (req, res, next) {
     })
     .catch((err) => {
       console.log('Error getting products :', err)
+    })
+})
+
+router.get('/login', (req, res) => {
+  res.render('user/login')
+})
+
+router.get('/signup', (req, res) => {
+  res.render('user/signup')
+})
+
+router.post('/signup', (req, res) => {
+  userHelpers.doSignup(req.body)
+    .then(() => {
+      res.redirect('/')
+    })
+    .catch((err) => {
+      console.log(err)
     })
 })
 
