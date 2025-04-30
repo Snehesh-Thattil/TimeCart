@@ -6,7 +6,7 @@ module.exports = {
     doSignup: (formData) => {
         return new Promise(async (resolve, reject) => {
             formData.password = await bcrypt.hash(formData.password, 10)
-            await db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
+            db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
                 .then((data) => {
                     resolve(data.insertedId)
                 })
@@ -17,7 +17,21 @@ module.exports = {
     },
     doLogin: (formData) => {
         return new Promise(async (resolve, reject) => {
-            // yet to code ...
+            db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
+                .then(async (data) => {
+                    if (!data) return reject('No user found')
+
+                    const passwordValidate = await bcrypt.compare(formData.password, data.password)
+                    if (passwordValidate) {
+                        resolve(true)
+                    }
+                    else {
+                        reject('Password Missmatched')
+                    }
+                })
+                .catch((err) => {
+                    reject(err)
+                })
         })
     }
 }

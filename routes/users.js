@@ -14,10 +14,6 @@ router.get('/', function (req, res, next) {
     })
 })
 
-router.get('/login', (req, res) => {
-  res.render('user/login')
-})
-
 router.get('/signup', (req, res) => {
   res.render('user/signup')
 })
@@ -27,6 +23,20 @@ router.post('/signup', (req, res) => {
     .then(() => {
       res.redirect('/')
     })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
+router.get('/login', (req, res) => {
+  res.render('user/login')
+})
+
+router.post('/login', (req, res) => {
+  userHelpers.doLogin(req.body)
+    .then(() => [
+      res.redirect('/')
+    ])
     .catch((err) => {
       console.log(err)
     })
