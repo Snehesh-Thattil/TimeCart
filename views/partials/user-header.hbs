@@ -13,31 +13,20 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products">Products</a>
+                        <a class="nav-link" href="/wishlist">Wishlists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/wishlist">Wishlists</a>
+                        <a class="nav-link" href="/orders">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/cart">Cart</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
+                        {{#if user}}
+                        <a href="/profile" class="nav-link">{{user.name}}</a>
+                        {{else}}
                         <a class="nav-link" href="/login">Login</a>
+                        {{/if}}
                     </li>
                 </ul>
 
@@ -45,6 +34,13 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <ul class="navbar-nav ms-5 me-2 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        {{#if user}}
+                        <a class="nav-link" href="/logout">Logout</a>
+                        {{/if}}
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

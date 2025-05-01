@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var session = require('express-session')
 var { engine } = require('express-handlebars')
 var fileUpload = require('express-fileupload')
 var db = require('./database/connection')
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use((session({ secret: 'SecretHashKeyHere', cookie: { maxAge: 600000 } })))
 app.use(fileUpload())
 db.connect((err) => {
   if (err) console.log('Error connecting database :', err.message)
@@ -37,6 +37,7 @@ db.connect((err) => {
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,5 +1,6 @@
 const db = require('./connection')
 const collections = require('./collections')
+const { ObjectId } = require('mongodb')
 
 module.exports = {
     addProduct: (product, callback) => {
@@ -23,5 +24,5 @@ module.exports = {
                 reject(err)
             }
         })
-    }
+    },
 }

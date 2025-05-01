@@ -18,12 +18,12 @@ module.exports = {
     doLogin: (formData) => {
         return new Promise(async (resolve, reject) => {
             db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
-                .then(async (data) => {
-                    if (!data) return reject('No user found')
+                .then(async (user) => {
+                    if (!user) return reject('No user found')
 
-                    const passwordValidate = await bcrypt.compare(formData.password, data.password)
+                    const passwordValidate = await bcrypt.compare(formData.password, user.password)
                     if (passwordValidate) {
-                        resolve(true)
+                        resolve(user)
                     }
                     else {
                         reject('Password Missmatched')

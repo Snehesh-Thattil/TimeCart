@@ -12,6 +12,7 @@
                     <th scope="col">Category</th>
                     <th scope="col">Price</th>
                     <th scope="col">Photo</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +22,10 @@
                     <td>{{this.name}}</td>
                     <td>{{this.category}}</td>
                     <td>{{this.price}}</td>
-                    <td> <img style="width: 3rem;" src="/images/products/{{this._id}}.jpeg" alt="mobile">
+                    <td> <img style="width: 3rem;" src="/images/products/{{this._id}}.jpeg" alt="mobile"></td>
+                    <td>
+                        <a href="/admin/edit-product?id={{this._id}}" class="btn btn-primary me-2">Edit</a>
+                        <a href="/admin/delete-product?id={{this._id}}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 {{/each}}

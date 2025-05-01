@@ -3,11 +3,20 @@ var router = express.Router();
 const productHelpers = require('../database/product-helpers')
 const userHelpers = require('../database/user-helpers')
 
+const verifyLogin = (req, res, next) => {
+  if (req.session.user) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+}
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  const user = req.session.user
   productHelpers.getProducts()
     .then((products) => {
-      res.render('user/view-products', { products, admin: false })
+      res.render('user/view-products', { products, user, admin: false })
     })
     .catch((err) => {
       console.log('Error getting products :', err)
@@ -29,17 +38,42 @@ router.post('/signup', (req, res) => {
 })
 
 router.get('/login', (req, res) => {
-  res.render('user/login')
+  if (req.session.loggedIn) {
+    res.redirect('/')
+  } else {
+    res.render('user/login', { loginErr: req.session.loginErr })
+    req.session.loginErr = false
+  }
 })
 
 router.post('/login', (req, res) => {
   userHelpers.doLogin(req.body)
-    .then(() => [
+    .then((user) => {
+      req.session.loggedIn = true
+      req.session.user = user
       res.redirect('/')
-    ])
-    .catch((err) => {
-      console.log(err)
     })
+    .catch((err) => {
+      req.session.loginErr = 'Invalid username or password'
+      res.redirect('/login')
+    })
+})
+
+router.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
+})
+
+router.get('/cart', verifyLogin, (req, res) => {
+  res.render('user/cart')
+})
+
+router.get('/wishlist', verifyLogin, (req, res) => {
+  res.render('user/wishlist')
+})
+
+router.get('/orders', verifyLogin, (req, res) => {
+  res.render('user/orders')
 })
 
 module.exports = router;
