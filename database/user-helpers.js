@@ -5,14 +5,23 @@ const bcrypt = require('bcrypt')
 module.exports = {
     doSignup: (formData) => {
         return new Promise(async (resolve, reject) => {
-            formData.password = await bcrypt.hash(formData.password, 10)
-            db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
-                .then((data) => {
-                    resolve(data.insertedId)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
+
+            const alreadyExists = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
+            if (alreadyExists) {
+                reject('Email already exists')
+            }
+            else {
+                formData.password = await bcrypt.hash(formData.password, 10)
+                
+                db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
+                    .then((data) => {
+                        console.log('user data after doSignup :', data)
+                        resolve(data.insertedId)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            }
         })
     },
     doLogin: (formData) => {

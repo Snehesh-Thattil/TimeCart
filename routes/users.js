@@ -29,11 +29,19 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res) => {
   userHelpers.doSignup(req.body)
-    .then(() => {
+    .then((user) => {
+      req.session.loggedIn = true
+      req.session.user = user
       res.redirect('/')
     })
     .catch((err) => {
       console.log(err)
+      if (err = 'Email already exists') {
+        req.session.loginErr = 'Email already exists, Do login here:'
+        res.redirect('/login')
+      } else {
+        res.redirect('/signup')
+      }
     })
 })
 

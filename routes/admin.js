@@ -34,8 +34,7 @@ router.post('/add-product', (req, res) => {
 
     image.mv(imagePath, (mvErr) => {
       if (!mvErr) {
-        res.render('index', { admin: true })
-        console.log('Successfully Added product image and details')
+        res.redirect('/admin')
       } else {
         console.log('Error moving product image', mvErr)
         return res.render('index', { admin: true, error: 'Product added but image upload failed' })
@@ -43,6 +42,48 @@ router.post('/add-product', (req, res) => {
     })
 
   })
+})
+
+router.get('/edit-product/:id', (req, res) => {
+  productHelpers.getProductDetails(req.params.id)
+    .then((product) => {
+      res.render('admin/edit-product', { product })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/admin')
+    })
+})
+
+router.post('/submit-update/:id', (req, res) => {
+  productHelpers.updateProduct(req.params.id, req.body)
+    .then(() => {
+      let newImage = req.files.image
+      let imagePath = path.join(__dirname, '../public/images/products/', req.params.id + '.jpeg')
+      newImage.mv(imagePath, (mvErr) => {
+        if (!mvErr) {
+          res.redirect('/admin')
+        } else {
+          console.log('Uploading image failed!')
+          res.redirect('/admin')
+        }
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/admin')
+    })
+})
+
+router.get('/delete-product', (req, res) => {
+  productHelpers.deleteProduct(req.query.id)
+    .then((data) => {
+      res.redirect('/admin')
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/admin')
+    })
 })
 
 module.exports = router;

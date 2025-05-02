@@ -1,0 +1,46 @@
+<section>
+    <div class="container mt-3 mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="text-center">Edit Product</h3>
+                <form action="/admin/submit-update/{{product._id}}" method="post" enctype="multipart/form-data">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" value="{{product.name}}">
+
+                    <label for="category">Category</label>
+                    <input type="text" name="category" class="form-control" value="{{product.category}}">
+
+                    <label for="price">Price</label>
+                    <input type="number" name="price" class="form-control" value="{{product.price}}">
+
+                    <label for="description">Description</label>
+                    <textarea name="description" style="width: 100%;">{{product.description}}</textarea>
+                    <br>
+
+                    <label for="image">Image</label><br>
+                    <img src="/images/products/{{product._id}}.jpeg" style="width: 6rem; margin:1rem 0;" alt=""
+                        id="ImgView">
+                    <input type="file" name="image" class="form-control" id="ImgInput" style="display: none;"
+                        onchange="changeImg(event)"><br>
+
+                    <button type="submit" class="btn btn-success mt-4">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageView = document.getElementById('ImgView')
+        const imageInput = document.getElementById('ImgInput')
+
+        imageView.addEventListener('click', function () {
+            imageInput.click()
+        })
+    })
+
+    function changeImg(event) {
+        document.getElementById('ImgView').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

@@ -1,0 +1,17 @@
+@import './user/view-products/view-products.css';
+@import './user/signup/signup.css';
+@import './user/login/login.css';
+
+@import './admin/manage-product/manage-product.css';
+@import './admin/add-product/add-product.css';
+@import './admin/edit-product/edit-product.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+}

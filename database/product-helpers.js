@@ -25,4 +25,45 @@ module.exports = {
             }
         })
     },
+    deleteProduct: (productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).deleteOne({ _id: ObjectId.createFromHexString(productId) })
+                .then(() => {
+                    resolve(true)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    },
+    getProductDetails: (productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(productId) })
+                .then((data) => {
+                    resolve(data)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    },
+    updateProduct: (productId, update) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).updateOne({ _id: ObjectId.createFromHexString(productId) }, {
+                $set: {
+                    name: update.name,
+                    category: update.category,
+                    price: update.price,
+                    description: update.description
+                }
+            })
+                .then((res) => {
+                    console.log(res)
+                    resolve(true)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    }
 }
