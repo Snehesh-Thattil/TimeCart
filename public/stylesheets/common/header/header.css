@@ -1,0 +1,77 @@
+.header_component {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0A0A0A;
+  height: 4.5rem;
+  padding: 1rem 1.5rem;
+}
+.header_component a {
+  text-decoration: none;
+  color: #CBA74E;
+  font-weight: bold;
+}
+.header_component a img {
+  border-radius: 30%;
+  height: 3rem;
+  width: 3rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  outline: 2px solid #CBA74E;
+}
+.header_component a i {
+  transform: scale(1.25);
+  margin-left: 0.5rem;
+}
+.header_component .nav-items {
+  display: flex;
+  gap: 1.5rem;
+}
+.header_component .nav-items li {
+  list-style: none;
+}
+.header_component .nav-items li a {
+  text-decoration: none;
+  color: #bb9533;
+  font-weight: bold;
+}
+.header_component .nav-items li a:hover {
+  color: #CBA74E;
+}
+.header_component .search-products {
+  display: flex;
+  gap: 10px;
+  height: 2.75rem;
+}
+.header_component .search-products input {
+  height: 100%;
+  width: 17.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  border: none;
+}
+.header_component .search-products a {
+  text-decoration: none;
+}
+.header_component .search-products a button {
+  height: 100%;
+  width: 5rem;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: #bb9533;
+  color: #0A0A0A;
+}
+.header_component .search-products a button:hover {
+  color: rgba(10, 10, 10, 0.7960784314);
+  background-color: #d6af4b;
+}
+.header_component .login a i {
+  transform: scale(1.25);
+  margin-left: 0.5rem;
+}/*# sourceMappingURL=header.css.map */

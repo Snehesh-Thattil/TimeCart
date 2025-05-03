@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use((session({ secret: 'SecretHashKeyHere', cookie: { maxAge: 600000 } })))
+app.use((session({ secret: 'SecretHashKeyHere', resave: false, saveUninitialized: false, cookie: { maxAge: 600000 } })))
 app.use(fileUpload())
 db.connect((err) => {
   if (err) console.log('Error connecting database :', err.message)

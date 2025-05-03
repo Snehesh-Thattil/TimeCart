@@ -1,1 +1,71 @@
-/*# sourceMappingURL=view-products.css.map */
+.view-products {
+  background-color: black;
+  padding: 2rem;
+}
+.view-products .cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+}
+.view-products .cards .card {
+  border: 2px solid #E5C76A;
+  background: linear-gradient(90deg, #A56C2D, #CBA74E, #F9E794, #CBA74E, #A56C2D);
+  padding: 0.5rem;
+  height: 25rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.view-products .cards .card .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+.view-products .cards .card .details img {
+  width: 100%;
+  height: 12.5rem;
+  border-radius: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.view-products .cards .card .details h3 {
+  text-align: left;
+}
+.view-products .cards .card .details h3 span {
+  font-family: sans-serif;
+}
+.view-products .cards .card .details h3 strike {
+  color: rgb(53, 50, 50);
+  -webkit-text-decoration: line-through 2px;
+          text-decoration: line-through 2px;
+}
+.view-products .cards .card .buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+.view-products .cards .card .buttons a {
+  cursor: pointer;
+  text-decoration: none;
+  width: 75%;
+}
+.view-products .cards .card .buttons a button {
+  padding: 0.6rem;
+  border-radius: 5px;
+  font-weight: bold;
+  background: radial-gradient(circle at center, #2B2B2B, #1A1A1A, #0A0A0A);
+  color: #E5C76A;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.view-products .cards .card .buttons a button:hover {
+  background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
+  color: white;
+}/*# sourceMappingURL=view-products.css.map */

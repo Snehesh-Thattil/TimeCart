@@ -1,47 +1,36 @@
-<header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">InstaCart</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/wishlist">Wishlists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/orders">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">Cart</a>
-                    </li>
-                    <li class="nav-item">
-                        {{#if user}}
-                        <a href="/profile" class="nav-link">{{user.name}}</a>
-                        {{else}}
-                        <a class="nav-link" href="/login">Login</a>
-                        {{/if}}
-                    </li>
-                </ul>
+<header class="user-header header_component">
+    <a class="navbar-brand" href="/">
+        <img src="/images/resources/TimeCart Logo.jpeg" class="logo" alt="timeCart logo">
+    </a>
 
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <ul class="navbar-nav ms-5 me-2 mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        {{#if user}}
-                        <a class="nav-link" href="/logout">Logout</a>
-                        {{/if}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="nav-items">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/wishlist">Wishlists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/orders">Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/cart">Cart</a>
+        </li>
+    </div>
+
+    <form action="" class="search-products">
+        <input class="form-control me-2" type="search" placeholder="Search watches, brands, types, etc..."
+            aria-label="Search">
+        <a href=""> <button class="btn btn-outline-success">Search</button></a>
+    </form>
+
+    <a href="/admin">Become a Seller <i class="fa-solid fa-store"></i> </a>
+
+    <div class="login">
+        {{#if user}}
+        <a href="/profile" class="nav-link">{{user.name}} <i class="fa-regular fa-circle-user"></i> </a>
+        {{else}}
+        <a class="nav-link" href="/login">Login <i class="fa-solid fa-right-to-bracket"></i> </a>
+        {{/if}}
+    </div>
 </header>

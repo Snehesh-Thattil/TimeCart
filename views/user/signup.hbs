@@ -1,25 +1,14 @@
-<div class="row">
-    <div class="col-md-6 m-auto">
-        <div class="container mt-5 pl-5">
-            <h2 class="text-center">SignUp</h2>
-            <form action="/signup" method="post" class="d-flex flex-column gap-3">
-                <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" class="form-control" name="name" required placeholder="Enter your name">
-                </div>
-                <div class="form-group">
-                    <label for="">Email address</label>
-                    <input type="email" class="form-control" name="email" required placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" class="form-control" name="password" required placeholder="Enter password">
-                </div>
-                <div class="form-group mt-2 d-flex flex-column justify-content-space-between align-items-center">
-                    <button type="submit" class="btn btn-primary float-right" style="width: 100%;">Signup Now</button>
-                    <a href="/login" class="mt-4">Already have an account ?</a>
-                </div>
-            </form>
+<div class="signup login_component ">
+    <h2>SignUp</h2>
+    <form action="/signup" method="post">
+        <input type="text" minlength="2" maxlength="15" required placeholder="Enter your name">
+        <input type="email" name="email" required placeholder="Enter email address">
+        <input type="password" name="password" minlength="8" maxlength="32" required placeholder="Enter password">
+        <input type="password" name="ConfirmPassword" minlength="8" maxlength="32" required
+            placeholder="Confirm password">
+        <div class="actions">
+            <button type="submit">Create account</button>
+            <a href="/login">Already have an account ?</a>
         </div>
-    </div>
+    </form>
 </div>

@@ -1,1 +1,55 @@
-/*# sourceMappingURL=login.css.map */
+.login_component {
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(44, 41, 41, 0.685);
+  padding: 5rem;
+  color: #CBA74E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.login_component form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  width: 25rem;
+}
+.login_component form input {
+  padding: 0.75rem;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+}
+.login_component form .actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.login_component form .actions button {
+  border-radius: 5px;
+  width: 70%;
+  font-weight: 600;
+  padding: 0.75rem;
+  outline: none;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: rgba(187, 148, 51, 0.8431372549);
+  color: #0A0A0A;
+}
+.login_component form .actions button:hover {
+  background-color: #d3a532;
+}
+.login_component form .actions a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.3s ease-in-out;
+}
+.login_component form .actions a:hover {
+  color: #bb9533;
+}/*# sourceMappingURL=login.css.map */

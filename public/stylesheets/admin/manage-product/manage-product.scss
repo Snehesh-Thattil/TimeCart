@@ -1,0 +1,45 @@
+.manage-products_component {
+    width: 100%;
+    padding: 5rem;
+    color: #CBA74E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+
+    table {
+        outline: 2px solid #CBA74E;
+        width: 100%;
+        border-radius: 5px;
+
+        thead {
+            background-color: #f1f0ed;
+            border-radius: 5px;
+        }
+
+        tbody {
+            text-align: center;
+
+            tr {
+                td {
+                    a {
+                        padding: .5rem 1rem;
+                        background-color: rgba(255, 0, 0, 0.548);
+                        margin: 0 5px;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    .add-btn {
+        padding: .5rem 1rem;
+        background-color: #CBA74E;
+        border-radius: 5px;
+        color: black;
+        width: 20%;
+        text-align: center;
+    }
+}

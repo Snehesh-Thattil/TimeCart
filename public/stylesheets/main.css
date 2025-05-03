@@ -1,5 +1,6 @@
+@import './common/header/header.css';
+
 @import './user/view-products/view-products.css';
-@import './user/signup/signup.css';
 @import './user/login/login.css';
 
 @import './admin/manage-product/manage-product.css';
@@ -10,8 +11,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  color: unset;
 }
 
 body {
   width: 100%;
+  background-color: black;
+  font-family: "DM Serif Display", "Cinzel", "Playfair Display", serif;
 }

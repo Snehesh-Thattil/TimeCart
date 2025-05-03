@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"manage-product.css"}
+{"version":3,"sources":["manage-product.scss","manage-product.css"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;EACA,cAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,sBAAA;EACA,SAAA;ACCJ;ADCI;EACI,0BAAA;EACA,WAAA;EACA,kBAAA;ACCR;ADCQ;EACI,yBAAA;EACA,kBAAA;ACCZ;ADEQ;EACI,kBAAA;ACAZ;ADIoB;EACI,oBAAA;EACA,wCAAA;EACA,aAAA;EACA,kBAAA;ACFxB;ADSI;EACI,oBAAA;EACA,yBAAA;EACA,kBAAA;EACA,YAAA;EACA,UAAA;EACA,kBAAA;ACPR","file":"manage-product.css"}

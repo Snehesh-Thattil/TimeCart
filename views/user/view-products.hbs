@@ -1,20 +1,23 @@
-<section>
-    <div class="container-fluid mt-3">
-        <div class="row">
-            {{#each products}}
-            <div class="col-md-3">
-                <div class="card me-3 mt-3" style="width: 20rem; height:25rem;">
-                    <img src='/images/products/{{this._id}}.jpeg' style="height: 10rem; object-fit:contain;"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h4 class="card-title">{{this.name}}</h4>
-                        <p class="card-text">{{this.description}}</p>
-                        <h5>{{this.price}}</h5>
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
+<section class="view-products">
+    <div class="cards">
+        {{#each products}}
+        <div class="card">
+            <div class="details">
+                <img src="/images/products/{{this._id}}.jpeg" alt="product-photo">
+                <div class="infos">
+                    <h4>{{this.name}}</h4>
+                    {{!-- <p>{{this.description}}</p> --}}
+                    <h3>
+                        <span>₹</span>{{this.price}}
+                        <strike><span>₹</span>{{this.original_price}}</strike>
+                    </h3>
                 </div>
             </div>
-            {{/each}}
+            <div class="buttons">
+                <a href="/add-to-cart"><button class="buttons">Add to cart</button></a>
+                <a href="/buy-now"><button class="buttons">Buy Now</button></a>
+            </div>
         </div>
+        {{/each}}
     </div>
 </section>

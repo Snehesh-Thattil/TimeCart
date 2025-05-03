@@ -1,36 +1,32 @@
-<section>
-    <div class="container-fluid">
-        <div class="row mt-3">
-            <a href="/admin/add-product" style="padding: .5rem; width: 10rem; margin-left:auto; margin-right:2rem;"
-                class="btn btn-success">Add product</a>
-        </div>
-        <table class="table mt-3">
-            <thead>
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Photo</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each products}}
-                <tr>
-                    <th scope="row">{{@index}}</th>
-                    <td>{{this.name}}</td>
-                    <td>{{this.category}}</td>
-                    <td>{{this.price}}</td>
-                    <td> <img style="width: 3rem;" src="/images/products/{{this._id}}.jpeg" alt="mobile"></td>
-                    <td>
-                        <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary me-2">Edit</a>
-                        <a href="/admin/delete-product?id={{this._id}}" class="btn btn-danger"
-                            onclick="return confirm('Delete the product {{this.Name}} ?')">Delete</a>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
+<section class="manage-products_component">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each products}}
+            <tr>
+                <th scope="row">{{@index}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.category}}</td>
+                <td>{{this.price}}</td>
+                <td> <img style="width: 3rem;" src="/images/products/{{this._id}}.jpeg" alt="mobile"></td>
+                <td>
+                    <a href="/admin/edit-product/{{this._id}}" class="edit-btn">Edit</a>
+                    <a href="/admin/delete-product?id={{this._id}}" class="delete-btn"
+                        onclick="return confirm('Delete the product {{this.Name}} ?')">Unlist</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <a href="/admin/add-product" class="add-btn">List new product</a>
 </section>

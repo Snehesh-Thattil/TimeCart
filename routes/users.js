@@ -24,7 +24,11 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/signup', (req, res) => {
-  res.render('user/signup')
+  if (req.session.loggedIn) {
+    res.redirect('/')
+  } else {
+    res.render('user/signup')
+  }
 })
 
 router.post('/signup', (req, res) => {
@@ -37,7 +41,7 @@ router.post('/signup', (req, res) => {
     .catch((err) => {
       console.log(err)
       if (err = 'Email already exists') {
-        req.session.loginErr = 'Email already exists, Do login here:'
+        req.session.loginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/login')
       } else {
         res.redirect('/signup')
@@ -62,7 +66,7 @@ router.post('/login', (req, res) => {
       res.redirect('/')
     })
     .catch((err) => {
-      req.session.loginErr = 'Invalid username or password'
+      req.session.loginErr = 'Invalid username or password! 😞'
       res.redirect('/login')
     })
 })
