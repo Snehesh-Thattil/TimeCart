@@ -60,3 +60,26 @@
         }
     }
 }
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:767px) {
+    .login_component {
+        min-height: calc(100vh - 4.5rem);
+        padding-top: 10rem;
+
+        &.signup {
+            padding-top: 5rem;
+        }
+
+
+        form {
+            width: 17.5rem;
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+    .login_component {
+        padding-top: 12.5rem;
+    }
+}

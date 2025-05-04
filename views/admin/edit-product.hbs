@@ -1,35 +1,78 @@
-<section>
-    <div class="container mt-3 mb-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h3 class="text-center">Edit Product</h3>
-                <form action="/admin/submit-update/{{product._id}}" method="post" enctype="multipart/form-data">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{product.name}}">
+<section class="add-product product-form_component">
+    <h2>Edit Product</h2>
+    <form action="/admin/submit-update/{{product._id}}" method="post" enctype="multipart/form-data">
 
-                    <label for="category">Category</label>
-                    <input type="text" name="category" class="form-control" value="{{product.category}}">
+        <div class="form-group">
+            <label for="">Name and brand</label>
+            <input type="text" name="brand_name" placeholder="Brand name" value="{{product.brand_name}}" required>
+            <input type="text" name="product_name" placeholder="Product name" value="{{product.product_name}}" required>
+        </div>
 
-                    <label for="price">Price</label>
-                    <input type="number" name="price" class="form-control" value="{{product.price}}">
+        <div class="form-group">
+            <label for="">Type</label>
 
-                    <label for="description">Description</label>
-                    <textarea name="description" style="width: 100%;">{{product.description}}</textarea>
-                    <br>
+            <div class="radios">
+                <div class="radio">
+                    <label for="analog">Analog</label>
+                    <input type="radio" name="type" id="analog" required>
+                </div>
 
-                    <label for="image">Image</label><br>
-                    <img src="/images/products/{{product._id}}.jpeg" style="width: 6rem; margin:1rem 0;" alt=""
-                        id="ImgView">
-                    <input type="file" name="image" class="form-control" id="ImgInput" style="display: none;"
-                        onchange="changeImg(event)"><br>
+                <div class="radio">
+                    <label for="digital">Digital</label>
+                    <input type="radio" name="type" id="digital" required>
+                </div>
 
-                    <button type="submit" class="btn btn-success mt-4">Submit</button>
-                </form>
+                <div class="radio">
+                    <label for="smartwatch">Smartwatch</label>
+                    <input type="radio" name="type" id="smartwatch" required>
+                </div>
+
+                <div class="radio">
+                    <label for="chronograph">Chronograph</label>
+                    <input type="radio" name="type" id="chronograph" required>
+                </div>
+
+                <div class="radio">
+                    <label for="hybrid">Hybrid</label>
+                    <input type="radio" name="type" id="hybrid" required>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            <textarea name="description" rows="10" minlength="50" maxlength="9999"
+                placeholder="Describe the product details" required>{{product.description}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="">Pricing details</label>
+            <input type="number" min="9" max="99999999" name="selling_price" placeholder="Selling price"
+                value="{{product.selling_price}}" required>
+            <input type="number" min="9" max="99999999" name="original_price" placeholder="Original price"
+                value="{{product.original_price}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Images</label>
+            <div class="img-upload" onclick="addImage()">
+                <img src="/images/resources/image-upload-icon.png" alt="">
+                <div class="upload-right">
+                    <h4>UPLOAD YOUR PRODUCT IMAGES</h4>
+                    <p>You can upload upto 10 images</p>
+                </div>
+            </div>
+            <div class="preview-container" id="imagePreviewContainer"></div>
+            <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 </section>
+
 
 {{!-- Links --}}
 <script src="/javascripts/admin/edit-product.js"></script>
-<link rel="stylesheet" href="/stylesheets/admin/edit-product/edit-product.css">
+<link rel="stylesheet" href="/stylesheets/admin/add-product/add-product.css">
