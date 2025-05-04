@@ -16,6 +16,7 @@
         thead {
             background-color: #f1f0ed;
             border-radius: 5px;
+            color: black;
         }
 
         tbody {
@@ -25,9 +26,23 @@
                 td {
                     a {
                         padding: .5rem 1rem;
-                        background-color: rgba(255, 0, 0, 0.548);
                         margin: 0 5px;
                         border-radius: 5px;
+                        opacity: .75;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                        &.delete-btn {
+                            background-color: #CBA74E;
+                            color: white;
+                        }
+
+                        &.edit-btn {
+                            background-color: rgb(56, 54, 54);
+                            color: #CBA74E;
+                        }
                     }
                 }
             }
@@ -36,10 +51,16 @@
 
     .add-btn {
         padding: .5rem 1rem;
+        border: none;
         background-color: #CBA74E;
         border-radius: 5px;
         color: black;
-        width: 20%;
         text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            background-color: peru;
+        }
     }
 }

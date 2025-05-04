@@ -1,28 +1,75 @@
-<section>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="text-center">Add Product</h2>
-                <form action="/admin/add-product" method="post" enctype="multipart/form-data">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" class="form-control">
+<section class="add-product product-form_component">
+    <h2>Add Product</h2>
+    <form action="/admin/add-product" method="post" enctype="multipart/form-data">
 
-                    <label for="category">Category</label>
-                    <input type="text" name="category" class="form-control">
+        <div class="form-group">
+            <label for="">Name and brand</label>
+            <input type="text" name="brand_name" placeholder="Brand name" required>
+            <input type="text" name="product_name" placeholder="Product name" required>
+        </div>
 
-                    <label for="price">Price</label>
-                    <input type="number" name="price" class="form-control">
+        <div class="form-group">
+            <label for="">Type</label>
 
-                    <label for="description">Description</label>
-                    <textarea name="description" style="width: 100%;"></textarea>
-                    <br>
+            <div class="radios">
+                <div class="radio">
+                    <label for="analog">Analog</label>
+                    <input type="radio" name="type" id="analog" required>
+                </div>
 
-                    <label for="image">Image</label>
-                    <input type="file" name="image" class="form-control">
+                <div class="radio">
+                    <label for="digital">Digital</label>
+                    <input type="radio" name="type" id="digital" required>
+                </div>
 
-                    <button type="submit" class="btn btn-success mt-4">Submit</button>
-                </form>
+                <div class="radio">
+                    <label for="smartwatch">Smartwatch</label>
+                    <input type="radio" name="type" id="smartwatch" required>
+                </div>
+
+                <div class="radio">
+                    <label for="chronograph">Chronograph</label>
+                    <input type="radio" name="type" id="chronograph" required>
+                </div>
+
+                <div class="radio">
+                    <label for="hybrid">Hybrid</label>
+                    <input type="radio" name="type" id="hybrid" required>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            <textarea name="description" rows="10" minlength="50" maxlength="9999"
+                placeholder="Describe the product details" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="">Pricing details</label>
+            <input type="number" min="9" max="99999999" name="selling_price" placeholder="Selling price" required>
+            <input type="number" min="9" max="99999999" name="original_price" placeholder="Original price" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Images</label>
+            <div class="img-upload" onclick="addImage()">
+                <img src="/images/resources/image-upload-icon.png" alt="">
+                <div class="upload-right">
+                    <h4>UPLOAD YOUR PRODUCT IMAGES</h4>
+                    <p>You can upload upto 10 images</p>
+                </div>
+            </div>
+            <div class="preview-container" id="imagePreviewContainer"></div>
+            <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 </section>
+
+{{!-- Links --}}
+<script src="/javascripts/admin/add-product.js"></script>
+<link rel="stylesheet" href="/stylesheets/admin/add-product/add-product.css">
