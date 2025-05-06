@@ -3,16 +3,17 @@ const collections = require('./collections')
 const { ObjectId } = require('mongodb')
 
 module.exports = {
-    addProduct: (product, callback) => {
-
-        db.get().collection(collections.PRODUCTS_COLLECTION).insertOne(product)
-            .then((data) => {
-                console.log('data added to collection :-', data)
-                callback(null, data.insertedId)
-            })
-            .catch((err) => {
-                callback(err)
-            })
+    addProduct: (product, imgNames) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).insertOne({ ...product, imgNames: imgNames })
+                .then((data) => {
+                    console.log('data added to collection :-', data)
+                    resolve(data.insertedId)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
     },
     getProducts: () => {
         return new Promise(async (resolve, reject) => {
