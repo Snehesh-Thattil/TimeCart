@@ -21,6 +21,12 @@
 .manage-products_component table tbody {
   text-align: center;
 }
+.manage-products_component table tbody tr td img {
+  width: 3rem;
+  height: 3rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .manage-products_component table tbody tr td a {
   padding: 0.5rem 1rem;
   margin: 0 5px;

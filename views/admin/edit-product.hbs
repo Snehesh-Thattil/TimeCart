@@ -14,27 +14,32 @@
             <div class="radios">
                 <div class="radio">
                     <label for="analog">Analog</label>
-                    <input type="radio" name="type" id="analog" required>
+                    <input type="radio" name="type" id="analog" {{#if (eq product.type "analog" )}} checked {{/if}}
+                        value="analog" required>
                 </div>
 
                 <div class="radio">
                     <label for="digital">Digital</label>
-                    <input type="radio" name="type" id="digital" required>
+                    <input type="radio" name="type" id="digital" {{#if (eq product.type "digital" )}} checked {{/if}}
+                        value="digital" required>
                 </div>
 
                 <div class="radio">
                     <label for="smartwatch">Smartwatch</label>
-                    <input type="radio" name="type" id="smartwatch" required>
+                    <input type="radio" name="type" id="smartwatch" {{#if (eq product.type "smartwatch" )}} checked
+                        {{/if}} value="smartwatch" required>
                 </div>
 
                 <div class="radio">
                     <label for="chronograph">Chronograph</label>
-                    <input type="radio" name="type" id="chronograph" required>
+                    <input type="radio" name="type" id="chronograph" {{#if (eq product.type "chronograph" )}} checked
+                        {{/if}} value="chronograph" required>
                 </div>
 
                 <div class="radio">
                     <label for="hybrid">Hybrid</label>
-                    <input type="radio" name="type" id="hybrid" required>
+                    <input type="radio" name="type" id="hybrid" {{#if (eq product.type "hybrid" )}} checked {{/if}}
+                        value="hybrid" required>
                 </div>
             </div>
         </div>
@@ -62,7 +67,14 @@
                     <p>You can upload upto 10 images</p>
                 </div>
             </div>
-            <div class="preview-container" id="imagePreviewContainer"></div>
+            <div class="preview-container" id="imagePreviewContainer">
+                {{#each product.imgNames}}
+                <div class="wrapper">
+                    <img src="/images/products/{{this}}" alt="watch-photo">
+                    <span>❌</span>
+                </div>
+                {{/each}}
+            </div>
             <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;" required>
         </div>
 

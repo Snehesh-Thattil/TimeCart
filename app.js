@@ -20,7 +20,12 @@ app.engine('hbs', engine({
   extname: 'hbs',
   defaultLayout: 'layout',
   layoutsDir: __dirname + '/views/layout',
-  partialsDir: __dirname + '/views/partials/'
+  partialsDir: __dirname + '/views/partials/',
+  helpers: {
+    eq: function (a, b) {
+      return a === b;
+    }
+  }
 }))
 
 app.use(logger('dev'));

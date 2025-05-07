@@ -4,9 +4,11 @@
             <tr>
                 <th scope="col">No.</th>
                 <th scope="col">Name</th>
-                <th scope="col">Category</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Type</th>
                 <th scope="col">Price</th>
-                <th scope="col">Photo</th>
+                <th scope="col">Org. price</th>
+                <th scope="col">Photos</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -14,15 +16,22 @@
         <tbody>
             {{#each products}}
             <tr>
-                <th scope="row">{{@index}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.category}}</td>
-                <td>{{this.price}}</td>
-                <td> <img style="width: 3rem;" src="/images/products/{{this._id}}.jpeg" alt="mobile"></td>
+                <td scope="row">{{@index}}</td>
+                <td>{{this.product_name}}</td>
+                <td>{{this.brand_name}}</td>
+                <td>{{this.type}}</td>
+                <td>{{this.selling_price}}</td>
+                <td>{{this.original_price}}</td>
+                <td>
+                    {{#each this.imgNames}}
+                    <img style="width: 3rem;" src="/images/products/{{this}}" alt="mobile">
+                    {{/each}}
+                </td>
+
                 <td>
                     <a href="/admin/edit-product/{{this._id}}" class="edit-btn">Edit</a>
                     <a href="/admin/delete-product?id={{this._id}}" class="delete-btn"
-                        onclick="return confirm('Delete the product {{this.Name}} ?')">Unlist</a>
+                        onclick="return confirm('Delete the product {{this.product_name}} ?')">Unlist</a>
                 </td>
             </tr>
             {{/each}}
