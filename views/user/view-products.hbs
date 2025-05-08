@@ -3,12 +3,13 @@
         {{#each products}}
         <div class="card">
             <div class="details">
-                <img src="/images/products/{{this._id}}.jpeg" alt="product-photo">
+                <img src="/images/products/{{this.coverImg}}" alt="product-photo">
                 <div class="infos">
-                    <h4>{{this.name}}</h4>
-                    {{!-- <p>{{this.description}}</p> --}}
+                    <h5 class="brand">{{this.brand_name}}</h5>
+                    <h4>{{this.product_name}}</h4>
+                    <p>{{this.description}}</p>
                     <h3>
-                        <span>₹</span>{{this.price}}
+                        <span>₹</span>{{this.selling_price}}
                         <strike><span>₹</span>{{this.original_price}}</strike>
                     </h3>
                 </div>

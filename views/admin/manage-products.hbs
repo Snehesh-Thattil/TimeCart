@@ -1,4 +1,5 @@
 <section class="manage-products_component">
+    {{#if products}}
     <table>
         <thead>
             <tr>
@@ -22,7 +23,7 @@
                 <td>{{this.type}}</td>
                 <td>{{this.selling_price}}</td>
                 <td>{{this.original_price}}</td>
-                <td>
+                <td class="photos">
                     {{#each this.imgNames}}
                     <img style="width: 3rem;" src="/images/products/{{this}}" alt="mobile">
                     {{/each}}
@@ -37,6 +38,9 @@
             {{/each}}
         </tbody>
     </table>
+    {{else}}
+    <p>You have no product listings currently</p>
+    {{/if}}
     <a href="/admin/add-product" class="add-btn">List new product</a>
 </section>
 

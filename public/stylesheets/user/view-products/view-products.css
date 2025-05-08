@@ -11,35 +11,58 @@
   border: 2px solid #E5C76A;
   background: linear-gradient(90deg, #A56C2D, #CBA74E, #F9E794, #CBA74E, #A56C2D);
   padding: 0.5rem;
-  height: 25rem;
+  height: -moz-max-content;
+  height: max-content;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5rem;
 }
 .view-products .cards .card .details {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5rem;
   align-items: start;
 }
 .view-products .cards .card .details img {
   width: 100%;
-  height: 12.5rem;
+  height: 11rem;
   border-radius: 5px;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.view-products .cards .card .details h3 {
-  text-align: left;
+.view-products .cards .card .details .infos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
-.view-products .cards .card .details h3 span {
+.view-products .cards .card .details .infos h5 {
+  opacity: 0.8;
+}
+.view-products .cards .card .details .infos h3 {
+  text-align: left;
+  margin: 5px;
+}
+.view-products .cards .card .details .infos h3 span {
   font-family: sans-serif;
 }
-.view-products .cards .card .details h3 strike {
+.view-products .cards .card .details .infos h3 strike {
   color: rgb(53, 50, 50);
   -webkit-text-decoration: line-through 2px;
           text-decoration: line-through 2px;
+  margin: 5px;
+}
+.view-products .cards .card .details .infos p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  opacity: 0.75;
 }
 .view-products .cards .card .buttons {
   display: flex;
@@ -68,4 +91,59 @@
 .view-products .cards .card .buttons a button:hover {
   background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
   color: white;
+}
+
+@media screen and (max-width: 767px) {
+  .view-products {
+    padding: 1rem;
+  }
+  .view-products .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .view-products .cards .card {
+    padding: 0.35rem;
+    gap: 0.25rem;
+  }
+  .view-products .cards .card .details {
+    gap: 0.25rem;
+  }
+  .view-products .cards .card .details img {
+    height: 7rem;
+  }
+  .view-products .cards .card .details .infos {
+    gap: 0.15rem;
+  }
+  .view-products .cards .card .details .infos h5 {
+    font-size: 10px;
+  }
+  .view-products .cards .card .details .infos h4 {
+    font-size: 12px;
+  }
+  .view-products .cards .card .details .infos p {
+    font-size: 9px;
+  }
+  .view-products .cards .card .details .infos h3 {
+    font-size: 12.5px;
+    margin: 5px 2.5px;
+  }
+  .view-products .cards .card .details .infos h3 strike {
+    margin: 5px 2.5px;
+  }
+  .view-products .cards .card .buttons a {
+    width: 100%;
+  }
+  .view-products .cards .card .buttons a button {
+    padding: 0.4rem;
+    font-size: 10px;
+    text-align: center;
+    align-content: center;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .view-products .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .view-products .cards .card .details .infos h3 {
+    font-size: 16px;
+  }
 }/*# sourceMappingURL=view-products.css.map */
