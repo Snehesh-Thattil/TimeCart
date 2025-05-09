@@ -1,46 +1,49 @@
 <section class="manage-products_component">
-    {{#if products}}
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Type</th>
-                <th scope="col">Price</th>
-                <th scope="col">Org. price</th>
-                <th scope="col">Photos</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
+    <h3>Your product listings :</h3>
+    <div class="table-wrapper">
+        {{#if products}}
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Org. price</th>
+                    <th scope="col">Photos</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            {{#each products}}
-            <tr>
-                <td scope="row">{{@index}}</td>
-                <td>{{this.product_name}}</td>
-                <td>{{this.brand_name}}</td>
-                <td>{{this.type}}</td>
-                <td>{{this.selling_price}}</td>
-                <td>{{this.original_price}}</td>
-                <td class="photos">
-                    {{#each this.imgNames}}
-                    <img style="width: 3rem;" src="/images/products/{{this}}" alt="mobile">
-                    {{/each}}
-                </td>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td scope="row">{{@index}}</td>
+                    <td>{{this.product_name}}</td>
+                    <td>{{this.brand_name}}</td>
+                    <td>{{this.type}}</td>
+                    <td>{{this.selling_price}}</td>
+                    <td>{{this.original_price}}</td>
+                    <td class="photos">
+                        {{#each this.imgNames}}
+                        <img style="width: 3rem;" src="/images/products/{{this}}" alt="mobile">
+                        {{/each}}
+                    </td>
 
-                <td>
-                    <a href="/admin/edit-product/{{this._id}}" class="edit-btn">Edit</a>
-                    <a href="/admin/delete-product?id={{this._id}}" class="delete-btn"
-                        onclick="return confirm('Delete the product {{this.product_name}} ?')">Unlist</a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    {{else}}
-    <p>You have no product listings currently</p>
-    {{/if}}
+                    <td class="buttons">
+                        <a href="/admin/edit-product/{{this._id}}" class="edit-btn">Edit</a>
+                        <a href="/admin/delete-product?id={{this._id}}" class="delete-btn"
+                            onclick="return confirm('Delete the product {{this.product_name}} ?')">Unlist</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <p>You have no product listings currently</p>
+        {{/if}}
+    </div>
     <a href="/admin/add-product" class="add-btn">List new product</a>
 </section>
 

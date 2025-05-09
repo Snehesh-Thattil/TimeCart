@@ -8,55 +8,63 @@
   justify-content: start;
   gap: 1rem;
 }
-.manage-products_component table {
-  outline: 2px solid #CBA74E;
+.manage-products_component .table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  outline: 1px solid #CBA74E;
+}
+.manage-products_component .table-wrapper table {
   width: 100%;
   border-radius: 5px;
+  min-width: 800px;
 }
-.manage-products_component table thead {
+.manage-products_component .table-wrapper table thead {
   background-color: #f1f0ed;
   border-radius: 5px;
   color: black;
 }
-.manage-products_component table tbody {
+.manage-products_component .table-wrapper table tbody {
   text-align: center;
 }
-.manage-products_component table tbody tr td {
-  height: 7.5rem;
-  max-width: 12rem;
-  min-width: 2rem;
+.manage-products_component .table-wrapper table tbody tr td {
+  border: 1px solid rgba(255, 255, 255, 0.185);
+  min-width: 2.5rem;
+  max-width: 13rem;
+  min-height: 9rem;
   border-bottom: 2px solid rgba(200, 250, 0, 0.2);
   text-transform: capitalize;
   padding: 0 10px;
 }
-.manage-products_component table tbody tr td.photos {
+.manage-products_component .table-wrapper table tbody tr td.photos {
   text-align: start;
 }
-.manage-products_component table tbody tr td img {
+.manage-products_component .table-wrapper table tbody tr td img {
   width: 3rem;
   height: 3rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.manage-products_component table tbody tr td a {
+.manage-products_component .table-wrapper table tbody tr td a {
+  width: 100%;
   padding: 0.5rem 1rem;
   margin: 0 5px;
   border-radius: 5px;
   opacity: 0.75;
 }
-.manage-products_component table tbody tr td a:hover {
+.manage-products_component .table-wrapper table tbody tr td a:hover {
   opacity: 1;
 }
-.manage-products_component table tbody tr td a.delete-btn {
+.manage-products_component .table-wrapper table tbody tr td a.edit-btn {
   background-color: #CBA74E;
   color: white;
 }
-.manage-products_component table tbody tr td a.edit-btn {
+.manage-products_component .table-wrapper table tbody tr td a.delete-btn {
   background-color: rgb(56, 54, 54);
   color: #CBA74E;
 }
 .manage-products_component .add-btn {
   padding: 0.5rem 1rem;
+  width: 15rem;
   border: none;
   background-color: #CBA74E;
   border-radius: 5px;
@@ -67,4 +75,50 @@
 }
 .manage-products_component .add-btn:hover {
   background-color: peru;
+}
+
+@media screen and (max-width: 767px) {
+  .manage-products_component {
+    padding: 2rem;
+  }
+  .manage-products_component .table-wrapper table {
+    font-size: 0.85rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td.photos {
+    max-width: 20rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .manage-products_component .add-btn {
+    width: 100%;
+    padding: 0.5rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .manage-products_component .table-wrapper table {
+    font-size: 1rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td.photos {
+    max-width: 25rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .manage-products_component .table-wrapper table tbody tr td img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }/*# sourceMappingURL=manage-product.css.map */
