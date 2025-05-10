@@ -64,12 +64,12 @@
   border: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  background-color: #bb9533;
+  background-color: #c29b3b;
   color: #0A0A0A;
 }
 .header_component .search-products a button:hover {
   color: rgba(10, 10, 10, 0.7960784314);
-  background-color: #d6af4b;
+  background-color: #aa8529;
 }
 .header_component .login a i {
   transform: scale(1.25);

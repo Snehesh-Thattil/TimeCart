@@ -23,8 +23,8 @@
                     <td>{{this.product_name}}</td>
                     <td>{{this.brand_name}}</td>
                     <td>{{this.type}}</td>
-                    <td>{{this.selling_price}}</td>
-                    <td>{{this.original_price}}</td>
+                    <td> <span class="currency">₹</span> {{this.selling_price}}</td>
+                    <td> <span class="currency">₹</span> {{this.original_price}}</td>
                     <td class="photos">
                         {{#each this.imgNames}}
                         <img style="width: 3rem;" src="/images/products/{{this}}" alt="mobile">

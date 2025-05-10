@@ -1,6 +1,6 @@
 .manage-products_component {
   width: 100%;
-  padding: 5rem;
+  padding: 2.5rem 5rem;
   color: #CBA74E;
   display: flex;
   flex-direction: column;
@@ -29,14 +29,17 @@
 .manage-products_component .table-wrapper table tbody tr td {
   border: 1px solid rgba(255, 255, 255, 0.185);
   min-width: 2.5rem;
-  max-width: 13rem;
-  min-height: 9rem;
+  max-width: 14rem;
+  height: 7.5rem;
   border-bottom: 2px solid rgba(200, 250, 0, 0.2);
   text-transform: capitalize;
   padding: 0 10px;
 }
 .manage-products_component .table-wrapper table tbody tr td.photos {
   text-align: start;
+}
+.manage-products_component .table-wrapper table tbody tr td span {
+  font-family: "Courier New", Courier, monospace;
 }
 .manage-products_component .table-wrapper table tbody tr td img {
   width: 3rem;

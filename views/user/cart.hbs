@@ -1,1 +1,74 @@
-<p>Empty Cart</p>
+<section class="cart_component">
+    <div class="left-section">
+        <div class="address">
+            <h3 id="section-title">Address</h3>
+            <form action="">
+                <input type="text" minlength="3" maxlength="30" required placeholder="Address line 1">
+                <input type="text" minlength="3" maxlength="30" required placeholder="Address line 2">
+                <input type="tel" minlength="10" maxlength="12" placeholder="Mobile">
+                <input type="email" required placeholder="Email address">
+                <div class="pin-distr">
+                    <input class="pin" type="number" min="4" max="6" required placeholder="Pincode">
+                    <input class="distr" type="text" minlength="2" maxlength="20" required placeholder="District">
+                </div>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="cards">
+            <h3 id="section-title">Items</h3>
+
+            <div class="card">
+                <img src="/images/products/Rolex_classic_premium-1746771399_1795.jpeg" alt="rolex-image">
+                <div class="details">
+                    <h2>Name</h2>
+                    <h4>Brand</h4>
+                    <p>Description</p>
+                    <h1> <span class="currency">₹</span> Price
+                        <strike>Original Price</strike>
+                    </h1>
+                    <div class="qnty">
+                        <button>-</button>
+                        <p>1</p>
+                        <button>+</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="right-section">
+        <h3 id="section-title">Summary</h3>
+
+        <div class="total-summary">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Original price</td>
+                        <td> <span class="currency">₹</span> 295928</td>
+                    </tr>
+                    <tr>
+                        <td>Discounted Price</td>
+                        <td> <span class="currency">₹</span> 195915</td>
+                    </tr>
+                    <tr>
+                        <td>Coupon Code</td>
+                        <td>CJAFKAJF18328</td>
+                    </tr>
+                    <tr>
+                        <td>Coupon Discount</td>
+                        <td> <span class="currency">₹</span> 95195</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="price-and-btn">
+                <h3><span class="currency">₹</span>12999</h3>
+                <button>Checkout</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="/stylesheets/user/cart/cart.css">

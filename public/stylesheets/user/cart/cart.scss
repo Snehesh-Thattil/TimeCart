@@ -1,0 +1,152 @@
+.cart_component {
+    width: 100%;
+    padding: 2.5rem 7.5rem;
+    display: flex;
+    gap: 5rem;
+    color: #CBA74E;
+    background-color: rgb(14, 13, 13);
+
+    .left-section {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+
+        .address {
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                width: 30rem;
+
+                input {
+                    padding: .5rem;
+                }
+
+                .pin-distr {
+                    width: 100%;
+                    display: flex;
+                    gap: 10px;
+
+                    .pin {
+                        width: 35%;
+                    }
+
+                    .distr {
+                        width: 65%;
+                    }
+                }
+
+                button {
+                    padding: .5rem;
+                    border-radius: 5px;
+                    outline: none;
+                    border-color: peru;
+                    background-color: peachpuff;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: background-color .2s ease-in-out;
+
+                    &:hover {
+                        background-color: #CBA74E;
+                    }
+                }
+            }
+        }
+
+        .cards {
+            .card {
+                display: flex;
+                outline: 1px solid peru;
+                height: 11rem;
+
+                img {
+                    height: 100%;
+                    width: 12.5rem;
+                    object-fit: cover;
+                }
+
+                .details {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    padding: 1rem;
+
+                    .qnty {
+                        display: flex;
+                        outline: 1px solid rgba(205, 134, 63, 0.25);
+                        gap: .75rem;
+                        width: max-content;
+                        padding: 4px;
+
+                        p {
+                            width: 1rem;
+                            align-content: center;
+                            text-align: center;
+                        }
+
+                        button {
+                            width: 2rem;
+                            height: 2rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: large;
+                            font-weight: bolder;
+                            cursor: pointer;
+                            transition: background-color .3s ease-in-out;
+
+                            &:hover {
+                                background-color: #CBA74E;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .right-section {
+        width: 30%;
+        height: max-content;
+
+        .total-summary {
+            outline: 1px solid peru;
+
+            table {
+                outline: 1px solid peru;
+                padding: 1rem;
+                width: 100%;
+                height: 12.5rem;
+            }
+
+            .price-and-btn {
+                padding: 1rem;
+
+                h3 {
+                    margin: 1rem 0;
+                }
+
+                button {
+                    padding: .5rem;
+                    width: 100%;
+                    border-radius: 5px;
+                    outline: none;
+                    border-color: peru;
+                    background-color: peachpuff;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: background-color .2s ease-in-out;
+
+                    &:hover {
+                        background-color: #CBA74E;
+                    }
+                }
+            }
+        }
+    }
+
+    #section-title {
+        margin-bottom: 1rem;
+    }
+}

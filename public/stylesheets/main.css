@@ -12,6 +12,11 @@ body {
   font-family: "DM Serif Display", "Cinzel", "Playfair Display", serif;
 }
 
+.currency {
+  font-family: 'Courier New', Courier, monospace;
+  margin-right: 5px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
