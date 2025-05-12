@@ -12,6 +12,14 @@ body {
   font-family: "DM Serif Display", "Cinzel", "Playfair Display", serif;
 }
 
+body.scroll-prevent {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 .currency {
   font-family: 'Courier New', Courier, monospace;
   margin-right: 5px;

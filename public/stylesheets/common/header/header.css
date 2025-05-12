@@ -1,18 +1,22 @@
 .header_component {
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   background-color: #0A0A0A;
-  height: 4.5rem;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
 }
-.header_component a {
+.header_component .icons {
+  color: #bb9533;
+}
+.header_component .icons .fa-bars {
+  display: none;
+}
+.header_component .icons a {
   text-decoration: none;
-  color: #CBA74E;
   font-weight: bold;
 }
-.header_component a img {
+.header_component .icons a img {
   border-radius: 30%;
   height: 3rem;
   width: 3rem;
@@ -20,7 +24,7 @@
      object-fit: cover;
   outline: 2px solid #CBA74E;
 }
-.header_component a i {
+.header_component .icons a i {
   transform: scale(1.25);
   margin-left: 0.5rem;
 }
@@ -31,6 +35,9 @@
 .header_component .nav-items li {
   list-style: none;
 }
+.header_component .nav-items li.mobile-only {
+  display: none;
+}
 .header_component .nav-items li a {
   text-decoration: none;
   color: #bb9533;
@@ -38,6 +45,9 @@
 }
 .header_component .nav-items li a:hover {
   color: #CBA74E;
+}
+.header_component .nav-items li a i {
+  margin-right: 0.5rem;
 }
 .header_component .search-products {
   display: flex;
@@ -64,14 +74,143 @@
   border: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  background-color: #c29b3b;
+  background-color: #bb9533;
   color: #0A0A0A;
 }
 .header_component .search-products a button:hover {
   color: rgba(10, 10, 10, 0.7960784314);
   background-color: #aa8529;
 }
+.header_component .seller {
+  color: #bb9533;
+}
+.header_component .seller i {
+  margin-left: 0.5rem;
+}
+.header_component .login a {
+  color: #bb9533;
+}
 .header_component .login a i {
   transform: scale(1.25);
   margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  .header_component {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
+    height: 8rem;
+  }
+  .header_component .icons {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+  }
+  .header_component .icons .fa-bars {
+    display: block;
+    border-radius: 5px;
+    padding: 0.75rem;
+    background-color: #1a1919;
+  }
+  .header_component .icons a img {
+    height: 2rem;
+    width: 2rem;
+    outline: 1px solid #CBA74E;
+  }
+  .header_component .nav-items {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: #141414;
+    gap: 0;
+    z-index: 2;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .header_component .nav-items.hidden {
+    transform: translateX(0);
+  }
+  .header_component .nav-items li {
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  }
+  .header_component .nav-items li.mobile-only {
+    display: unset;
+  }
+  .header_component .nav-items li:hover {
+    background-color: #0A0A0A;
+  }
+  .header_component .search-products {
+    height: 2rem;
+    grid-area: 2/1/3/3;
+    width: 100%;
+  }
+  .header_component .search-products input {
+    width: 80%;
+  }
+  .header_component .search-products a {
+    width: 20%;
+  }
+  .header_component .search-products a button {
+    width: 100%;
+  }
+  .header_component .seller {
+    display: none;
+  }
+  .header_component .login {
+    display: flex;
+    justify-content: end;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .header_component {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
+    height: 8rem;
+    padding: 1rem 2.5rem;
+  }
+  .header_component .icons a img {
+    height: 3rem;
+    width: 3rem;
+    outline: 1px solid #CBA74E;
+  }
+  .header_component .nav-items li a i {
+    margin-right: 0.25rem;
+  }
+  .header_component .search-products {
+    height: 2rem;
+    grid-area: 2/1/3/3;
+    width: 100%;
+  }
+  .header_component .search-products input {
+    width: 80%;
+  }
+  .header_component .search-products a {
+    width: 20%;
+  }
+  .header_component .search-products a button {
+    width: 100%;
+  }
+  .header_component .seller {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .header_component .login {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }/*# sourceMappingURL=header.css.map */
