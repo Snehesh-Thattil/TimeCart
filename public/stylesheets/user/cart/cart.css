@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 30rem;
+  width: 70%;
 }
 .cart_component .left-section .address form input {
   padding: 0.5rem;
@@ -62,8 +62,15 @@
   justify-content: space-evenly;
   padding: 1rem;
 }
+.cart_component .left-section .cards .card .details h1 strike {
+  color: rgba(189, 166, 144, 0.75);
+  -webkit-text-decoration: line-through 3px rgb(61, 56, 56);
+          text-decoration: line-through 3px rgb(61, 56, 56);
+}
 .cart_component .left-section .cards .card .details .qnty {
   display: flex;
+  align-items: center;
+  justify-content: center;
   outline: 1px solid rgba(205, 134, 63, 0.25);
   gap: 0.75rem;
   width: -moz-max-content;
@@ -125,4 +132,78 @@
 }
 .cart_component #section-title {
   margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .cart_component {
+    padding: 2.25rem;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .cart_component .left-section {
+    width: 100%;
+  }
+  .cart_component .left-section .address form {
+    width: 100%;
+  }
+  .cart_component .left-section .cards .card {
+    height: 10rem;
+  }
+  .cart_component .left-section .cards .card img {
+    width: 7.5rem;
+  }
+  .cart_component .left-section .cards .card .details {
+    padding: 0.5rem 0.75rem;
+  }
+  .cart_component .left-section .cards .card .details h1 {
+    font-size: 18px;
+  }
+  .cart_component .left-section .cards .card .details .qnty {
+    gap: 0.5rem;
+  }
+  .cart_component .left-section .cards .card .details .qnty p {
+    width: 0.5rem;
+  }
+  .cart_component .left-section .cards .card .details .qnty button {
+    width: 1rem;
+    height: 1rem;
+  }
+  .cart_component .right-section {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cart_component {
+    padding: 4rem;
+    gap: 3.5rem;
+    flex-direction: row;
+  }
+  .cart_component .left-section {
+    width: 60%;
+  }
+  .cart_component .left-section .address form {
+    width: 100%;
+  }
+  .cart_component .left-section .cards .card {
+    height: 9rem;
+  }
+  .cart_component .left-section .cards .card img {
+    width: 8rem;
+  }
+  .cart_component .right-section {
+    width: 40%;
+  }
+  .cart_component .right-section .total-summary table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .cart_component .right-section .total-summary table tbody tr {
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .cart_component .right-section .total-summary table tbody tr td {
+    text-align: start;
+  }
 }/*# sourceMappingURL=cart.css.map */

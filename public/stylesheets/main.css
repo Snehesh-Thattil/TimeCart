@@ -22,7 +22,6 @@ body.scroll-prevent {
 
 .currency {
   font-family: 'Courier New', Courier, monospace;
-  margin-right: 5px;
 }
 
 input::-webkit-outer-spin-button,

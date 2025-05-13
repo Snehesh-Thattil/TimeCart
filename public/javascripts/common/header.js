@@ -1,3 +1,4 @@
+
 function toggle() {
     const navItems = document.querySelector('.nav-items')
     navItems.classList.toggle('hidden')
