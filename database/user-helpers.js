@@ -1,6 +1,7 @@
 const db = require('./connection')
 const collections = require('./collections')
 const bcrypt = require('bcrypt')
+const { ObjectId } = require('mongodb')
 
 module.exports = {
     doSignup: (formData) => {
@@ -12,7 +13,7 @@ module.exports = {
             }
             else {
                 formData.password = await bcrypt.hash(formData.password, 10)
-                
+
                 db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
                     .then((data) => {
                         console.log('user data after doSignup :', data)
@@ -41,6 +42,47 @@ module.exports = {
                 .catch((err) => {
                     reject(err)
                 })
+        })
+    },
+    addToCart: (productId, userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const userCart = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+
+                if (userCart) {
+                    await db.get().collection(collections.CART_COLLECTION).updateOne({ user: ObjectId.createFromHexString(userId) },
+                        {
+                            $push: { products: ObjectId.createFromHexString(productId) }
+                        }
+                    )
+                    resolve(true)
+                }
+                else {
+                    let userCartObj = {
+                        user: ObjectId.createFromHexString(userId),
+                        products: [ObjectId.createFromHexString(productId)]
+                    }
+                    await db.get().collection(collections.CART_COLLECTION).insertOne(userCartObj)
+                    resolve(true)
+                }
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    getCartItems: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            // await db.get().collection(collections.CART_COLLECTION).aggregate([
+            //     {
+            //         $match: ObjectId.createFromHexString(userId)
+            //     },
+            //     {
+            //         $lookup: {
+            //             from: collections.PRODUCTS_COLLECTION,
+            //         }
+            //     }
+            // ])
         })
     }
 }
