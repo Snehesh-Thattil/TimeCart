@@ -73,16 +73,34 @@ module.exports = {
     },
     getCartItems: (userId) => {
         return new Promise(async (resolve, reject) => {
-            // await db.get().collection(collections.CART_COLLECTION).aggregate([
-            //     {
-            //         $match: ObjectId.createFromHexString(userId)
-            //     },
-            //     {
-            //         $lookup: {
-            //             from: collections.PRODUCTS_COLLECTION,
-            //         }
-            //     }
-            // ])
+            try {
+                const cartList = await db.get().collection(collections.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId.createFromHexString(userId) }
+                    },
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            let: { userCartProducts: '$products' },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $in: ['$_id', '$$userCartProducts']
+                                        }
+                                    }
+                                }
+                            ],
+                            as: 'cartProducts'
+                        }
+                    }
+                ]).toArray()
+
+                resolve(cartList[0].cartProducts)
+            }
+            catch (err) {
+                reject(err)
+            }
         })
     }
 }

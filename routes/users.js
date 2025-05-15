@@ -81,7 +81,8 @@ router.get('/add-to-cart/:id', verifyLogin, async (req, res) => {
     const res = await userHelpers.addToCart(req.params.id, req.session.user._id)
     const cartList = await userHelpers.getCartItems(req.session.user._id)
 
-    res.redirect('/cart', { cartList })
+    console.log('HERE IS THE AGGREGATED CARTLIST :', cartList)
+    // res.redirect('/cart', { cartList })
   }
   catch (err) {
     console.log('Error adding product to the cart :', err)
