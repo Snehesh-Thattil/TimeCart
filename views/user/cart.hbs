@@ -23,14 +23,15 @@
         <div class="cards">
             <h3 id="section-title">Items</h3>
 
+            {{#each cartList}}
             <div class="card">
-                <img src="/images/products/Rolex_classic_premium-1746771399_1795.jpeg" alt="rolex-image">
+                <img src="/images/products/{{this.coverImg}}" alt="rolex-image">
                 <div class="details">
-                    <h2>Name</h2>
-                    <h4>Brand</h4>
-                    <p>Description</p>
-                    <h1> <span class="currency">₹</span> 239999
-                        <strike> <span class="currency">₹</span>290000</strike>
+                    <h2>{{this.product_name}}</h2>
+                    <h4>{{this.brand_name}}</h4>
+                    <p>{{this.description}}</p>
+                    <h1> <span class="currency">₹</span> {{this.selling_price}}
+                        <strike> <span class="currency">₹</span>{{this.original_price}}</strike>
                     </h1>
                     <div class="qnty">
                         <button>-</button>
@@ -39,6 +40,7 @@
                     </div>
                 </div>
             </div>
+            {{/each}}
 
         </div>
     </div>

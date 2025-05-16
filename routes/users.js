@@ -82,7 +82,7 @@ router.get('/add-to-cart/:id', verifyLogin, async (req, res) => {
     const cartList = await userHelpers.getCartItems(req.session.user._id)
 
     console.log('HERE IS THE AGGREGATED CARTLIST :', cartList)
-    // res.redirect('/cart', { cartList })
+    res.redirect('/cart', { cartList })
   }
   catch (err) {
     console.log('Error adding product to the cart :', err)
@@ -91,7 +91,14 @@ router.get('/add-to-cart/:id', verifyLogin, async (req, res) => {
 })
 
 router.get('/cart', verifyLogin, (req, res) => {
-  res.render('user/cart')
+  userHelpers.getCartItems(req.session.user._id)
+    .then((cartList) => {
+      res.render('user/cart', { cartList })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/')
+    })
 })
 
 router.get('/wishlist', verifyLogin, (req, res) => {

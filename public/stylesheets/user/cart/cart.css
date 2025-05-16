@@ -45,13 +45,17 @@
 .cart_component .left-section .address form button:hover {
   background-color: #CBA74E;
 }
+.cart_component .left-section .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 .cart_component .left-section .cards .card {
   display: flex;
   outline: 1px solid peru;
-  height: 11rem;
+  height: 12rem;
 }
 .cart_component .left-section .cards .card img {
-  height: 100%;
   width: 12.5rem;
   -o-object-fit: cover;
      object-fit: cover;
@@ -60,12 +64,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 .cart_component .left-section .cards .card .details h1 strike {
   color: rgba(189, 166, 144, 0.75);
   -webkit-text-decoration: line-through 3px rgb(61, 56, 56);
           text-decoration: line-through 3px rgb(61, 56, 56);
+}
+.cart_component .left-section .cards .card .details p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-align: justify;
 }
 .cart_component .left-section .cards .card .details .qnty {
   display: flex;
@@ -147,7 +160,7 @@
     width: 100%;
   }
   .cart_component .left-section .cards .card {
-    height: 10rem;
+    height: 9rem;
   }
   .cart_component .left-section .cards .card img {
     width: 7.5rem;
@@ -155,8 +168,17 @@
   .cart_component .left-section .cards .card .details {
     padding: 0.5rem 0.75rem;
   }
+  .cart_component .left-section .cards .card .details h2 {
+    font-size: 16px;
+  }
+  .cart_component .left-section .cards .card .details h4 {
+    font-size: 12.5px;
+  }
+  .cart_component .left-section .cards .card .details p {
+    font-size: 12px;
+  }
   .cart_component .left-section .cards .card .details h1 {
-    font-size: 18px;
+    font-size: 17px;
   }
   .cart_component .left-section .cards .card .details .qnty {
     gap: 0.5rem;
