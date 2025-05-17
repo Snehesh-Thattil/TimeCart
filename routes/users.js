@@ -12,15 +12,22 @@ const verifyLogin = (req, res, next) => {
 }
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
   const user = req.session.user
-  productHelpers.getProducts()
-    .then((products) => {
-      res.render('user/view-products', { products, user, admin: false })
-    })
-    .catch((err) => {
-      console.log('Error getting products :', err)
-    })
+  let cartCount = null
+
+  try {
+    const products = await productHelpers.getProducts()
+
+    if (user) {
+      cartCount = await userHelpers.getCartCount(user._id)
+    }
+
+    res.render('user/view-products', { products, cartCount, user, admin: false })
+  }
+  catch (err) {
+    console.log('Error getting products :', err)
+  }
 })
 
 router.get('/signup', (req, res) => {
@@ -76,24 +83,10 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/add-to-cart/:id', verifyLogin, async (req, res) => {
-  try {
-    const res = await userHelpers.addToCart(req.params.id, req.session.user._id)
-    const cartList = await userHelpers.getCartItems(req.session.user._id)
-
-    console.log('HERE IS THE AGGREGATED CARTLIST :', cartList)
-    res.redirect('/cart', { cartList })
-  }
-  catch (err) {
-    console.log('Error adding product to the cart :', err)
-    res.redirect('/')
-  }
-})
-
 router.get('/cart', verifyLogin, (req, res) => {
   userHelpers.getCartItems(req.session.user._id)
     .then((cartList) => {
-      res.render('user/cart', { cartList })
+      res.render('user/cart', { user: req.session.user, cartList })
     })
     .catch((err) => {
       console.log(err)
@@ -101,12 +94,29 @@ router.get('/cart', verifyLogin, (req, res) => {
     })
 })
 
+router.get('/add-to-cart/:id', async (req, res) => {
+  // verifyLogin // is temporarily disabled
+
+  try {
+    await userHelpers.addToCart(req.params.id, req.session.user._id)
+    const cartList = await userHelpers.getCartItems(req.session.user._id)
+    const cartCount = await userHelpers.getCartCount(req.session.user._id)
+
+    // res.render('user/cart', { user: req.session.user, cartList, cartCount })
+    res.json({ status: true })
+  }
+  catch (err) {
+    console.log('Error adding product to the cart :', err)
+    res.redirect('/')
+  }
+})
+
 router.get('/wishlist', verifyLogin, (req, res) => {
-  res.render('user/wishlist')
+  res.render('user/wishlist', { user: req.session.user })
 })
 
 router.get('/orders', verifyLogin, (req, res) => {
-  res.render('user/orders')
+  res.render('user/orders', { user: req.session.user })
 })
 
 module.exports = router;

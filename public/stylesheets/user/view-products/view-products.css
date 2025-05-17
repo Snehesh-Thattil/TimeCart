@@ -73,11 +73,13 @@
   justify-content: center;
 }
 .view-products .cards .card .buttons a {
-  cursor: pointer;
-  text-decoration: none;
-  width: 75%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.view-products .cards .card .buttons a button {
+.view-products .cards .card .buttons button {
+  width: 75%;
   padding: 0.6rem;
   border-radius: 5px;
   font-weight: bold;
@@ -88,7 +90,7 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.view-products .cards .card .buttons a button:hover {
+.view-products .cards .card .buttons button:hover {
   background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
   color: white;
 }
@@ -129,10 +131,8 @@
   .view-products .cards .card .details .infos h3 strike {
     margin: 5px 2.5px;
   }
-  .view-products .cards .card .buttons a {
+  .view-products .cards .card .buttons button {
     width: 100%;
-  }
-  .view-products .cards .card .buttons a button {
     padding: 0.4rem;
     font-size: 10px;
     text-align: center;

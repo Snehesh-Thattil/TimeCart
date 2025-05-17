@@ -74,6 +74,11 @@ module.exports = {
     getCartItems: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
+                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+                if (!cartExist) {
+                    return resolve([])
+                }
+
                 const cartList = await db.get().collection(collections.CART_COLLECTION).aggregate([
                     {
                         $match: { user: ObjectId.createFromHexString(userId) }
@@ -97,6 +102,22 @@ module.exports = {
                 ]).toArray()
 
                 resolve(cartList[0].cartProducts)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    getCartCount: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const cartItems = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+                if (cartItems) {
+                    resolve(cartItems.products.length)
+                }
+                else {
+                    resolve(0)
+                }
             }
             catch (err) {
                 reject(err)

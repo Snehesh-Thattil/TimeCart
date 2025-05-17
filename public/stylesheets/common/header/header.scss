@@ -38,6 +38,7 @@
 
         li {
             list-style: none;
+            position: relative;
 
             &.mobile-only {
                 display: none;
@@ -55,6 +56,24 @@
                 i {
                     margin-right: .5rem;
                 }
+            }
+
+            .cart-count {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background-color: peru;
+                color: white;
+                font-weight: bold;
+                font-size: small;
+                padding: 5px;
+                border-radius: 5px;
+                min-width: 1rem;
+                height: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2.5px 25px rgba(0, 128, 0, 0.75);
             }
         }
     }
@@ -125,6 +144,10 @@
         grid-template-rows: 1fr 1fr;
         gap: .5rem;
         height: 8rem;
+
+        &.admin-header {
+            height: 4rem;
+        }
 
         .icons {
             display: flex;
@@ -221,6 +244,11 @@
         gap: .5rem;
         height: 8rem;
         padding: 1rem 2.5rem;
+
+
+        &.admin-header {
+            height: 4rem;
+        }
 
         .nav-items {
             li {

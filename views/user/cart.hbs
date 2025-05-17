@@ -3,6 +3,7 @@
 
 {{!-- HBS --}}
 <section class="cart_component">
+    {{#if cartList}}
     <div class="left-section">
         <div class="address">
             <h3 id="section-title">Address</h3>
@@ -75,4 +76,10 @@
             </div>
         </div>
     </div>
+    {{else}}
+    <div class="empty-cart">
+        <h1>Your cart is empty</h1>
+        <button>Add Items</button>
+    </div>
+    {{/if}}
 </section>

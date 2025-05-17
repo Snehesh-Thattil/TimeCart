@@ -3,9 +3,12 @@
 
 {{!-- HBS --}}
 <header class="admin-header header_component">
-    <a class="navbar-brand" href="/">
-        <img src="/images/resources/TimeCart Logo.jpeg" class="logo" alt="timeCart logo">
-    </a>
+    <div class="icons">
+        <i class="fa-solid fa-bars" onclick="toggle()"></i>
+        <a class="navbar-brand" href="/admin">
+            <img src="/images/resources/TimeCart Logo.jpeg" class="logo" alt="timeCart logo">
+        </a>
+    </div>
 
     <div class="nav-items">
         <li class="nav-item">
@@ -26,3 +29,6 @@
         <a href="/profile" class="nav-link">{{user.name}}<i class="fa-regular fa-circle-user"></i> </a>
     </div>
 </header>
+
+{{!-- JS --}}
+<script src="/javascripts/common/header.js"></script>

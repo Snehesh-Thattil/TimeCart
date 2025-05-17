@@ -19,10 +19,13 @@
                 </div>
             </div>
             <div class="buttons">
-                <a href="/add-to-cart/{{this._id}}"><button class="buttons">Add to Cart</button></a>
+                <button class="buttons" onclick="addToCart('{{this._id}}')">Add to Cart</button>
                 <a href="/buy-now/{{this._id}}"><button class="buttons">Buy Now</button></a>
             </div>
         </div>
         {{/each}}
     </div>
 </section>
+
+{{!-- JS --}}
+<script src="/javascripts/user/view-products.js"></script>

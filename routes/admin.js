@@ -110,4 +110,20 @@ router.get('/delete-product', (req, res) => {
     })
 })
 
+router.get('/orders', (req, res) => {
+  res.render('admin/orders', { admin: true })
+})
+
+router.get('/products', (req, res) => {
+  res.render('admin/products', { admin: true })
+})
+
+router.get('/stats', (req, res) => {
+  res.render('admin/stats', { admin: true })
+})
+
+router.get('/users', (req, res) => {
+  res.render('admin/users', { admin: true })
+})
+
 module.exports = router;

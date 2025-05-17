@@ -79,27 +79,30 @@
                 justify-content: center;
 
                 a {
-                    cursor: pointer;
-                    text-decoration: none;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                button {
                     width: 75%;
+                    padding: .6rem;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    background: radial-gradient(circle at center, #2B2B2B, #1A1A1A, #0A0A0A);
+                    color: #E5C76A;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    transition: all .3s ease-in-out;
 
-                    button {
-                        padding: .6rem;
-                        border-radius: 5px;
-                        font-weight: bold;
-                        background: radial-gradient(circle at center, #2B2B2B, #1A1A1A, #0A0A0A);
-                        color: #E5C76A;
-                        border: none;
-                        outline: none;
-                        cursor: pointer;
-                        transition: all .3s ease-in-out;
-
-                        &:hover {
-                            background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
-                            color: white;
-                        }
+                    &:hover {
+                        background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
+                        color: white;
                     }
                 }
+
             }
         }
     }
@@ -151,16 +154,12 @@
                 }
 
                 .buttons {
-                    a {
+                    button {
                         width: 100%;
-
-
-                        button {
-                            padding: .4rem;
-                            font-size: 10px;
-                            text-align: center;
-                            align-content: center;
-                        }
+                        padding: .4rem;
+                        font-size: 10px;
+                        text-align: center;
+                        align-content: center;
                     }
                 }
             }
