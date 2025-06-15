@@ -94,8 +94,19 @@ router.get('/cart', verifyLogin, (req, res) => {
     })
 })
 
+router.get('/view-item/:id', async (req, res) => {
+  productHelpers.getProductDetails(req.params.id)
+    .then((data) => {
+      res.render('user/view-item', { product: data })
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res.redirect('/')
+    })
+})
+
 router.get('/add-to-cart/:id', async (req, res) => {
-  // verifyLogin // is temporarily disabled
+  // verifyLogin temporarily disabled
 
   try {
     await userHelpers.addToCart(req.params.id, req.session.user._id)

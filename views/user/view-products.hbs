@@ -5,7 +5,7 @@
 <section class="view-products">
     <div class="cards">
         {{#each products}}
-        <div class="card">
+        <a href="/view-item/{{this._id}}" class="card">
             <div class="details">
                 <img src="/images/products/{{this.coverImg}}" alt="product-photo">
                 <div class="infos">
@@ -18,11 +18,11 @@
                     </h3>
                 </div>
             </div>
-            <div class="buttons">
+            {{!-- <div class="buttons">
                 <button class="buttons" onclick="addToCart('{{this._id}}')">Add to Cart</button>
                 <a href="/buy-now/{{this._id}}"><button class="buttons">Buy Now</button></a>
-            </div>
-        </div>
+            </div> --}}
+        </a>
         {{/each}}
     </div>
 </section>
