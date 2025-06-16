@@ -45,22 +45,45 @@ module.exports = {
         })
     },
     addToCart: (productId, userId) => {
+        const productObj = {
+            item: ObjectId.createFromHexString(productId),
+            quantity: 1
+        }
+
         return new Promise(async (resolve, reject) => {
             try {
                 const userCart = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
 
                 if (userCart) {
-                    await db.get().collection(collections.CART_COLLECTION).updateOne({ user: ObjectId.createFromHexString(userId) },
-                        {
-                            $push: { products: ObjectId.createFromHexString(productId) }
-                        }
-                    )
-                    resolve(true)
+                    const productExists = userCart.products.findIndex((cartProduct) => cartProduct.item.equals(ObjectId.createFromHexString(productId)))
+
+                    if (productExists !== -1) {
+                        await db.get().collection(collections.CART_COLLECTION).updateOne(
+                            {
+                                user: ObjectId.createFromHexString(userId),
+                                'products.item': ObjectId.createFromHexString(productId)
+                            },
+                            {
+                                $inc: { 'products.$.quantity': 1 }
+                            }
+                        )
+                        resolve(true)
+                    } else {
+                        await db.get().collection(collections.CART_COLLECTION).updateOne(
+                            {
+                                user: ObjectId.createFromHexString(userId)
+                            },
+                            {
+                                $push: { products: productObj }
+                            }
+                        )
+                        resolve(true)
+                    }
                 }
                 else {
-                    let userCartObj = {
+                    const userCartObj = {
                         user: ObjectId.createFromHexString(userId),
-                        products: [ObjectId.createFromHexString(productId)]
+                        products: [productObj]
                     }
                     await db.get().collection(collections.CART_COLLECTION).insertOne(userCartObj)
                     resolve(true)
