@@ -61,16 +61,16 @@
   padding: 0.6rem;
   border-radius: 5px;
   font-weight: bold;
-  background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
-  color: #E5C76A;
-  border: none;
+  background-color: peachpuff;
+  border-color: peru;
+  color: #1f1f1f;
   outline: none;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .view-item .photos-and-actions .actions button:hover {
-  color: white;
-  background: radial-gradient(circle at center, #2B2B2B, #1A1A1A, #0A0A0A);
+  color: black;
+  background-color: #CBA74E;
 }
 .view-item .details {
   width: 50%;
@@ -79,6 +79,9 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.view-item .details .overview .name p {
+  color: #ad9a5e;
 }
 .view-item .details .overview .name h3 {
   color: rgba(173, 154, 94, 0.768627451);
@@ -95,6 +98,11 @@
 .view-item .details .overview .offers h4,
 .view-item .details .overview .reviews h4 {
   color: #795d0b;
+}
+.view-item .details .overview .price span,
+.view-item .details .overview .offers span,
+.view-item .details .overview .reviews span {
+  font-weight: bold;
 }
 .view-item .details .overview .price h3 {
   text-align: left;

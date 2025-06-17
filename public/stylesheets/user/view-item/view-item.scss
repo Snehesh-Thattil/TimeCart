@@ -68,16 +68,16 @@
                 padding: .6rem;
                 border-radius: 5px;
                 font-weight: bold;
-                background: radial-gradient(circle at center, #0A0A0A, #2B2B2B, #1A1A1A);
-                color: #E5C76A;
-                border: none;
+                background-color: peachpuff;
+                border-color: peru;
+                color: #1f1f1f;
                 outline: none;
                 cursor: pointer;
-                transition: all .3s ease-in-out;
+                transition: all .2s ease-in-out;
 
                 &:hover {
-                    color: white;
-                    background: radial-gradient(circle at center, #2B2B2B, #1A1A1A, #0A0A0A);
+                    color: black;
+                    background-color: #CBA74E;
                 }
             }
         }
@@ -92,6 +92,10 @@
             gap: 1rem;
 
             .name {
+                p {
+                    color: #ad9a5e;
+                }
+
                 h3 {
                     color: #ad9a5ec4;
                 }
@@ -108,6 +112,10 @@
 
                 h4 {
                     color: #795d0b;
+                }
+
+                span {
+                    font-weight: bold;
                 }
             }
 

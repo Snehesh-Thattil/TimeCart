@@ -107,24 +107,24 @@ module.exports = {
                         $match: { user: ObjectId.createFromHexString(userId) }
                     },
                     {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
                         $lookup: {
                             from: collections.PRODUCTS_COLLECTION,
-                            let: { userCartProducts: '$products' },
-                            pipeline: [
-                                {
-                                    $match: {
-                                        $expr: {
-                                            $in: ['$_id', '$$userCartProducts']
-                                        }
-                                    }
-                                }
-                            ],
-                            as: 'cartProducts'
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
                         }
                     }
                 ]).toArray()
-
-                resolve(cartList[0].cartProducts)
+                resolve(cartList)
             }
             catch (err) {
                 reject(err)
