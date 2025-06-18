@@ -122,8 +122,16 @@ module.exports = {
                             foreignField: '_id',
                             as: 'product'
                         }
+                    },
+                    {
+                        $project: {
+                            item: 1,
+                            quantity: 1,
+                            product: { $arrayElemAt: ['$product', 0] }
+                        }
                     }
                 ]).toArray()
+                console.log(cartList)
                 resolve(cartList)
             }
             catch (err) {
@@ -141,6 +149,26 @@ module.exports = {
                 else {
                     resolve(0)
                 }
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    changeProductQnty: ({ cartId, productId, count }) => {
+        return new Promise(async (resolve, reject) => {
+            const countChange = parseInt(count)
+            try {
+                await db.get().collection(collections.CART_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(cartId),
+                        'products.item': ObjectId.createFromHexString(productId)
+                    },
+                    {
+                        $inc: { 'products.$.quantity': countChange }
+                    })
+
+                resolve(true)
             }
             catch (err) {
                 reject(err)

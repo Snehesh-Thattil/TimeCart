@@ -94,6 +94,16 @@ router.get('/cart', verifyLogin, (req, res) => {
     })
 })
 
+router.post('/change-product-qnty', (req, res) => {
+  userHelpers.changeProductQnty(req.body)
+    .then(() => {
+      res.json({ status: true })
+    })
+    .catch((err) => {
+      console.log('Error Changing Product Quantity')
+    })
+})
+
 router.get('/view-item/:id', async (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((data) => {
