@@ -1,16 +1,25 @@
 
-function changeQnty(cartId, productId, count) {
-    console.log('AJAX is calling here')
+function changeQnty(cartId, productId, change) {
+    let quantity = parseInt(document.getElementById(productId).innerHTML)
+    change = parseInt(change)
+
     $.ajax({
         url: '/change-product-qnty',
         method: 'post',
         data: {
             cartId,
             productId,
-            count
+            change,
+            quantity
         },
         success: (response) => {
-            alert(response)
+            if (response.removed) {
+                alert('Products removed from cart!')
+                location.reload()
+            }
+            else {
+                document.getElementById(productId).innerHTML = quantity + change
+            }
         }
     })
 }

@@ -77,7 +77,7 @@ module.exports = {
                                 $push: { products: productObj }
                             }
                         )
-                        resolve(true)
+                        resolve({ newProductAdded: true })
                     }
                 }
                 else {
@@ -131,7 +131,6 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-                console.log(cartList)
                 resolve(cartList)
             }
             catch (err) {
@@ -155,20 +154,35 @@ module.exports = {
             }
         })
     },
-    changeProductQnty: ({ cartId, productId, count }) => {
+    changeProductQnty: ({ cartId, productId, change, quantity }) => {
         return new Promise(async (resolve, reject) => {
-            const countChange = parseInt(count)
-            try {
-                await db.get().collection(collections.CART_COLLECTION).updateOne(
-                    {
-                        _id: ObjectId.createFromHexString(cartId),
-                        'products.item': ObjectId.createFromHexString(productId)
-                    },
-                    {
-                        $inc: { 'products.$.quantity': countChange }
-                    })
 
-                resolve(true)
+            change = parseInt(change)
+            quantity = parseInt(quantity)
+
+            try {
+                if (change === -1 && quantity === 1) {
+                    await db.get().collection(collections.CART_COLLECTION).updateOne(
+                        {
+                            _id: ObjectId.createFromHexString(cartId)
+                        },
+                        {
+                            $pull: { products: { item: ObjectId.createFromHexString(productId) } }
+                        }
+                    )
+                    resolve({ removed: true })
+                }
+                else {
+                    await db.get().collection(collections.CART_COLLECTION).updateOne(
+                        {
+                            _id: ObjectId.createFromHexString(cartId),
+                            'products.item': ObjectId.createFromHexString(productId)
+                        },
+                        {
+                            $inc: { 'products.$.quantity': change }
+                        })
+                    resolve(true)
+                }
             }
             catch (err) {
                 reject(err)

@@ -36,9 +36,9 @@
                         <strike> <span class="currency">₹</span>{{this.product.original_price}}</strike>
                     </h1>
                     <div class="qnty">
-                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}', -1 )">-</button>
-                        <p>{{this.quantity}}</p>
-                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}', 1 )">+</button>
+                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                        <p id="{{this.product._id}}">{{this.quantity}}</p>
+                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',1)">+</button>
                     </div>
                 </div>
 

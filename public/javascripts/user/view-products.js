@@ -4,7 +4,7 @@ function addToCart(productId) {
         url: '/add-to-cart/' + productId,
         method: 'get',
         success: (response) => {
-            if (response.status) {
+            if (response.newProductAdded) {
                 let count = $('#cart-count').html()
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)

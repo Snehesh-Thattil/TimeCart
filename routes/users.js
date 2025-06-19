@@ -83,6 +83,19 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/add-to-cart/:id', async (req, res) => {
+  // verifyLogin temporarily disabled
+
+  userHelpers.addToCart(req.params.id, req.session.user._id)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      console.log('Error adding product to the cart :', err)
+      res.redirect('/')
+    })
+})
+
 router.get('/cart', verifyLogin, (req, res) => {
   userHelpers.getCartItems(req.session.user._id)
     .then((cartList) => {
@@ -96,11 +109,11 @@ router.get('/cart', verifyLogin, (req, res) => {
 
 router.post('/change-product-qnty', (req, res) => {
   userHelpers.changeProductQnty(req.body)
-    .then(() => {
-      res.json({ status: true })
+    .then((response) => {
+      res.json(response)
     })
     .catch((err) => {
-      console.log('Error Changing Product Quantity')
+      console.log('Error Changing Product Quantity :', err.message)
     })
 })
 
@@ -113,23 +126,6 @@ router.get('/view-item/:id', async (req, res) => {
       console.log(err.message)
       res.redirect('/')
     })
-})
-
-router.get('/add-to-cart/:id', async (req, res) => {
-  // verifyLogin temporarily disabled
-
-  try {
-    await userHelpers.addToCart(req.params.id, req.session.user._id)
-    const cartList = await userHelpers.getCartItems(req.session.user._id)
-    const cartCount = await userHelpers.getCartCount(req.session.user._id)
-
-    // res.render('user/cart', { user: req.session.user, cartList, cartCount })
-    res.json({ status: true })
-  }
-  catch (err) {
-    console.log('Error adding product to the cart :', err)
-    res.redirect('/')
-  }
 })
 
 router.get('/wishlist', verifyLogin, (req, res) => {
