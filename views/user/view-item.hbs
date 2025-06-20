@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="actions">
-            <button class="buttons" onclick="addToCart('{{this._id}}')">Add to Cart</button>
-            <a href="/buy-now/{{this._id}}"><button class="buttons">Buy Now</button></a>
+            <button class="buttons" onclick="addToCart('{{product._id}}')">Add to Cart</button>
+            <a href="/buy-now/{{product._id}}"><button class="buttons">Buy Now</button></a>
         </div>
     </div>
 
@@ -70,3 +70,6 @@
 
     </div>
 </div>
+
+{{!-- JS --}}
+<script src="/javascripts/user/view-item.js"></script>

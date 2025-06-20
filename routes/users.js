@@ -99,6 +99,7 @@ router.get('/add-to-cart/:id', async (req, res) => {
 router.get('/cart', verifyLogin, (req, res) => {
   userHelpers.getCartItems(req.session.user._id)
     .then((cartList) => {
+      console.log(cartList)
       res.render('user/cart', { user: req.session.user, cartList })
     })
     .catch((err) => {
@@ -117,7 +118,18 @@ router.post('/change-product-qnty', (req, res) => {
     })
 })
 
-router.get('/view-item/:id', async (req, res) => {
+router.post('/remove-from-cart', (req, res) => {
+  userHelpers.removeFromCart(req.body)
+    .then(() => {
+      res.json({ status: true })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/')
+    })
+})
+
+router.get('/view-item/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((data) => {
       res.render('user/view-item', { product: data })

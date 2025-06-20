@@ -80,7 +80,11 @@
   -webkit-box-orient: vertical;
   text-align: justify;
 }
-.cart_component .left-section .cards .card .details .qnty {
+.cart_component .left-section .cards .card .details .actions {
+  display: flex;
+  gap: 1rem;
+}
+.cart_component .left-section .cards .card .details .actions .qnty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,12 +94,12 @@
   width: max-content;
   padding: 4px;
 }
-.cart_component .left-section .cards .card .details .qnty p {
+.cart_component .left-section .cards .card .details .actions .qnty p {
   width: 1rem;
   align-content: center;
   text-align: center;
 }
-.cart_component .left-section .cards .card .details .qnty button {
+.cart_component .left-section .cards .card .details .actions .qnty button {
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -106,8 +110,21 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-.cart_component .left-section .cards .card .details .qnty button:hover {
+.cart_component .left-section .cards .card .details .actions .qnty button:hover {
   background-color: #CBA74E;
+}
+.cart_component .left-section .cards .card .details .actions .remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(205, 134, 63, 0.25);
+  padding: 4px 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+.cart_component .left-section .cards .card .details .actions .remove:hover {
+  border: 2px solid rgba(205, 134, 63, 0.5);
+  background-color: black;
 }
 .cart_component .right-section {
   width: 30%;
@@ -129,18 +146,23 @@
 .cart_component .right-section .total-summary .price-and-btn h3 {
   margin: 1rem 0;
 }
-.cart_component .right-section .total-summary .price-and-btn button {
-  padding: 0.5rem;
+.cart_component .right-section .total-summary .price-and-btn .checkout {
+  display: block;
+  text-align: center;
   width: 100%;
+  padding: 0.5rem;
   border-radius: 5px;
   outline: none;
-  border-color: peru;
+  border: 2px solid peru;
   background-color: peachpuff;
   font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
   transition: background-color 0.2s ease-in-out;
 }
-.cart_component .right-section .total-summary .price-and-btn button:hover {
+.cart_component .right-section .total-summary .price-and-btn .checkout:hover {
   background-color: #CBA74E;
 }
 .cart_component .empty-cart {
@@ -192,24 +214,25 @@
     padding: 0.5rem 0.75rem;
   }
   .cart_component .left-section .cards .card .details h2 {
-    font-size: 16px;
+    font-size: 15px;
   }
   .cart_component .left-section .cards .card .details h4 {
     font-size: 12.5px;
   }
   .cart_component .left-section .cards .card .details p {
-    font-size: 12px;
+    font-size: 11px;
   }
   .cart_component .left-section .cards .card .details h1 {
-    font-size: 17px;
+    font-size: 16px;
   }
-  .cart_component .left-section .cards .card .details .qnty {
+  .cart_component .left-section .cards .card .details .actions .qnty {
     gap: 0.5rem;
   }
-  .cart_component .left-section .cards .card .details .qnty p {
+  .cart_component .left-section .cards .card .details .actions .qnty p {
     width: 0.5rem;
+    font-size: 15px;
   }
-  .cart_component .left-section .cards .card .details .qnty button {
+  .cart_component .left-section .cards .card .details .actions .qnty button {
     width: 1rem;
     height: 1rem;
   }
@@ -234,6 +257,14 @@
   }
   .cart_component .left-section .cards .card img {
     width: 8rem;
+  }
+  .cart_component .left-section .cards .card .details .actions .qnty p {
+    width: 0.75rem;
+    font-size: 17.5px;
+  }
+  .cart_component .left-section .cards .card .details .actions .qnty button {
+    width: 1.75rem;
+    height: 1.5rem;
   }
   .cart_component .right-section {
     width: 40%;

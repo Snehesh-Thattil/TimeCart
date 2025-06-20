@@ -35,13 +35,15 @@
                     <h1> <span class="currency">₹</span> {{this.product.selling_price}}
                         <strike> <span class="currency">₹</span>{{this.product.original_price}}</strike>
                     </h1>
-                    <div class="qnty">
-                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',-1)">-</button>
-                        <p id="{{this.product._id}}">{{this.quantity}}</p>
-                        <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',1)">+</button>
+                    <div class="actions">
+                        <div class="qnty">
+                            <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                            <p id="{{this.product._id}}">{{this.quantity}}</p>
+                            <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',1)">+</button>
+                        </div>
+                        <p class="remove" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">Remove</p>
                     </div>
                 </div>
-
             </div>
             {{/each}}
 
@@ -74,7 +76,7 @@
             </table>
             <div class="price-and-btn">
                 <h3><span class="currency">₹</span>12999</h3>
-                <button>Checkout</button>
+                <a href="/place-order" class="checkout">Checkout</a>
             </div>
         </div>
     </div>

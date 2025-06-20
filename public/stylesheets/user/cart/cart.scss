@@ -92,34 +92,54 @@
                         text-align: justify;
                     }
 
-                    .qnty {
+                    .actions {
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        outline: 1px solid rgba(205, 134, 63, 0.25);
-                        gap: .75rem;
-                        width: max-content;
-                        padding: 4px;
+                        gap: 1rem;
 
-                        p {
-                            width: 1rem;
-                            align-content: center;
-                            text-align: center;
-                        }
-
-                        button {
-                            width: 2rem;
-                            height: 2rem;
+                        .qnty {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            font-size: large;
-                            font-weight: bolder;
+                            outline: 1px solid rgba(205, 134, 63, 0.25);
+                            gap: .75rem;
+                            width: max-content;
+                            padding: 4px;
+
+                            p {
+                                width: 1rem;
+                                align-content: center;
+                                text-align: center;
+                            }
+
+                            button {
+                                width: 2rem;
+                                height: 2rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: large;
+                                font-weight: bolder;
+                                cursor: pointer;
+                                transition: background-color .3s ease-in-out;
+
+                                &:hover {
+                                    background-color: #CBA74E;
+                                }
+                            }
+                        }
+
+                        .remove {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border: 2px solid rgba(205, 134, 63, 0.25);
+                            padding: 4px 1rem;
                             cursor: pointer;
-                            transition: background-color .3s ease-in-out;
+                            transition: all .25s ease-in-out;
 
                             &:hover {
-                                background-color: #CBA74E;
+                                border: 2px solid rgba(205, 134, 63, 0.5);
+                                background-color: black;
                             }
                         }
                     }
@@ -149,15 +169,20 @@
                     margin: 1rem 0;
                 }
 
-                button {
-                    padding: .5rem;
+                .checkout {
+                    display: block;
+                    text-align: center;
                     width: 100%;
+                    padding: .5rem;
                     border-radius: 5px;
                     outline: none;
-                    border-color: peru;
+                    border: 2px solid peru;
                     background-color: peachpuff;
                     font-weight: 700;
+                    font-size: 14px;
                     cursor: pointer;
+                    text-decoration: none;
+                    color: black;
                     transition: background-color .2s ease-in-out;
 
                     &:hover {
@@ -228,7 +253,7 @@
                         padding: .5rem .75rem;
 
                         h2 {
-                            font-size: 16px;
+                            font-size: 15px;
                         }
 
                         h4 {
@@ -236,23 +261,26 @@
                         }
 
                         p {
-                            font-size: 12px;
+                            font-size: 11px;
                         }
 
                         h1 {
-                            font-size: 17px;
+                            font-size: 16px;
                         }
 
-                        .qnty {
-                            gap: .5rem;
+                        .actions {
+                            .qnty {
+                                gap: .5rem;
 
-                            p {
-                                width: .5rem;
-                            }
+                                p {
+                                    width: .5rem;
+                                    font-size: 15px;
+                                }
 
-                            button {
-                                width: 1rem;
-                                height: 1rem;
+                                button {
+                                    width: 1rem;
+                                    height: 1rem;
+                                }
                             }
                         }
                     }
@@ -287,6 +315,22 @@
 
                     img {
                         width: 8rem;
+                    }
+
+                    .details {
+                        .actions {
+                            .qnty {
+                                p {
+                                    width: .75rem;
+                                    font-size: 17.5px;
+                                }
+
+                                button {
+                                    width: 1.75rem;
+                                    height: 1.5rem;
+                                }
+                            }
+                        }
                     }
                 }
             }

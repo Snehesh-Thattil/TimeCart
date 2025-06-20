@@ -23,3 +23,18 @@ function changeQnty(cartId, productId, change) {
         }
     })
 }
+
+function removeFromCart(cartId, productId) {
+    $.ajax({
+        url: '/remove-from-cart',
+        method: 'post',
+        data: {
+            cartId,
+            productId
+        },
+        success: (response) => {
+            alert('Item removed from cart')
+            location.reload()
+        }
+    })
+}

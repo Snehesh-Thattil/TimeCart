@@ -188,5 +188,23 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    removeFromCart: ({ cartId, productId }) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await db.get().collection(collections.CART_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(cartId)
+                    },
+                    {
+                        $pull: { products: { item: ObjectId.createFromHexString(productId) } }
+                    }
+                )
+                resolve(true)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }
