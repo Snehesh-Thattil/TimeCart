@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 module.exports = {
     addProduct: (product, imgNames) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).insertOne({ ...product, imgNames: imgNames, coverImg: imgNames[0] })
+            db.get().collection(collections.PRODUCTS_COLLECTION).insertOne({ ...product, selling_price: parseInt(product.selling_price), original_price: parseInt(product.original_price), imgNames: imgNames, coverImg: imgNames[0] })
                 .then((data) => {
                     console.log('data added to collection :-', data)
                     resolve(data.insertedId)

@@ -206,5 +206,56 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    getCartTotal: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+                if (!cartExist) {
+                    return resolve([])
+                }
+
+                const cartTotal = await db.get().collection(collections.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId.createFromHexString(userId) }
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1,
+                            quantity: 1,
+                            product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            discounted_total: { $sum: { $multiply: ['$product.selling_price', '$quantity'] } },
+                            original_total: { $sum: { $multiply: ['$product.original_price', '$quantity'] } }
+                        }
+                    }
+                ]).toArray()
+                resolve(cartTotal[0])
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }
