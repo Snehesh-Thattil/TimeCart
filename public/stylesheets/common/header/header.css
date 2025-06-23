@@ -171,6 +171,9 @@
   .header_component .nav-items li:hover {
     background-color: #0A0A0A;
   }
+  .header_component .nav-items li .cart-count {
+    display: none;
+  }
   .header_component .search-products {
     height: 2rem;
     grid-area: 2/1/3/3;

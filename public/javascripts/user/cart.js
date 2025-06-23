@@ -1,5 +1,5 @@
 
-function changeQnty(cartId, productId, change) {
+function changeQnty(cartId, productId, userId, change) {
     let quantity = parseInt(document.getElementById(productId).innerHTML)
     change = parseInt(change)
 
@@ -9,6 +9,7 @@ function changeQnty(cartId, productId, change) {
         data: {
             cartId,
             productId,
+            userId,
             change,
             quantity
         },
@@ -19,6 +20,13 @@ function changeQnty(cartId, productId, change) {
             }
             else {
                 document.getElementById(productId).innerHTML = quantity + change
+                
+                document.getElementById('original_price').innerHTML = response.cartTotal.original_total
+                document.getElementById('discounted_price').innerHTML = response.cartTotal.discounted_total
+
+                const couponValue = document.getElementById('coupon-value').innerHTML
+                let finalPrice = response.cartTotal.discounted_total - parseInt(couponValue)
+                document.getElementById('final_price').innerHTML = finalPrice
             }
         }
     })

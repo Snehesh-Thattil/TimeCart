@@ -1,8 +1,12 @@
 
-function addToCart(productId) {
+function addToCart(productId, userId) {
     $.ajax({
-        url: '/add-to-cart/' + productId,
+        url: '/add-to-cart',
         method: 'post',
+        data: {
+            productId,
+            userId
+        },
         success: (response) => {
             if (response.newProductAdded) {
                 let count = $('#cart-count').html()

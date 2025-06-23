@@ -23,7 +23,7 @@
             <tbody>
                 {{#each products}}
                 <tr>
-                    <td scope="row">{{@index}}</td>
+                    <td scope="row">{{addition @index 1}}</td>
                     <td>{{this.product_name}}</td>
                     <td>{{this.brand_name}}</td>
                     <td>{{this.type}}</td>

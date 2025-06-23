@@ -37,9 +37,13 @@
                     </h1>
                     <div class="actions">
                         <div class="qnty">
-                            <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                            <button
+                                onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+
                             <p id="{{this.product._id}}">{{this.quantity}}</p>
-                            <button onclick="changeQnty('{{this._id}}','{{this.product._id}}',1)">+</button>
+
+                            <button
+                                onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
                         </div>
                         <p class="remove" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">Remove</p>
                     </div>
@@ -58,11 +62,13 @@
                 <tbody>
                     <tr>
                         <td>Original price</td>
-                        <td> <span class="currency">₹</span> {{cartTotal.discounted_total}}</td>
+                        <td><span class="currency">₹</span> <span
+                                id="original_price">{{cartTotal.original_total}}</span></td>
                     </tr>
                     <tr>
                         <td>Discounted Price</td>
-                        <td> <span class="currency">₹</span> {{cartTotal.discounted_total}}</td>
+                        <td><span class="currency">₹</span> <span
+                                id="discounted_price">{{cartTotal.discounted_total}}</span></td>
                     </tr>
                     <tr>
                         <td>Coupon Code</td>
@@ -70,12 +76,14 @@
                     </tr>
                     <tr>
                         <td>Coupon Discount</td>
-                        <td> <span class="currency">₹</span> 95195</td>
+                        <td><span class="currency">₹</span> <span id="coupon-value">200</span></td>
                     </tr>
                 </tbody>
             </table>
             <div class="price-and-btn">
-                <h3><span class="currency">₹</span>12999</h3>
+                <h3><span class="currency">₹</span>
+                    <span id="final_price">{{subtract cartTotal.discounted_total 200}}</span>
+                </h3>
                 <a href="/place-order" class="checkout">Checkout</a>
             </div>
         </div>

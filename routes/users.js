@@ -83,10 +83,10 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.post('/add-to-cart/:id', async (req, res) => {
+router.post('/add-to-cart', async (req, res) => {
   // verifyLogin temporarily disabled
 
-  userHelpers.addToCart(req.params.id, req.session.user._id)
+  userHelpers.addToCart(req.body)
     .then((response) => {
       res.json(response)
     })
@@ -97,9 +97,13 @@ router.post('/add-to-cart/:id', async (req, res) => {
 })
 
 router.get('/cart', verifyLogin, async (req, res) => {
+  const data = {
+    userId: req.session.user._id
+  }
+
   try {
     const cartList = await userHelpers.getCartItems(req.session.user._id)
-    const cartTotal = await userHelpers.getCartTotal(req.session.user._id)
+    const cartTotal = await userHelpers.getCartTotal(data)
 
     res.render('user/cart', { user: req.session.user, cartList, cartTotal })
   }
@@ -109,14 +113,16 @@ router.get('/cart', verifyLogin, async (req, res) => {
   }
 })
 
-router.post('/change-product-qnty', (req, res) => {
-  userHelpers.changeProductQnty(req.body)
-    .then((response) => {
-      res.json(response)
-    })
-    .catch((err) => {
-      console.log('Error Changing Product Quantity :', err.message)
-    })
+router.post('/change-product-qnty', async (req, res) => {
+  try {
+    const response = await userHelpers.changeProductQnty(req.body)
+    response.cartTotal = await userHelpers.getCartTotal(req.body)
+    res.json(response)
+  }
+  catch (err) {
+    console.log(err.message)
+    res.redirect('/')
+  }
 })
 
 router.post('/remove-from-cart', (req, res) => {
@@ -133,7 +139,7 @@ router.post('/remove-from-cart', (req, res) => {
 router.get('/view-item/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((data) => {
-      res.render('user/view-item', { product: data })
+      res.render('user/view-item', { product: data, user: req.session.user })
     })
     .catch((err) => {
       console.log(err.message)

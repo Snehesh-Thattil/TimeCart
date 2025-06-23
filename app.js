@@ -16,15 +16,21 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 app.engine('hbs', engine({
   extname: 'hbs',
   defaultLayout: 'layout',
-  layoutsDir: __dirname + '/views/layout',
-  partialsDir: __dirname + '/views/partials/',
+  layoutsDir: path.join(__dirname, 'views/layout'),
+  partialsDir: path.join(__dirname, 'views/partials'),
+
   helpers: {
     eq: function (a, b) {
       return a === b;
-    }
+    },
+    subtract: (a, b) => Number(a) - Number(b),
+    addition: (a, b) => Number(a) + Number(b),
+    division: (a, b) => Number(a) / Number(b),
+    multiply: (a, b) => Number(a) * Number(b)
   }
 }))
 

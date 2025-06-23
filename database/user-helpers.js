@@ -44,7 +44,7 @@ module.exports = {
                 })
         })
     },
-    addToCart: (productId, userId) => {
+    addToCart: ({ productId, userId }) => {
         const productObj = {
             item: ObjectId.createFromHexString(productId),
             quantity: 1
@@ -181,7 +181,7 @@ module.exports = {
                         {
                             $inc: { 'products.$.quantity': change }
                         })
-                    resolve(true)
+                    resolve({ status: true })
                 }
             }
             catch (err) {
@@ -207,17 +207,17 @@ module.exports = {
             }
         })
     },
-    getCartTotal: (userId) => {
+    getCartTotal: (data) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(data.userId) })
                 if (!cartExist) {
                     return resolve([])
                 }
 
                 const cartTotal = await db.get().collection(collections.CART_COLLECTION).aggregate([
                     {
-                        $match: { user: ObjectId.createFromHexString(userId) }
+                        $match: { user: ObjectId.createFromHexString(data.userId) }
                     },
                     {
                         $unwind: '$products'
