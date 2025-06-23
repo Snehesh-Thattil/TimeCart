@@ -108,7 +108,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
     res.render('user/cart', { user: req.session.user, cartList, cartTotal })
   }
   catch (err) {
-    console.log(err)
+    console.log(err.message)
     res.redirect('/')
   }
 })
