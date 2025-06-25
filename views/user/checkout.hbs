@@ -1,0 +1,47 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/user/checkout/checkout.css">
+
+<div class="checkout_page">
+    <h1>Checkout</h1>
+
+    <!-- Address Overview -->
+    <div class="section">
+        <h2>Address</h2>
+        <form class="address-form">
+            <input type="text" placeholder="Address line 1" required />
+            <input type="text" placeholder="Address line 2" />
+            <input type="tel" placeholder="Mobile" required />
+            <input type="email" placeholder="Email address" required />
+            <div class="row">
+                <input type="text" placeholder="Pincode" required />
+                <input type="text" placeholder="District" required />
+            </div>
+            <button type="submit" class="button save-address">Save</button>
+        </form>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="section">
+        <h2>Payment Method</h2>
+        <form action="/place-order" method="POST" class="payment-form">
+            <label><input type="radio" name="payment" value="cod" checked /> Cash on Delivery</label>
+            <label><input type="radio" name="payment" value="online" /> Online Payment</label>
+            <label><input type="radio" name="payment" value="upi" /> UPI</label>
+        </form>
+    </div>
+
+    <!-- Summary -->
+    <div class="section summary-box">
+        <h2>Summary</h2>
+        <div class="summary">
+            <p>Original price: <span>₹{{cart.originalPrice}}</span></p>
+            <p>Discounted price: <span>₹{{cart.discountedPrice}}</span></p>
+            <p>Coupon Code: <span>{{cart.coupon.code}}</span></p>
+            <p>Coupon Discount: <span>₹{{cart.coupon.discount}}</span></p>
+        </div>
+        <div class="total">
+            <h3>Total: ₹{{cart.finalPrice}}</h3>
+            <a href="/checkout" class="button proceed-btn">Checkout</a>
+        </div>
+    </div>
+</div>

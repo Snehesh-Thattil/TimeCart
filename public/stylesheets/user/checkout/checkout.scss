@@ -1,0 +1,135 @@
+$bg-color: #0d0d0d;
+$card-bg: #1a1a1a;
+$gold: #e4b343;
+$text-color: #f5f5f5;
+$highlight: #ffcc99;
+
+.checkout_page {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: $bg-color;
+    color: $text-color;
+    font-family: 'Segoe UI', sans-serif;
+
+    h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: $gold;
+    }
+
+    .section {
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 1.2rem;
+            color: $gold;
+            border-bottom: 1px solid $gold;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .address-form,
+    .payment-form {
+        background: $card-bg;
+        padding: 1rem;
+        border: 1px solid $gold;
+        border-radius: 8px;
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.5rem 0;
+            background: transparent;
+            border: 1px solid $gold;
+            color: $text-color;
+            border-radius: 6px;
+
+            &::placeholder {
+                color: #ccc;
+            }
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+
+            input {
+                flex: 1;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+
+            input {
+                margin-right: 0.5rem;
+            }
+        }
+
+        .button {
+            background: $highlight;
+            color: $bg-color;
+            padding: 0.6rem 1rem;
+            border: none;
+            width: 100%;
+            margin-top: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+
+            &:hover {
+                background: lighten($highlight, 10%);
+            }
+        }
+    }
+
+    .summary-box {
+        background: $card-bg;
+        border: 1px solid $gold;
+        padding: 1rem;
+        border-radius: 8px;
+
+        .summary p {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.4rem 0;
+        }
+
+        .total {
+            border-top: 1px solid $gold;
+            margin-top: 1rem;
+            padding-top: 1rem;
+
+            h3 {
+                color: $gold;
+                margin-bottom: 1rem;
+            }
+
+            .proceed-btn {
+                display: block;
+                text-align: center;
+                width: 100%;
+                padding: .5rem;
+                border-radius: 5px;
+                outline: none;
+                border: 2px solid peru;
+                background-color: peachpuff;
+                font-weight: 700;
+                font-size: 14px;
+                cursor: pointer;
+                text-decoration: none;
+                color: black;
+                transition: background-color .2s ease-in-out;
+
+                &:hover {
+                    background-color: #CBA74E;
+                }
+            }
+        }
+    }
+}

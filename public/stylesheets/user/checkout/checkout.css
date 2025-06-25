@@ -1,0 +1,128 @@
+.checkout_page {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #0d0d0d;
+  color: #f5f5f5;
+  font-family: "Segoe UI", sans-serif;
+}
+.checkout_page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e4b343;
+}
+.checkout_page .section {
+  margin-bottom: 2rem;
+}
+.checkout_page .section h2 {
+  font-size: 1.2rem;
+  color: #e4b343;
+  border-bottom: 1px solid #e4b343;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+.checkout_page .address-form,
+.checkout_page .payment-form {
+  background: #1a1a1a;
+  padding: 1rem;
+  border: 1px solid #e4b343;
+  border-radius: 8px;
+}
+.checkout_page .address-form input[type=text],
+.checkout_page .address-form input[type=tel],
+.checkout_page .address-form input[type=email],
+.checkout_page .payment-form input[type=text],
+.checkout_page .payment-form input[type=tel],
+.checkout_page .payment-form input[type=email] {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  background: transparent;
+  border: 1px solid #e4b343;
+  color: #f5f5f5;
+  border-radius: 6px;
+}
+.checkout_page .address-form input[type=text]::-moz-placeholder, .checkout_page .address-form input[type=tel]::-moz-placeholder, .checkout_page .address-form input[type=email]::-moz-placeholder, .checkout_page .payment-form input[type=text]::-moz-placeholder, .checkout_page .payment-form input[type=tel]::-moz-placeholder, .checkout_page .payment-form input[type=email]::-moz-placeholder {
+  color: #ccc;
+}
+.checkout_page .address-form input[type=text]::placeholder,
+.checkout_page .address-form input[type=tel]::placeholder,
+.checkout_page .address-form input[type=email]::placeholder,
+.checkout_page .payment-form input[type=text]::placeholder,
+.checkout_page .payment-form input[type=tel]::placeholder,
+.checkout_page .payment-form input[type=email]::placeholder {
+  color: #ccc;
+}
+.checkout_page .address-form .row,
+.checkout_page .payment-form .row {
+  display: flex;
+  gap: 1rem;
+}
+.checkout_page .address-form .row input,
+.checkout_page .payment-form .row input {
+  flex: 1;
+}
+.checkout_page .address-form label,
+.checkout_page .payment-form label {
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.checkout_page .address-form label input,
+.checkout_page .payment-form label input {
+  margin-right: 0.5rem;
+}
+.checkout_page .address-form .button,
+.checkout_page .payment-form .button {
+  background: #ffcc99;
+  color: #0d0d0d;
+  padding: 0.6rem 1rem;
+  border: none;
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.checkout_page .address-form .button:hover,
+.checkout_page .payment-form .button:hover {
+  background: #ffe6cc;
+}
+.checkout_page .summary-box {
+  background: #1a1a1a;
+  border: 1px solid #e4b343;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.checkout_page .summary-box .summary p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0;
+}
+.checkout_page .summary-box .total {
+  border-top: 1px solid #e4b343;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.checkout_page .summary-box .total h3 {
+  color: #e4b343;
+  margin-bottom: 1rem;
+}
+.checkout_page .summary-box .total .proceed-btn {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid peru;
+  background-color: peachpuff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  transition: background-color 0.2s ease-in-out;
+}
+.checkout_page .summary-box .total .proceed-btn:hover {
+  background-color: #CBA74E;
+}/*# sourceMappingURL=checkout.css.map */

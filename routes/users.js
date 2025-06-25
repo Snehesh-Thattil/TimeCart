@@ -147,6 +147,10 @@ router.get('/view-item/:id', (req, res) => {
     })
 })
 
+router.get('/place-order', verifyLogin, (req, res) => {
+  res.render('user/checkout')
+})
+
 router.get('/wishlist', verifyLogin, (req, res) => {
   res.render('user/wishlist', { user: req.session.user })
 })
