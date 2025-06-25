@@ -20,7 +20,7 @@ function changeQnty(cartId, productId, userId, change) {
             }
             else {
                 document.getElementById(productId).innerHTML = quantity + change
-                
+
                 document.getElementById('original_price').innerHTML = response.cartTotal.original_total
                 document.getElementById('discounted_price').innerHTML = response.cartTotal.discounted_total
 
@@ -42,6 +42,22 @@ function removeFromCart(cartId, productId) {
         },
         success: (response) => {
             alert('Item removed from cart')
+            location.reload()
+        }
+    })
+}
+
+function moveToWishlist(cartId, productId, userId) {
+    $.ajax({
+        url: '/move-to-cart',
+        method: 'post',
+        data: {
+            cartId,
+            productId,
+            userId
+        },
+        success: (response) => {
+            alert('Item moved to Wishlist')
             location.reload()
         }
     })

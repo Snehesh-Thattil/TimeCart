@@ -6,147 +6,119 @@
     color: #CBA74E;
     background-color: rgb(14, 13, 13);
 
-    .left-section {
+    .cards {
         width: 70%;
         display: flex;
         flex-direction: column;
-        gap: 2.5rem;
 
-        .address {
-            form {
+        .card {
+            display: flex;
+            outline: 1px solid peru;
+            height: 12rem;
+            margin-bottom: 1rem;
+
+            img {
+                width: 12.5rem;
+                object-fit: cover;
+            }
+
+            .details {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
-                width: 70%;
+                justify-content: space-evenly;
+                padding: .5rem 1rem;
 
-                input {
-                    padding: .5rem;
+                .product-name {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    max-width: 80%;
+                    -webkit-line-clamp: 1;
+                    line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    text-align: justify;
                 }
 
-                .pin-distr {
-                    width: 100%;
+                .price {
+                    strike {
+                        color: rgba(189, 166, 144, 0.75);
+                        text-decoration: line-through 3px rgb(61, 56, 56);
+                    }
+                }
+
+                p {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    text-align: justify;
+                }
+
+                .actions {
                     display: flex;
-                    gap: 10px;
+                    gap: 1rem;
 
-                    .pin {
-                        width: 35%;
-                    }
-
-                    .distr {
-                        width: 65%;
-                    }
-                }
-
-                button {
-                    padding: .5rem;
-                    border-radius: 5px;
-                    outline: none;
-                    border-color: peru;
-                    background-color: peachpuff;
-                    font-weight: 700;
-                    cursor: pointer;
-                    transition: background-color .2s ease-in-out;
-
-                    &:hover {
-                        background-color: #CBA74E;
-                    }
-                }
-            }
-        }
-
-        .cards {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            .card {
-                display: flex;
-                outline: 1px solid peru;
-                height: 12rem;
-
-                img {
-                    width: 12.5rem;
-                    object-fit: cover;
-                }
-
-                .details {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-evenly;
-                    padding: .5rem 1rem;
-
-                    h1 {
-                        strike {
-                            color: rgba(189, 166, 144, 0.75);
-                            text-decoration: line-through 3px rgb(61, 56, 56);
-                        }
-                    }
-
-                    p {
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-line-clamp: 2;
-                        line-clamp: 2;
-                        -webkit-box-orient: vertical;
-                        text-align: justify;
-                    }
-
-                    .actions {
+                    .qnty {
                         display: flex;
-                        gap: 1rem;
+                        align-items: center;
+                        justify-content: center;
+                        outline: 1px solid rgba(205, 134, 63, 0.25);
+                        gap: .75rem;
+                        width: max-content;
+                        padding: 4px;
 
-                        .qnty {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            outline: 1px solid rgba(205, 134, 63, 0.25);
-                            gap: .75rem;
-                            width: max-content;
-                            padding: 4px;
-
-                            p {
-                                width: 1rem;
-                                align-content: center;
-                                text-align: center;
-                            }
-
-                            button {
-                                width: 2rem;
-                                height: 2rem;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-size: large;
-                                font-weight: bolder;
-                                cursor: pointer;
-                                transition: background-color .3s ease-in-out;
-
-                                &:hover {
-                                    background-color: #CBA74E;
-                                }
-                            }
+                        p {
+                            width: 1rem;
+                            align-content: center;
+                            text-align: center;
                         }
 
-                        .remove {
+                        button {
+                            width: 2rem;
+                            height: 2rem;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            border: 2px solid rgba(205, 134, 63, 0.25);
-                            padding: 4px 1rem;
+                            font-size: large;
+                            font-weight: bolder;
                             cursor: pointer;
-                            transition: all .25s ease-in-out;
+                            transition: background-color .3s ease-in-out;
 
                             &:hover {
-                                border: 2px solid rgba(205, 134, 63, 0.5);
-                                background-color: black;
+                                background-color: #CBA74E;
                             }
+                        }
+                    }
+
+                    .move {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: 2px solid rgba(205, 134, 63, 0.25);
+                        padding: 4px 1rem;
+                        cursor: pointer;
+                        transition: all .25s ease-in-out;
+
+                        span {
+                            margin-right: 7.5px;
+                        }
+
+                        &:hover {
+                            border: 2px solid rgba(205, 134, 63, 0.5);
+                            background-color: black;
+                        }
+
+                        &.remove:hover {
+                            border: 2px solid rgba(250, 30, 30, 0.25);
                         }
                     }
                 }
             }
         }
     }
+
 
     .right-section {
         width: 30%;
@@ -203,7 +175,10 @@
         justify-content: center;
         gap: 1rem;
 
-        button {
+        a {
+            display: block;
+            text-decoration: none;
+            color: black;
             padding: .75rem 1rem;
             border-radius: 5px;
             border: none;
@@ -226,61 +201,78 @@
 
 
 // MEDIA-QUERIES RESPONSIVENESS
-@media screen and (max-width:1024px) {
+@media screen and (max-width:767px) {
     .cart_component {
         padding: 2.25rem;
         flex-direction: column;
-        gap: 2.5rem;
+        gap: 1.5rem;
 
-        .left-section {
+        .cards {
             width: 100%;
 
-            .address {
-                form {
-                    width: 100%;
+            .card {
+                position: relative;
+                height: 10rem;
+
+                img {
+                    width: 7rem;
                 }
-            }
 
-            .cards {
-                .card {
-                    height: 9rem;
+                .details {
+                    padding: .5rem .75rem;
 
-                    img {
-                        width: 7.5rem;
+                    .product-name {
+                        font-size: 15px;
                     }
 
-                    .details {
-                        padding: .5rem .75rem;
+                    .brand-name {
+                        font-size: 12.5px;
+                    }
 
-                        h2 {
-                            font-size: 15px;
+                    .description {
+                        font-size: 11px;
+                    }
+
+                    .price {
+                        font-size: 16px;
+                    }
+
+                    .actions {
+                        .qnty {
+                            gap: .5rem;
+
+                            p {
+                                width: .5rem;
+                                font-size: 15px;
+                            }
+
+                            button {
+                                width: 1rem;
+                                height: 1rem;
+                            }
                         }
 
-                        h4 {
+                        .move {
+                            position: absolute;
+                            top: unset;
+                            bottom: 10px;
+                            right: 10px;
+                            z-index: 2;
+                            padding: .2rem .5rem;
                             font-size: 12.5px;
-                        }
 
-                        p {
-                            font-size: 11px;
-                        }
+                            &.remove {
+                                top: 10px;
+                                bottom: unset;
+                                padding: .25rem;
 
-                        h1 {
-                            font-size: 16px;
-                        }
-
-                        .actions {
-                            .qnty {
-                                gap: .5rem;
-
-                                p {
-                                    width: .5rem;
-                                    font-size: 15px;
+                                span {
+                                    display: none;
                                 }
+                            }
 
-                                button {
-                                    width: 1rem;
-                                    height: 1rem;
-                                }
+                            &.wishlist {
+                                height: 2rem;
                             }
                         }
                     }
@@ -297,38 +289,75 @@
 @media (min-width:768px) and (max-width:1024px) {
     .cart_component {
         padding: 4rem;
-        gap: 3.5rem;
+        gap: 2rem;
         flex-direction: row;
 
-        .left-section {
+        .cards {
             width: 60%;
 
-            .address {
-                form {
-                    width: 100%;
+            .card {
+                height: 9rem;
+                position: relative;
+
+                img {
+                    width: 8rem;
                 }
-            }
 
-            .cards {
-                .card {
-                    height: 9rem;
+                .details {
+                    padding: .5rem .75rem;
 
-                    img {
-                        width: 8rem;
+                    .product-name {
+                        font-size: 15px;
                     }
 
-                    .details {
-                        .actions {
-                            .qnty {
-                                p {
-                                    width: .75rem;
-                                    font-size: 17.5px;
-                                }
+                    .brand-name {
+                        font-size: 12.5px;
+                    }
 
-                                button {
-                                    width: 1.75rem;
-                                    height: 1.5rem;
+                    .description {
+                        font-size: 11px;
+                    }
+
+                    .price {
+                        font-size: 16px;
+                    }
+
+                    .actions {
+                        .qnty {
+                            gap: .5rem;
+
+                            p {
+                                width: .75rem;
+                                font-size: 17.5px;
+                            }
+
+                            button {
+                                width: 1.75rem;
+                                height: 1.5rem;
+                            }
+                        }
+
+                        .move {
+                            position: absolute;
+                            top: unset;
+                            bottom: 10px;
+                            right: 10px;
+                            z-index: 2;
+                            padding: .2rem .5rem;
+                            font-size: 12.5px;
+
+                            &.remove {
+                                top: 10px;
+                                bottom: unset;
+                                padding: .25rem;
+
+                                span {
+                                    display: none;
                                 }
+                            }
+
+                            &.wishlist {
+                                height: 2rem;
                             }
                         }
                     }
@@ -341,7 +370,6 @@
 
             .total-summary {
                 table {
-
                     tbody {
                         display: flex;
                         flex-direction: column;

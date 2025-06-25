@@ -4,54 +4,41 @@
 {{!-- HBS --}}
 <section class="cart_component">
     {{#if cartList}}
-    <div class="left-section">
-        <div class="address">
-            <h3 id="section-title">Address</h3>
-            <form action="">
-                <input type="text" minlength="3" maxlength="30" required placeholder="Address line 1">
-                <input type="text" minlength="3" maxlength="30" required placeholder="Address line 2">
-                <input type="tel" minlength="10" maxlength="12" placeholder="Mobile">
-                <input type="email" required placeholder="Email address">
-                <div class="pin-distr">
-                    <input class="pin" type="number" min="4" max="6" required placeholder="Pincode">
-                    <input class="distr" type="text" minlength="2" maxlength="20" required placeholder="District">
-                </div>
+    <div class="cards">
+        <h3 id="section-title">Items</h3>
 
-                <button type="submit">Save</button>
-            </form>
-        </div>
+        {{#each cartList}}
+        <div class="card">
+            <img src="/images/products/{{this.product.coverImg}}" alt="rolex-image">
 
-        <div class="cards">
-            <h3 id="section-title">Items</h3>
+            <div class="details">
+                <h2 class="product-name">{{this.product.product_name}}</h2>
+                <h4 class="brand-name">{{this.product.brand_name}}</h4>
+                <p class="description">{{this.product.description}}</p>
+                <h1 class="price"> <span class="currency">₹</span> {{this.product.selling_price}}
+                    <strike> <span class="currency">₹</span>{{this.product.original_price}}</strike>
+                </h1>
+                <div class="actions">
+                    <div class="qnty">
+                        <button
+                            onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
 
-            {{#each cartList}}
-            <div class="card">
-                <img src="/images/products/{{this.product.coverImg}}" alt="rolex-image">
+                        <p id="{{this.product._id}}">{{this.quantity}}</p>
 
-                <div class="details">
-                    <h2>{{this.product.product_name}}</h2>
-                    <h4>{{this.product.brand_name}}</h4>
-                    <p>{{this.product.description}}</p>
-                    <h1> <span class="currency">₹</span> {{this.product.selling_price}}
-                        <strike> <span class="currency">₹</span>{{this.product.original_price}}</strike>
-                    </h1>
-                    <div class="actions">
-                        <div class="qnty">
-                            <button
-                                onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
-
-                            <p id="{{this.product._id}}">{{this.quantity}}</p>
-
-                            <button
-                                onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
-                        </div>
-                        <p class="remove" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">Remove</p>
+                        <button
+                            onclick="changeQnty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
                     </div>
+                    <p class="move wishlist"
+                        onclick="moveToWishlist('{{this._id}}','{{this.product._id}}', '{{../user._id}}')">
+                        <span>Move to</span><i class="fa-solid fa-heart"></i>
+                    </p>
+                    <p class="move remove" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">
+                        <span>Remove</span> <i class="fa-solid fa-trash"></i>
+                    </p>
                 </div>
             </div>
-            {{/each}}
-
         </div>
+        {{/each}}
     </div>
 
     <div class="right-section">
@@ -84,14 +71,14 @@
                 <h3><span class="currency">₹</span>
                     <span id="final_price">{{subtract cartTotal.discounted_total 200}}</span>
                 </h3>
-                <a href="/place-order" class="checkout">Checkout</a>
+                <a href="/checkout" class="checkout">Checkout</a>
             </div>
         </div>
     </div>
     {{else}}
     <div class="empty-cart">
         <h1>Your cart is empty</h1>
-        <button>Add Items</button>
+        <a href="/">Add Items</a>
     </div>
     {{/if}}
 </section>

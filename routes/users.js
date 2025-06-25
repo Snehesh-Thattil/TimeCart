@@ -147,8 +147,21 @@ router.get('/view-item/:id', (req, res) => {
     })
 })
 
-router.get('/place-order', verifyLogin, (req, res) => {
+router.get('/checkout', verifyLogin, (req, res) => {
   res.render('user/checkout')
+})
+
+router.post('/move-to-cart', async (req, res) => {
+  try {
+    await userHelpers.removeFromCart(req.body)
+    await userHelpers.addToWishlist(req.body)
+
+    res.json({ status: true })
+  }
+  catch (err) {
+    console.log('Error moving item to wishlist')
+    res.redirect('/')
+  }
 })
 
 router.get('/wishlist', verifyLogin, (req, res) => {

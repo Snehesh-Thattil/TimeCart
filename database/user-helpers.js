@@ -257,5 +257,39 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    addToWishlist: ({ productId, userId }) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const userWishlist = await db.get().collection(collections.WISHLIST_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+
+                if (userWishlist) {
+                    const wishlistExist = userWishlist.products.findIndex((item) => item.equals(ObjectId.createFromHexString(productId)))
+
+                    if (wishlistExist === -1) {
+                        await db.get().collection(collections.WISHLIST_COLLECTION).updateOne(
+                            {
+                                user: ObjectId.createFromHexString(userId)
+                            },
+                            {
+                                $push: { products: ObjectId.createFromHexString(productId) }
+                            }
+                        )
+                    }
+                }
+                else {
+                    await db.get().collection(collections.WISHLIST_COLLECTION).insertOne(
+                        {
+                            user: ObjectId.createFromHexString(userId),
+                            products: [ObjectId.createFromHexString(productId)],
+                        }
+                    )
+                }
+                resolve(true)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }

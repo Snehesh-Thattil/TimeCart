@@ -6,72 +6,44 @@
   color: #CBA74E;
   background-color: rgb(14, 13, 13);
 }
-.cart_component .left-section {
+.cart_component .cards {
   width: 70%;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
 }
-.cart_component .left-section .address form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 70%;
-}
-.cart_component .left-section .address form input {
-  padding: 0.5rem;
-}
-.cart_component .left-section .address form .pin-distr {
-  width: 100%;
-  display: flex;
-  gap: 10px;
-}
-.cart_component .left-section .address form .pin-distr .pin {
-  width: 35%;
-}
-.cart_component .left-section .address form .pin-distr .distr {
-  width: 65%;
-}
-.cart_component .left-section .address form button {
-  padding: 0.5rem;
-  border-radius: 5px;
-  outline: none;
-  border-color: peru;
-  background-color: peachpuff;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-.cart_component .left-section .address form button:hover {
-  background-color: #CBA74E;
-}
-.cart_component .left-section .cards {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.cart_component .left-section .cards .card {
+.cart_component .cards .card {
   display: flex;
   outline: 1px solid peru;
   height: 12rem;
+  margin-bottom: 1rem;
 }
-.cart_component .left-section .cards .card img {
+.cart_component .cards .card img {
   width: 12.5rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.cart_component .left-section .cards .card .details {
+.cart_component .cards .card .details {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   padding: 0.5rem 1rem;
 }
-.cart_component .left-section .cards .card .details h1 strike {
+.cart_component .cards .card .details .product-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  max-width: 80%;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+}
+.cart_component .cards .card .details .price strike {
   color: rgba(189, 166, 144, 0.75);
   -webkit-text-decoration: line-through 3px rgb(61, 56, 56);
           text-decoration: line-through 3px rgb(61, 56, 56);
 }
-.cart_component .left-section .cards .card .details p {
+.cart_component .cards .card .details p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -80,11 +52,11 @@
   -webkit-box-orient: vertical;
   text-align: justify;
 }
-.cart_component .left-section .cards .card .details .actions {
+.cart_component .cards .card .details .actions {
   display: flex;
   gap: 1rem;
 }
-.cart_component .left-section .cards .card .details .actions .qnty {
+.cart_component .cards .card .details .actions .qnty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,12 +66,12 @@
   width: max-content;
   padding: 4px;
 }
-.cart_component .left-section .cards .card .details .actions .qnty p {
+.cart_component .cards .card .details .actions .qnty p {
   width: 1rem;
   align-content: center;
   text-align: center;
 }
-.cart_component .left-section .cards .card .details .actions .qnty button {
+.cart_component .cards .card .details .actions .qnty button {
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -110,10 +82,10 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-.cart_component .left-section .cards .card .details .actions .qnty button:hover {
+.cart_component .cards .card .details .actions .qnty button:hover {
   background-color: #CBA74E;
 }
-.cart_component .left-section .cards .card .details .actions .remove {
+.cart_component .cards .card .details .actions .move {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,9 +94,15 @@
   cursor: pointer;
   transition: all 0.25s ease-in-out;
 }
-.cart_component .left-section .cards .card .details .actions .remove:hover {
+.cart_component .cards .card .details .actions .move span {
+  margin-right: 7.5px;
+}
+.cart_component .cards .card .details .actions .move:hover {
   border: 2px solid rgba(205, 134, 63, 0.5);
   background-color: black;
+}
+.cart_component .cards .card .details .actions .move.remove:hover {
+  border: 2px solid rgba(250, 30, 30, 0.25);
 }
 .cart_component .right-section {
   width: 30%;
@@ -175,7 +153,10 @@
   justify-content: center;
   gap: 1rem;
 }
-.cart_component .empty-cart button {
+.cart_component .empty-cart a {
+  display: block;
+  text-decoration: none;
+  color: black;
   padding: 0.75rem 1rem;
   border-radius: 5px;
   border: none;
@@ -185,56 +166,74 @@
   font-weight: 700;
   cursor: pointer;
 }
-.cart_component .empty-cart button:hover {
+.cart_component .empty-cart a:hover {
   background-color: #af892a;
 }
 .cart_component #section-title {
   margin-bottom: 1rem;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 767px) {
   .cart_component {
     padding: 2.25rem;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 1.5rem;
   }
-  .cart_component .left-section {
+  .cart_component .cards {
     width: 100%;
   }
-  .cart_component .left-section .address form {
-    width: 100%;
+  .cart_component .cards .card {
+    position: relative;
+    height: 10rem;
   }
-  .cart_component .left-section .cards .card {
-    height: 9rem;
+  .cart_component .cards .card img {
+    width: 7rem;
   }
-  .cart_component .left-section .cards .card img {
-    width: 7.5rem;
-  }
-  .cart_component .left-section .cards .card .details {
+  .cart_component .cards .card .details {
     padding: 0.5rem 0.75rem;
   }
-  .cart_component .left-section .cards .card .details h2 {
+  .cart_component .cards .card .details .product-name {
     font-size: 15px;
   }
-  .cart_component .left-section .cards .card .details h4 {
+  .cart_component .cards .card .details .brand-name {
     font-size: 12.5px;
   }
-  .cart_component .left-section .cards .card .details p {
+  .cart_component .cards .card .details .description {
     font-size: 11px;
   }
-  .cart_component .left-section .cards .card .details h1 {
+  .cart_component .cards .card .details .price {
     font-size: 16px;
   }
-  .cart_component .left-section .cards .card .details .actions .qnty {
+  .cart_component .cards .card .details .actions .qnty {
     gap: 0.5rem;
   }
-  .cart_component .left-section .cards .card .details .actions .qnty p {
+  .cart_component .cards .card .details .actions .qnty p {
     width: 0.5rem;
     font-size: 15px;
   }
-  .cart_component .left-section .cards .card .details .actions .qnty button {
+  .cart_component .cards .card .details .actions .qnty button {
     width: 1rem;
     height: 1rem;
+  }
+  .cart_component .cards .card .details .actions .move {
+    position: absolute;
+    top: unset;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    padding: 0.2rem 0.5rem;
+    font-size: 12.5px;
+  }
+  .cart_component .cards .card .details .actions .move.remove {
+    top: 10px;
+    bottom: unset;
+    padding: 0.25rem;
+  }
+  .cart_component .cards .card .details .actions .move.remove span {
+    display: none;
+  }
+  .cart_component .cards .card .details .actions .move.wishlist {
+    height: 2rem;
   }
   .cart_component .right-section {
     width: 100%;
@@ -243,28 +242,64 @@
 @media (min-width: 768px) and (max-width: 1024px) {
   .cart_component {
     padding: 4rem;
-    gap: 3.5rem;
+    gap: 2rem;
     flex-direction: row;
   }
-  .cart_component .left-section {
+  .cart_component .cards {
     width: 60%;
   }
-  .cart_component .left-section .address form {
-    width: 100%;
-  }
-  .cart_component .left-section .cards .card {
+  .cart_component .cards .card {
     height: 9rem;
+    position: relative;
   }
-  .cart_component .left-section .cards .card img {
+  .cart_component .cards .card img {
     width: 8rem;
   }
-  .cart_component .left-section .cards .card .details .actions .qnty p {
+  .cart_component .cards .card .details {
+    padding: 0.5rem 0.75rem;
+  }
+  .cart_component .cards .card .details .product-name {
+    font-size: 15px;
+  }
+  .cart_component .cards .card .details .brand-name {
+    font-size: 12.5px;
+  }
+  .cart_component .cards .card .details .description {
+    font-size: 11px;
+  }
+  .cart_component .cards .card .details .price {
+    font-size: 16px;
+  }
+  .cart_component .cards .card .details .actions .qnty {
+    gap: 0.5rem;
+  }
+  .cart_component .cards .card .details .actions .qnty p {
     width: 0.75rem;
     font-size: 17.5px;
   }
-  .cart_component .left-section .cards .card .details .actions .qnty button {
+  .cart_component .cards .card .details .actions .qnty button {
     width: 1.75rem;
     height: 1.5rem;
+  }
+  .cart_component .cards .card .details .actions .move {
+    position: absolute;
+    top: unset;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    padding: 0.2rem 0.5rem;
+    font-size: 12.5px;
+  }
+  .cart_component .cards .card .details .actions .move.remove {
+    top: 10px;
+    bottom: unset;
+    padding: 0.25rem;
+  }
+  .cart_component .cards .card .details .actions .move.remove span {
+    display: none;
+  }
+  .cart_component .cards .card .details .actions .move.wishlist {
+    height: 2rem;
   }
   .cart_component .right-section {
     width: 40%;

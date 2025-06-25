@@ -1,36 +1,69 @@
 .checkout_page {
-  max-width: 1000px;
+  max-width: 65%;
   margin: 2rem auto;
+  border-radius: 7.5px;
   padding: 2rem;
   background: #0d0d0d;
   color: #f5f5f5;
   font-family: "Segoe UI", sans-serif;
 }
-.checkout_page h1 {
+.checkout_page h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #e4b343;
 }
 .checkout_page .section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
-.checkout_page .section h2 {
-  font-size: 1.2rem;
+.checkout_page .section .section-titles {
+  font-size: 1rem;
   color: #e4b343;
-  border-bottom: 1px solid #e4b343;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
-.checkout_page .address-form,
+.checkout_page .address {
+  width: 100%;
+}
+.checkout_page .address form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  outline: 1px solid peru;
+  padding: 1rem;
+  border: none;
+  border-radius: 0;
+}
+.checkout_page .address form input {
+  padding: 0.5rem;
+}
+.checkout_page .address form .pin-distr {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.checkout_page .address form .pin-distr .pin {
+  width: 35%;
+}
+.checkout_page .address form .pin-distr .distr {
+  width: 65%;
+}
+.checkout_page .address form button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  outline: none;
+  border-color: peru;
+  background-color: peachpuff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.checkout_page .address form button:hover {
+  background-color: #CBA74E;
+}
 .checkout_page .payment-form {
   background: #1a1a1a;
   padding: 1rem;
-  border: 1px solid #e4b343;
-  border-radius: 8px;
+  outline: 1px solid peru;
 }
-.checkout_page .address-form input[type=text],
-.checkout_page .address-form input[type=tel],
-.checkout_page .address-form input[type=email],
 .checkout_page .payment-form input[type=text],
 .checkout_page .payment-form input[type=tel],
 .checkout_page .payment-form input[type=email] {
@@ -42,36 +75,31 @@
   color: #f5f5f5;
   border-radius: 6px;
 }
-.checkout_page .address-form input[type=text]::-moz-placeholder, .checkout_page .address-form input[type=tel]::-moz-placeholder, .checkout_page .address-form input[type=email]::-moz-placeholder, .checkout_page .payment-form input[type=text]::-moz-placeholder, .checkout_page .payment-form input[type=tel]::-moz-placeholder, .checkout_page .payment-form input[type=email]::-moz-placeholder {
+.checkout_page .payment-form input[type=text]::-moz-placeholder, .checkout_page .payment-form input[type=tel]::-moz-placeholder, .checkout_page .payment-form input[type=email]::-moz-placeholder {
   color: #ccc;
 }
-.checkout_page .address-form input[type=text]::placeholder,
-.checkout_page .address-form input[type=tel]::placeholder,
-.checkout_page .address-form input[type=email]::placeholder,
 .checkout_page .payment-form input[type=text]::placeholder,
 .checkout_page .payment-form input[type=tel]::placeholder,
 .checkout_page .payment-form input[type=email]::placeholder {
   color: #ccc;
 }
-.checkout_page .address-form .row,
 .checkout_page .payment-form .row {
   display: flex;
   gap: 1rem;
 }
-.checkout_page .address-form .row input,
 .checkout_page .payment-form .row input {
   flex: 1;
 }
-.checkout_page .address-form label,
 .checkout_page .payment-form label {
   display: block;
   margin-bottom: 0.6rem;
 }
-.checkout_page .address-form label input,
 .checkout_page .payment-form label input {
   margin-right: 0.5rem;
 }
-.checkout_page .address-form .button,
+.checkout_page .payment-form label.radios {
+  cursor: pointer;
+}
 .checkout_page .payment-form .button {
   background: #ffcc99;
   color: #0d0d0d;
@@ -83,15 +111,13 @@
   border-radius: 6px;
   cursor: pointer;
 }
-.checkout_page .address-form .button:hover,
 .checkout_page .payment-form .button:hover {
   background: #ffe6cc;
 }
 .checkout_page .summary-box {
   background: #1a1a1a;
-  border: 1px solid #e4b343;
   padding: 1rem;
-  border-radius: 8px;
+  outline: 1px solid peru;
 }
 .checkout_page .summary-box .summary p {
   display: flex;
