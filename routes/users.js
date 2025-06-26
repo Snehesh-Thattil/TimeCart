@@ -147,11 +147,7 @@ router.get('/view-item/:id', (req, res) => {
     })
 })
 
-router.get('/checkout', verifyLogin, (req, res) => {
-  res.render('user/checkout')
-})
-
-router.post('/move-to-cart', async (req, res) => {
+router.post('/move-to-wishlist', async (req, res) => {
   try {
     await userHelpers.removeFromCart(req.body)
     await userHelpers.addToWishlist(req.body)
@@ -160,6 +156,34 @@ router.post('/move-to-cart', async (req, res) => {
   }
   catch (err) {
     console.log('Error moving item to wishlist')
+    res.redirect('/')
+  }
+})
+
+router.get('/checkout', verifyLogin, (req, res) => {
+  const data = {
+    userId: req.session.user._id
+  }
+  userHelpers.getCartTotal(data)
+    .then((cartTotal) => {
+      res.render('user/checkout', { cartTotal, userId: data.userId })
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res.redirect('/')
+    })
+})
+
+router.post('/place-order', async (req, res) => {
+  try {
+    const cartTotal = await userHelpers.getCartTotal(req.body.orderDetails)
+    const CartOverview = await userHelpers.getCartOverview(req.body.orderDetails.userId)
+
+    await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
+    res.json({ status: true })
+  }
+  catch (err) {
+    console.log(err.message)
     res.redirect('/')
   }
 })

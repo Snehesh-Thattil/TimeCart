@@ -1,8 +1,8 @@
 .checkout_page {
   max-width: 65%;
   margin: 2rem auto;
-  border-radius: 7.5px;
   padding: 2rem;
+  border-radius: 7.5px;
   background: #0d0d0d;
   color: #f5f5f5;
   font-family: "Segoe UI", sans-serif;
@@ -12,41 +12,39 @@
   margin-bottom: 1rem;
   color: #e4b343;
 }
-.checkout_page .section {
+.checkout_page form .section {
   margin-bottom: 1.5rem;
+  padding: 2rem;
 }
-.checkout_page .section .section-titles {
+.checkout_page form .section .section-titles {
   font-size: 1rem;
   color: #e4b343;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
-.checkout_page .address {
+.checkout_page form .address {
   width: 100%;
-}
-.checkout_page .address form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   outline: 1px solid peru;
-  padding: 1rem;
   border: none;
   border-radius: 0;
 }
-.checkout_page .address form input {
+.checkout_page form .address input {
   padding: 0.5rem;
 }
-.checkout_page .address form .pin-distr {
+.checkout_page form .address .pin-distr {
   width: 100%;
   display: flex;
   gap: 10px;
 }
-.checkout_page .address form .pin-distr .pin {
+.checkout_page form .address .pin-distr .pin {
   width: 35%;
 }
-.checkout_page .address form .pin-distr .distr {
+.checkout_page form .address .pin-distr .distr {
   width: 65%;
 }
-.checkout_page .address form button {
+.checkout_page form .address button {
   padding: 0.5rem;
   border-radius: 5px;
   outline: none;
@@ -56,17 +54,16 @@
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
-.checkout_page .address form button:hover {
+.checkout_page form .address button:hover {
   background-color: #CBA74E;
 }
-.checkout_page .payment-form {
+.checkout_page form .payment {
   background: #1a1a1a;
-  padding: 1rem;
   outline: 1px solid peru;
 }
-.checkout_page .payment-form input[type=text],
-.checkout_page .payment-form input[type=tel],
-.checkout_page .payment-form input[type=email] {
+.checkout_page form .payment input[type=text],
+.checkout_page form .payment input[type=tel],
+.checkout_page form .payment input[type=email] {
   width: 100%;
   padding: 0.6rem;
   margin: 0.5rem 0;
@@ -75,32 +72,32 @@
   color: #f5f5f5;
   border-radius: 6px;
 }
-.checkout_page .payment-form input[type=text]::-moz-placeholder, .checkout_page .payment-form input[type=tel]::-moz-placeholder, .checkout_page .payment-form input[type=email]::-moz-placeholder {
+.checkout_page form .payment input[type=text]::-moz-placeholder, .checkout_page form .payment input[type=tel]::-moz-placeholder, .checkout_page form .payment input[type=email]::-moz-placeholder {
   color: #ccc;
 }
-.checkout_page .payment-form input[type=text]::placeholder,
-.checkout_page .payment-form input[type=tel]::placeholder,
-.checkout_page .payment-form input[type=email]::placeholder {
+.checkout_page form .payment input[type=text]::placeholder,
+.checkout_page form .payment input[type=tel]::placeholder,
+.checkout_page form .payment input[type=email]::placeholder {
   color: #ccc;
 }
-.checkout_page .payment-form .row {
+.checkout_page form .payment .row {
   display: flex;
   gap: 1rem;
 }
-.checkout_page .payment-form .row input {
+.checkout_page form .payment .row input {
   flex: 1;
 }
-.checkout_page .payment-form label {
+.checkout_page form .payment label {
   display: block;
   margin-bottom: 0.6rem;
 }
-.checkout_page .payment-form label input {
+.checkout_page form .payment label input {
   margin-right: 0.5rem;
 }
-.checkout_page .payment-form label.radios {
+.checkout_page form .payment label.radios {
   cursor: pointer;
 }
-.checkout_page .payment-form .button {
+.checkout_page form .payment .button {
   background: #ffcc99;
   color: #0d0d0d;
   padding: 0.6rem 1rem;
@@ -111,29 +108,28 @@
   border-radius: 6px;
   cursor: pointer;
 }
-.checkout_page .payment-form .button:hover {
+.checkout_page form .payment .button:hover {
   background: #ffe6cc;
 }
-.checkout_page .summary-box {
+.checkout_page form .summary-box {
   background: #1a1a1a;
-  padding: 1rem;
   outline: 1px solid peru;
 }
-.checkout_page .summary-box .summary p {
+.checkout_page form .summary-box .summary p {
   display: flex;
   justify-content: space-between;
   margin: 0.4rem 0;
 }
-.checkout_page .summary-box .total {
+.checkout_page form .summary-box .total {
   border-top: 1px solid #e4b343;
   margin-top: 1rem;
   padding-top: 1rem;
 }
-.checkout_page .summary-box .total h3 {
+.checkout_page form .summary-box .total h3 {
   color: #e4b343;
   margin-bottom: 1rem;
 }
-.checkout_page .summary-box .total .proceed-btn {
+.checkout_page form .summary-box .total .proceed-btn {
   display: block;
   text-align: center;
   width: 100%;
@@ -149,6 +145,26 @@
   color: black;
   transition: background-color 0.2s ease-in-out;
 }
-.checkout_page .summary-box .total .proceed-btn:hover {
+.checkout_page form .summary-box .total .proceed-btn:hover {
   background-color: #CBA74E;
+}
+
+@media screen and (max-width: 767px) {
+  .checkout_page {
+    max-width: 100%;
+    margin: 0;
+    padding: 2rem;
+  }
+  .checkout_page form .section {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+  }
+  .checkout_page form .section .section-titles {
+    margin-bottom: 0.5rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .checkout_page {
+    max-width: 80%;
+  }
 }/*# sourceMappingURL=checkout.css.map */

@@ -288,12 +288,12 @@
 
 @media (min-width:768px) and (max-width:1024px) {
     .cart_component {
-        padding: 4rem;
-        gap: 2rem;
+        padding: 2.25rem;
+        gap: 1.5rem;
         flex-direction: row;
 
         .cards {
-            width: 60%;
+            width: 65%;
 
             .card {
                 height: 9rem;
@@ -366,7 +366,7 @@
         }
 
         .right-section {
-            width: 40%;
+            width: 35%;
 
             .total-summary {
                 table {

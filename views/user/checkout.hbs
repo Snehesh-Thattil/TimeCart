@@ -4,44 +4,46 @@
 <div class="checkout_page">
     <h2>Checkout</h2>
 
-    {{!-- Address New --}}
-    <div class="section address">
-        <h3 class="section-titles">Address</h3>
-        <form action="" class="address-form">
-            <input type="text" minlength="3" maxlength="30" required placeholder="Address line 1">
-            <input type="text" minlength="3" maxlength="30" required placeholder="Address line 2">
-            <input type="tel" minlength="10" maxlength="12" placeholder="Mobile">
-            <input type="email" required placeholder="Email address">
+    <form action="" id="checkout-form">
+        <!-- Address Section -->
+        <div class="section address">
+            <h3 class="section-titles">Address</h3>
+            <input type="text" name="addressLine1" minlength="3" maxlength="30" required placeholder="Address line 1">
+            <input type="text" name="addressLine2" minlength="3" maxlength="30" required placeholder="Address line 2">
+            <input type="tel" name="mobile" minlength="10" maxlength="12" required placeholder="Mobile">
+            <input type="email" name="email" required placeholder="Email address">
             <div class="pin-distr">
-                <input class="pin" type="number" min="4" max="6" required placeholder="Pincode">
-                <input class="distr" type="text" minlength="2" maxlength="20" required placeholder="District">
+                <input class="pin" name="pincode" type="number" required placeholder="Pincode">
+                <input class="distr" name="district" type="text" minlength="2" maxlength="20" required
+                    placeholder="District">
             </div>
-
-            {{!-- <button type="submit">Save</button> --}}
-        </form>
-    </div>
-
-    <!-- Payment Options NEW-->
-    <div class="section">
-        <h3 class="section-titles">Payment Method</h3>
-        <form action="/place-order" method="POST" class="payment-form">
-            <label class="radios"><input type="radio" name="payment" value="cod" checked /> Cash on Delivery</label>
-            <label class="radios"><input type="radio" name="payment" value="online" /> Online Payment</label>
-        </form>
-    </div>
-
-    <!-- Summary -->
-    <div class="section summary-box">
-        <h3 class="section-titles">Summary</h3>
-        <div class="summary">
-            <p>Original price: <span>₹{{cart.originalPrice}}</span></p>
-            <p>Discounted price: <span>₹{{cart.discountedPrice}}</span></p>
-            <p>Coupon Code: <span>{{cart.coupon.code}}</span></p>
-            <p>Coupon Discount: <span>₹{{cart.coupon.discount}}</span></p>
         </div>
-        <div class="total">
-            <h3>Total: ₹{{cart.finalPrice}}</h3>
-            <a href="/place-order" class="button proceed-btn">Place Order</a>
+
+        <!-- Payment Section -->
+        <div class="section payment">
+            <h3 class="section-titles">Payment Method</h3>
+            <label class="radios"><input type="radio" name="paymentMethod" value="cod" checked /> Cash on Delivery</label>
+            <label class="radios"><input type="radio" name="paymentMethod" value="online" /> Online Payment</label>
         </div>
-    </div>
+
+        <!-- Summary Section -->
+        <div class="section summary-box">
+            <h3 class="section-titles">Summary</h3>
+            <div class="summary">
+                <p>Original price: <span>₹{{cartTotal.original_total}}</span></p>
+                <p>Discounted price: <span>₹{{cartTotal.discounted_total}}</span></p>
+                <p>Coupon Code: <span>CJAFKAJF18328</span></p>
+                <p>Coupon Discount: <span>₹200</span></p>
+            </div>
+            <div class="total">
+                <h3>Total: ₹{{subtract cartTotal.discounted_total 200}}</h3>
+                <button type="submit" class="button proceed-btn">Place Order</button>
+            </div>
+        </div>
+
+        <input type="text" name="userId" value="{{userId}}" hidden>
+    </form>
 </div>
+
+{{!-- JS --}}
+<script src="/javascripts/user/checkout.js"></script>

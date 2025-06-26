@@ -13,6 +13,10 @@ function addToCart(productId, userId) {
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
             }
+        },
+        error: (err) => {
+            console.error(err)
+            alert('Failed to adding to the cart')
         }
     })
 }

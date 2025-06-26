@@ -28,6 +28,10 @@ function changeQnty(cartId, productId, userId, change) {
                 let finalPrice = response.cartTotal.discounted_total - parseInt(couponValue)
                 document.getElementById('final_price').innerHTML = finalPrice
             }
+        },
+        error: (err) => {
+            console.error(err)
+            alert('Failed to change product quantity')
         }
     })
 }
@@ -43,13 +47,17 @@ function removeFromCart(cartId, productId) {
         success: (response) => {
             alert('Item removed from cart')
             location.reload()
+        },
+        error: (err) => {
+            console.error(err)
+            alert('Failed to remove from cart')
         }
     })
 }
 
 function moveToWishlist(cartId, productId, userId) {
     $.ajax({
-        url: '/move-to-cart',
+        url: '/move-to-wishlist',
         method: 'post',
         data: {
             cartId,
@@ -59,6 +67,10 @@ function moveToWishlist(cartId, productId, userId) {
         success: (response) => {
             alert('Item moved to Wishlist')
             location.reload()
+        },
+        error: (err) => {
+            console.error(err)
+            alert('Failed to move to wishlist')
         }
     })
 }

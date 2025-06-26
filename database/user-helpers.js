@@ -138,6 +138,17 @@ module.exports = {
             }
         })
     },
+    getCartOverview: (userId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
+                .then((data) => {
+                    resolve(data.products)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    },
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -285,6 +296,38 @@ module.exports = {
                         }
                     )
                 }
+                resolve(true)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    placeOrder: (orderDetails, products, totalValue) => {
+        return new Promise(async (resolve, reject) => {
+            const paymentStatus = orderDetails.paymentMethod === 'COD' ? 'paid' : 'pending'
+
+            try {
+                const order = {
+                    userId: orderDetails.userId,
+                    deliveryDetails: {
+                        addressLine1: orderDetails.addressLine1,
+                        addressLine2: orderDetails.addressLine2,
+                        mobile: orderDetails.mobile,
+                        pincode: orderDetails.pincode,
+                    },
+                    orderValue: totalValue.discounted_total,
+                    paymentMethod: orderDetails.paymentMethod,
+                    paymentStatus,
+                    products,
+                    date: {
+                        timestamp: Date.now(),
+                        iso: new Date().toISOString()
+                    }
+                }
+
+                await db.get().collection(collections.ORDERS_COLLCTION).insertOne({ order })
+                await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
                 resolve(true)
             }
             catch (err) {

@@ -241,12 +241,12 @@
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .cart_component {
-    padding: 4rem;
-    gap: 2rem;
+    padding: 2.25rem;
+    gap: 1.5rem;
     flex-direction: row;
   }
   .cart_component .cards {
-    width: 60%;
+    width: 65%;
   }
   .cart_component .cards .card {
     height: 9rem;
@@ -302,7 +302,7 @@
     height: 2rem;
   }
   .cart_component .right-section {
-    width: 40%;
+    width: 35%;
   }
   .cart_component .right-section .total-summary table tbody {
     display: flex;
