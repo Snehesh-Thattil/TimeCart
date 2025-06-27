@@ -54,22 +54,31 @@
                     </tr>
                     <tr>
                         <td>Discounted Price</td>
-                        <td><span class="currency">₹</span> <span
-                                id="discounted_price">{{cartTotal.discounted_total}}</span></td>
+                        <td><span class="currency">₹</span>
+                            <span id="discounted_price">{{cartTotal.discounted_total}}</span>
+                        </td>
                     </tr>
                     <tr>
                         <td>Coupon Code</td>
-                        <td>CJAFKAJF18328</td>
+                        <td>WINTER200</td>
                     </tr>
                     <tr>
                         <td>Coupon Discount</td>
-                        <td><span class="currency">₹</span> <span id="coupon-value">200</span></td>
+                        <td><span class="currency">₹</span>
+                            <span id="coupon-value">{{cartTotal.coupon_discount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Delivery Charges</td>
+                        <td><span class="currency">₹</span>
+                            <span id="delivery-charges">{{cartTotal.delivery_charges}}</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
             <div class="price-and-btn">
                 <h3><span class="currency">₹</span>
-                    <span id="final_price">{{subtract cartTotal.discounted_total 200}}</span>
+                    <span id="final_price">{{cartTotal.final_payable}}</span>
                 </h3>
                 <a href="/checkout" class="checkout">Checkout</a>
             </div>

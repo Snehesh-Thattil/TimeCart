@@ -22,7 +22,8 @@
         <!-- Payment Section -->
         <div class="section payment">
             <h3 class="section-titles">Payment Method</h3>
-            <label class="radios"><input type="radio" name="paymentMethod" value="cod" checked /> Cash on Delivery</label>
+            <label class="radios"><input type="radio" name="paymentMethod" value="cod" checked /> Cash on
+                Delivery</label>
             <label class="radios"><input type="radio" name="paymentMethod" value="online" /> Online Payment</label>
         </div>
 
@@ -34,14 +35,16 @@
                 <p>Discounted price: <span>₹{{cartTotal.discounted_total}}</span></p>
                 <p>Coupon Code: <span>CJAFKAJF18328</span></p>
                 <p>Coupon Discount: <span>₹200</span></p>
+                <p>Delivery Charges: <span>₹49</span></p>
             </div>
             <div class="total">
-                <h3>Total: ₹{{subtract cartTotal.discounted_total 200}}</h3>
+                <h3>Total: ₹{{cartValue cartTotal.discounted_total 200 49}}</h3>
                 <button type="submit" class="button proceed-btn">Place Order</button>
             </div>
         </div>
 
-        <input type="text" name="userId" value="{{userId}}" hidden>
+        <input hidden type="text" name="userId" value="{{userId}}">
+        <input hidden type="number" name="deliveryCharges" value="49">
     </form>
 </div>
 

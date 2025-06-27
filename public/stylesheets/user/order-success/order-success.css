@@ -1,0 +1,103 @@
+.order-success_page {
+  width: 100%;
+  height: 85vh;
+  color: goldenrod;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.order-success_page .success-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+}
+.order-success_page .success-msg img {
+  width: 20rem;
+  padding: 2rem;
+  outline: 1px solid goldenrod;
+  margin: 1rem 0;
+  background-color: white;
+  border-radius: 50%;
+  animation: expandImg 1s ease-in-out forwards;
+}
+.order-success_page .order-infos {
+  height: 100%;
+  width: 30%;
+  background-color: #1E1E1E;
+  color: #E0E0E0;
+}
+.order-success_page .order-infos .address,
+.order-success_page .order-infos .contact,
+.order-success_page .order-infos .summary {
+  outline: 2px solid rgba(0, 0, 0, 0.3);
+}
+.order-success_page .order-infos .address .heading,
+.order-success_page .order-infos .contact .heading,
+.order-success_page .order-infos .summary .heading {
+  border-bottom: 1px solid #444444;
+  padding: 1rem;
+  color: rgba(211, 182, 18, 0.768627451);
+}
+.order-success_page .order-infos .address .heading i,
+.order-success_page .order-infos .contact .heading i,
+.order-success_page .order-infos .summary .heading i {
+  margin-right: 1rem;
+}
+.order-success_page .order-infos .address .content,
+.order-success_page .order-infos .contact .content,
+.order-success_page .order-infos .summary .content {
+  padding: 1rem;
+}
+.order-success_page .order-infos .address .content p,
+.order-success_page .order-infos .contact .content p,
+.order-success_page .order-infos .summary .content p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.order-success_page .order-infos .redirect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.order-success_page .order-infos .redirect a {
+  display: block;
+  padding: 0.65rem 1.5rem;
+  width: -moz-max-content;
+  width: max-content;
+  outline: 1px solid #444444;
+  background-color: rgba(211, 182, 18, 0.768627451);
+  color: white;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+}
+.order-success_page .order-infos .redirect a:hover {
+  background-color: #bb9533;
+}
+.order-success_page .order-infos .redirect a:hover i {
+  transform: translateX(10px);
+}
+.order-success_page .order-infos .redirect a i {
+  margin-left: 0.75rem;
+  transition: 0.2s transform ease-in-out;
+}
+
+@keyframes expandImg {
+  0% {
+    border-radius: 50%;
+    opacity: 0;
+    transform: rotate(-90deg);
+    width: 15rem;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 20rem;
+    border-radius: 0;
+    transform: rotate(0deg);
+  }
+}/*# sourceMappingURL=order-success.css.map */

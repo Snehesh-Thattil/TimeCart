@@ -257,8 +257,28 @@ module.exports = {
                     {
                         $group: {
                             _id: null,
+                            original_total: { $sum: { $multiply: ['$product.original_price', '$quantity'] } },
                             discounted_total: { $sum: { $multiply: ['$product.selling_price', '$quantity'] } },
-                            original_total: { $sum: { $multiply: ['$product.original_price', '$quantity'] } }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            delivery_charges: 49,
+                            coupon_discount: 200
+                        }
+                    },
+                    {
+                        $project: {
+                            original_total: 1,
+                            discounted_total: 1,
+                            coupon_discount: 1,
+                            delivery_charges: 1,
+                            final_payable: {
+                                $add: [
+                                    { $subtract: ['$discounted_total', '$coupon_discount'] },
+                                    '$delivery_charges'
+                                ]
+                            }
                         }
                     }
                 ]).toArray()
@@ -328,6 +348,7 @@ module.exports = {
 
                 await db.get().collection(collections.ORDERS_COLLCTION).insertOne({ order })
                 await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
+
                 resolve(true)
             }
             catch (err) {

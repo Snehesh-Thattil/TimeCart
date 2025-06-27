@@ -25,7 +25,8 @@ function changeQnty(cartId, productId, userId, change) {
                 document.getElementById('discounted_price').innerHTML = response.cartTotal.discounted_total
 
                 const couponValue = document.getElementById('coupon-value').innerHTML
-                let finalPrice = response.cartTotal.discounted_total - parseInt(couponValue)
+                const deleveryCharges = document.getElementById('delivery-charges').innerHTML
+                let finalPrice = response.cartTotal.discounted_total - parseInt(couponValue) + parseInt(deleveryCharges)
                 document.getElementById('final_price').innerHTML = finalPrice
             }
         },

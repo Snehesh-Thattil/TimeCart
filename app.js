@@ -30,7 +30,9 @@ app.engine('hbs', engine({
     subtract: (a, b) => Number(a) - Number(b),
     addition: (a, b) => Number(a) + Number(b),
     division: (a, b) => Number(a) / Number(b),
-    multiply: (a, b) => Number(a) * Number(b)
+    multiply: (a, b) => Number(a) * Number(b),
+
+    cartValue: (a, b, c) => Number(a) - Number(b) + Number(c)
   }
 }))
 

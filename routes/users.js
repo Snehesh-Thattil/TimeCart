@@ -188,6 +188,10 @@ router.post('/place-order', async (req, res) => {
   }
 })
 
+router.get('/order-success-msg', (req,res)=>{
+  res.render('user/order-success')
+})
+
 router.get('/wishlist', verifyLogin, (req, res) => {
   res.render('user/wishlist', { user: req.session.user })
 })

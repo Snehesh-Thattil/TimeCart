@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }),
             success: (response) => {
                 alert('Order Placed')
+                if (response.status) {
+                    location.href = '/order-success-msg'
+                }
             },
             error: (err) => {
                 console.error(err)
