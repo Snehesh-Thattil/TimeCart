@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }),
             success: (response) => {
                 alert('Order Placed')
-                if (response.status) {
-                    location.href = '/order-success-msg'
+                if (response.orderId) {
+                    location.href = `/order-success-msg?orderId=${response.orderId}`
                 }
             },
             error: (err) => {

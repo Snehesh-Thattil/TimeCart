@@ -10,24 +10,26 @@
     <div class="order-infos">
         <div class="address">
             <p class="heading"><i class="fa-solid fa-truck"></i>Delivery Address</p>
-            <p class="content">Snehesh Thattil, Thattil House, Cherankunnu, Koyyam-po, Taliparamba, Kannur,
-                Pincode: 670142, Kerala, India</p>
+            <p class="content">{{user.name}}, {{order.deliveryDetails.addressLine1}},
+                {{order.deliveryDetails.addressLine2}},
+                {{order.deliveryDetails.district}}-{{order.deliveryDetails.pincode}} </p>
         </div>
 
         <div class="contact">
             <p class="heading"><i class="fa-solid fa-phone"></i>Contact Details</p>
-            <p class="content">Email: sneheshthattil75@gmail.com <br> Phone: +91 6235902137</p>
+            <p class="content">Email: {{order.userDetails.email}} <br> Phone: +91 {{order.userDetails.mobile}}</p>
         </div>
 
         <div class="summary">
             <p class="heading"><i class="fa-solid fa-clipboard-list"></i>Order Summary</p>
             <div class="content">
-                <p>Sub Total: <span>1000</span> </p>
-                <p>Delivery Charges: <span>49</span> </p>
+                <p>Sub Total: <span>₹ {{order.orderValue.discounted_total}}</span> </p>
+                <p>Coupon Value: <span>₹ {{order.orderValue.coupon_discount}}</span> </p>
+                <p>Delivery Charges: <span>₹ {{order.orderValue.delivery_charges}}</span> </p>
                 <br>
                 <hr>
                 <br>
-                <p>Total: <span>1049</span> </p>
+                <p>Total: <span>₹ {{order.orderValue.final_payable}}</span> </p>
             </div>
         </div>
 

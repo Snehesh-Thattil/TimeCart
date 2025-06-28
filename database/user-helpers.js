@@ -323,20 +323,24 @@ module.exports = {
             }
         })
     },
-    placeOrder: (orderDetails, products, totalValue) => {
+    placeOrder: (orderDetails, products, cartTotal) => {
         return new Promise(async (resolve, reject) => {
             const paymentStatus = orderDetails.paymentMethod === 'COD' ? 'paid' : 'pending'
 
             try {
                 const order = {
-                    userId: orderDetails.userId,
                     deliveryDetails: {
                         addressLine1: orderDetails.addressLine1,
                         addressLine2: orderDetails.addressLine2,
-                        mobile: orderDetails.mobile,
+                        district: orderDetails.district,
                         pincode: orderDetails.pincode,
                     },
-                    orderValue: totalValue.discounted_total,
+                    userDetails: {
+                        userId: orderDetails.userId,
+                        mobile: orderDetails.mobile,
+                        email: orderDetails.email
+                    },
+                    orderValue: { ...cartTotal },
                     paymentMethod: orderDetails.paymentMethod,
                     paymentStatus,
                     products,
@@ -346,14 +350,25 @@ module.exports = {
                     }
                 }
 
-                await db.get().collection(collections.ORDERS_COLLCTION).insertOne({ order })
+                const result = await db.get().collection(collections.ORDERS_COLLCTION).insertOne(order)
                 await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
 
-                resolve(true)
+                resolve(result.insertedId)
             }
             catch (err) {
                 reject(err)
             }
+        })
+    },
+    getOrderDetails: (orderId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.ORDERS_COLLCTION).findOne({ _id: ObjectId.createFromHexString(orderId) })
+                .then((result) => {
+                    resolve(result)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
         })
     }
 }

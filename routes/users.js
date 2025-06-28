@@ -83,6 +83,17 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/view-item/:id', (req, res) => {
+  productHelpers.getProductDetails(req.params.id)
+    .then((data) => {
+      res.render('user/view-item', { product: data, user: req.session.user })
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res.redirect('/')
+    })
+})
+
 router.post('/add-to-cart', async (req, res) => {
   // verifyLogin temporarily disabled
 
@@ -136,17 +147,6 @@ router.post('/remove-from-cart', (req, res) => {
     })
 })
 
-router.get('/view-item/:id', (req, res) => {
-  productHelpers.getProductDetails(req.params.id)
-    .then((data) => {
-      res.render('user/view-item', { product: data, user: req.session.user })
-    })
-    .catch((err) => {
-      console.log(err.message)
-      res.redirect('/')
-    })
-})
-
 router.post('/move-to-wishlist', async (req, res) => {
   try {
     await userHelpers.removeFromCart(req.body)
@@ -179,8 +179,8 @@ router.post('/place-order', async (req, res) => {
     const cartTotal = await userHelpers.getCartTotal(req.body.orderDetails)
     const CartOverview = await userHelpers.getCartOverview(req.body.orderDetails.userId)
 
-    await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
-    res.json({ status: true })
+    const orderId = await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
+    res.json({ orderId })
   }
   catch (err) {
     console.log(err.message)
@@ -188,8 +188,15 @@ router.post('/place-order', async (req, res) => {
   }
 })
 
-router.get('/order-success-msg', (req,res)=>{
-  res.render('user/order-success')
+router.get('/order-success-msg', (req, res) => {
+  userHelpers.getOrderDetails(req.query.orderId)
+    .then((data) => {
+      res.render('user/order-success', { order: data, user: req.session.user })
+    })
+    .catch((err) => {
+      console.log('Error getting order details:', err.message)
+      res.redirect('/')
+    })
 })
 
 router.get('/wishlist', verifyLogin, (req, res) => {

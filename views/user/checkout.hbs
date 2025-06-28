@@ -33,18 +33,17 @@
             <div class="summary">
                 <p>Original price: <span>₹{{cartTotal.original_total}}</span></p>
                 <p>Discounted price: <span>₹{{cartTotal.discounted_total}}</span></p>
-                <p>Coupon Code: <span>CJAFKAJF18328</span></p>
-                <p>Coupon Discount: <span>₹200</span></p>
-                <p>Delivery Charges: <span>₹49</span></p>
+                <p>Coupon Code: <span>WINTER200</span></p>
+                <p>Coupon Discount: <span>₹{{cartTotal.coupon_discount}}</span></p>
+                <p>Delivery Charges: <span>₹{{cartTotal.delivery_charges}}</span></p>
             </div>
             <div class="total">
-                <h3>Total: ₹{{cartValue cartTotal.discounted_total 200 49}}</h3>
+                <h3>Total: ₹{{cartTotal.final_payable}}</h3>
                 <button type="submit" class="button proceed-btn">Place Order</button>
             </div>
         </div>
 
         <input hidden type="text" name="userId" value="{{userId}}">
-        <input hidden type="number" name="deliveryCharges" value="49">
     </form>
 </div>
 
