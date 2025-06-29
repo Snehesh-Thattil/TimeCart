@@ -1,22 +1,9 @@
 
-function addToCart(productId, userId) {
-    $.ajax({
-        url: '/add-to-cart',
-        method: 'post',
-        data: {
-            productId,
-            userId
-        },
-        success: (response) => {
-            if (response.newProductAdded) {
-                let count = $('#cart-count').html()
-                count = parseInt(count) + 1
-                $('#cart-count').html(count)
-            }
-        },
-        error: (err) => {
-            console.error(err)
-            alert('Failed to adding to the cart')
-        }
-    })
+function viewImg(imgName) {
+    const viewedImg = document.getElementById('viewed-img')
+    viewedImg.src = `/images/products/${imgName}`
+
+    document.querySelectorAll('.photos-list img').forEach(img => img.classList.remove('selected'));
+    const selectedImg = [...document.querySelectorAll('.photos-list img')].find((img) => img.src.includes(imgName))
+    if (selectedImg) selectedImg.classList.add('selected')
 }

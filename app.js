@@ -1,3 +1,4 @@
+require('dotenv').config()
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -41,7 +42,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use((session({ secret: 'SecretHashKeyHere', resave: false, saveUninitialized: false, cookie: { maxAge: 6000000 } })))
+
+app.use((session({
+  secret: process.env.EXPRESS_SESSION_SECRET_KEY,
+  resave: false, saveUninitialized: false,
+  cookie: { maxAge: 6000000 }
+})))
+
+app.use((req, res, next) => {
+  res.locals.message = req.session.message
+  res.locals.error = req.session.error
+  delete req.session.message
+  delete req.session.error
+  next()
+})
+
 app.use(fileUpload())
 db.connect((err) => {
   if (err) console.log('Error connecting database :', err.message)

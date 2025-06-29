@@ -5,42 +5,39 @@
     <div class="photos-and-actions">
         <div class="photos">
             <div class="photos-list">
-                <img src="https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dweb549088/images/Titan/Catalog/90177TM02_2.jpg?sw=600&sh=600"
-                    alt="">
-                <img src="https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dwbb8c7651/images/Titan/Catalog/90148KD03_5.jpg?sw=600&sh=600"
-                    alt="">
-                <img src="https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw7969ce4a/images/Titan/Catalog/1596NL01_1.jpg?sw=600&sh=600"
-                    alt="">
-                <img src="https://www.fastrack.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw1888ad40/images/Titan/Catalog/1805QM01_1.jpg?sw=600&sh=600"
-                    alt="">
-                <img src="https://assets.myntassets.com/w_412,q_60,dpr_2,fl_progressive/assets/images/12156726/2023/1/5/28a85632-83fd-48cd-a170-a0cb51133c9c1672912119554-Titan-Women-White--Gold-Analogue-Watch-2593YM02-290167291211-1.jpg"
-                    alt="">
+                {{#each product.imgNames}}
+                <img src="/images/products/{{this}}" alt=""
+                    class="{{#if (eq this ../product.coverImg)}} selected {{/if}}" onclick="viewImg('{{this}}')">
+                {{/each}}
             </div>
             <div class="photo-viewed">
-                <img src="https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw0814ec34/images/Titan/Catalog/1805QM04_1.jpg?sw=800&sh=800"
-                    alt="">
+                <img src="/images/products/{{product.coverImg}}" id="viewed-img" alt="">
             </div>
         </div>
         <div class="actions">
-            <button class="buttons" onclick="addToCart('{{product._id}}','{{user._id}}')">Add to Cart</button>
-            <a href="/buy-now/{{product._id}}"><button class="buttons">Buy Now</button></a>
+            <form action="/add-to-cart/{{product._id}}" method="POST">
+                <button type="submit" class="buttons">Add to Cart</button>
+            </form>
+
+            <form action="/add-to-wishlist/{{product._id}}" method="POST">
+                <button type="submit" class="buttons">Save to Wishlist</button>
+            </form>
         </div>
     </div>
 
     <div class="details">
         <div class="overview">
             <div class="name">
-                <h3>TITAN</h3>
-                <h2>Spectra 3 Gen Series</h2>
-                <p>Description sample. This is a sample for a paragraph of description or two. Lets replace it with the
-                    actual description coming from the backend.</p>
+                <h3>{{product.brand_name}}</h3>
+                <h2>{{product.product_name}}</h2>
+                <p>{{product.description}}</p>
             </div>
 
             <div class="price">
                 <h4>Special Price</h4>
                 <h3>
-                    <span>₹</span>999
-                    <strike><span>₹</span>1299</strike>
+                    <span>₹</span>{{product.selling_price}}
+                    <strike><span>₹</span>{{product.original_price}}</strike>
                 </h3>
             </div>
 
@@ -70,6 +67,7 @@
 
     </div>
 </div>
+
 
 {{!-- JS --}}
 <script src="/javascripts/user/view-item.js"></script>

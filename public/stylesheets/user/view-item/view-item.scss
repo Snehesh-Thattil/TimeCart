@@ -11,9 +11,9 @@
 
         .photos {
             width: 100%;
+            height: 30rem;
             display: flex;
             gap: 1rem;
-            height: 30rem;
             padding: 1rem;
             outline: 2px solid #ad9a5e;
 
@@ -27,7 +27,15 @@
 
                 img {
                     width: 100%;
+                    min-height: 6rem;
                     border: 2px solid #2B2B2B;
+                    cursor: pointer;
+                    object-fit: cover;
+
+                    &.selected {
+                        border: 2px solid peru;
+                        opacity: 0.5;
+                    }
                 }
             }
 
@@ -38,6 +46,7 @@
                 img {
                     width: 100%;
                     height: 100%;
+                    object-fit: contain;
                 }
             }
         }
@@ -47,37 +56,29 @@
             display: flex;
             gap: 15px;
 
-            .buttons {
-                display: flex;
-                align-items: center;
-                gap: .5rem;
-                padding: 1rem;
-                width: 100%;
-                justify-content: center;
-            }
+            form {
+                width: 50%;
 
-            a {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+                button {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .5rem;
+                    padding: .75rem;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    background-color: peachpuff;
+                    border-color: peru;
+                    color: #1f1f1f;
+                    outline: none;
+                    cursor: pointer;
+                    transition: all .2s ease-in-out;
 
-            button {
-                width: 75%;
-                padding: .6rem;
-                border-radius: 5px;
-                font-weight: bold;
-                background-color: peachpuff;
-                border-color: peru;
-                color: #1f1f1f;
-                outline: none;
-                cursor: pointer;
-                transition: all .2s ease-in-out;
-
-                &:hover {
-                    color: black;
-                    background-color: #CBA74E;
+                    &:hover {
+                        color: black;
+                        background-color: #CBA74E;
+                    }
                 }
             }
         }
@@ -135,6 +136,54 @@
                     }
                 }
             }
+        }
+    }
+}
+
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:767px) {
+    .view-item {
+        flex-direction: column;
+        padding: 1.75rem;
+
+        .photos-and-actions {
+            width: 100%;
+
+            .photos {
+                height: 22.5rem;
+                gap: .5rem;
+                padding: .25rem;
+
+                .photos-list {
+                    img {
+                        min-height: 4rem;
+                    }
+                }
+            }
+        }
+
+        .details {
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+    .view-item {
+        flex-direction: column;
+        padding: 1.5rem 4rem;
+
+        .photos-and-actions {
+            width: 100%;
+
+            .photos {
+                height: 25rem;
+            }
+        }
+
+        .details {
+            width: 100%;
         }
     }
 }

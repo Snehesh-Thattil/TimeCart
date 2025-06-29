@@ -94,12 +94,10 @@ router.get('/view-item/:id', (req, res) => {
     })
 })
 
-router.post('/add-to-cart', async (req, res) => {
-  // verifyLogin temporarily disabled
-
-  userHelpers.addToCart(req.body)
-    .then((response) => {
-      res.json(response)
+router.post('/add-to-cart/:productId', verifyLogin, async (req, res) => {
+  userHelpers.addToCart(req.params.productId, req.session.user._id)
+    .then(() => {
+      res.redirect('/cart')
     })
     .catch((err) => {
       console.log('Error adding product to the cart :', err)
@@ -150,7 +148,7 @@ router.post('/remove-from-cart', (req, res) => {
 router.post('/move-to-wishlist', async (req, res) => {
   try {
     await userHelpers.removeFromCart(req.body)
-    await userHelpers.addToWishlist(req.body)
+    await userHelpers.addToWishlist(req.body.productId, req.body.userId)
 
     res.json({ status: true })
   }
@@ -158,6 +156,18 @@ router.post('/move-to-wishlist', async (req, res) => {
     console.log('Error moving item to wishlist')
     res.redirect('/')
   }
+})
+
+router.post('/add-to-wishlist/:productId', async (req, res) => {
+  userHelpers.addToWishlist(req.params.productId, req.session.user._id)
+    .then((response) => {
+      req.session.message = response.message
+      res.redirect('back')
+    })
+    .catch((err) => {
+      console.log('Error adding to wishlist :', err.message)
+      res.redirect('/')
+    })
 })
 
 router.get('/checkout', verifyLogin, (req, res) => {

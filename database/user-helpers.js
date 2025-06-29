@@ -44,7 +44,7 @@ module.exports = {
                 })
         })
     },
-    addToCart: ({ productId, userId }) => {
+    addToCart: (productId, userId) => {
         const productObj = {
             item: ObjectId.createFromHexString(productId),
             quantity: 1
@@ -289,7 +289,7 @@ module.exports = {
             }
         })
     },
-    addToWishlist: ({ productId, userId }) => {
+    addToWishlist: (productId, userId) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const userWishlist = await db.get().collection(collections.WISHLIST_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
@@ -306,7 +306,10 @@ module.exports = {
                                 $push: { products: ObjectId.createFromHexString(productId) }
                             }
                         )
+
+                        resolve({ message: 'Added to Wishlist!' })
                     }
+                    resolve({ message: 'Wishlist already exists!' })
                 }
                 else {
                     await db.get().collection(collections.WISHLIST_COLLECTION).insertOne(
@@ -315,8 +318,8 @@ module.exports = {
                             products: [ObjectId.createFromHexString(productId)],
                         }
                     )
+                    resolve({ message: 'Added to Wishlist!' })
                 }
-                resolve(true)
             }
             catch (err) {
                 reject(err)
