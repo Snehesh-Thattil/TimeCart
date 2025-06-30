@@ -147,7 +147,7 @@ router.post('/remove-from-cart', (req, res) => {
 
 router.post('/move-to-wishlist', async (req, res) => {
   try {
-    await userHelpers.removeFromCart(req.body)
+    await userHelpers.removeFromCart(req.body.productId, req.body.cartId)
     await userHelpers.addToWishlist(req.body.productId, req.body.userId)
 
     res.json({ status: true })
@@ -210,7 +210,37 @@ router.get('/order-success-msg', (req, res) => {
 })
 
 router.get('/wishlist', verifyLogin, (req, res) => {
-  res.render('user/wishlist', { user: req.session.user })
+  userHelpers.getWishlist(req.session.user._id)
+    .then((wishlist) => {
+      res.render('user/wishlist', { user: req.session.user, wishlist })
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res.redirect('/')
+    })
+})
+
+router.delete('/remove-from-wishlist/:productId', (req, res) => {
+  userHelpers.removeFromWishlist(req.params.productId, req.session.user._id)
+    .then(() => {
+      res.json({ status: true })
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+})
+
+router.post('/move-to-cart/:productId', async (req, res) => {
+  try {
+    await userHelpers.removeFromWishlist(req.params.productId, req.session.user._id)
+    await userHelpers.addToCart(req.params.productId, req.session.user._id)
+
+    res.redirect('/cart')
+  }
+  catch (err) {
+    console.log(err.message)
+    res.redirect('/')
+  }
 })
 
 router.get('/orders', verifyLogin, (req, res) => {

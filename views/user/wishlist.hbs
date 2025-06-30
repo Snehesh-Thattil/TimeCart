@@ -1,1 +1,28 @@
-<h1>Yet to Design</h1>
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/user/wishlist/wishlist.css">
+
+<div class="wishlist_page">
+    <div class="cards">
+        <p class="title">Wishlist</p>
+        {{#each wishlist}}
+        <div class="card" id="{{this._id}}">
+            <a href="/view-item/{{this._id}}"> <img src="/images/products/{{this.coverImg}}" alt=""></a>
+            <div class="details-and-btn">
+                <div class="details">
+                    <p class="brand-name">{{this.brand_name}}</p>
+                    <p class="product-name">{{this.product_name}}</p>
+                    <h4 class="price">₹{{this.selling_price}} <span>₹{{this.original_price}}</span> </h4>
+                </div>
+                <form action="/move-to-cart/{{this._id}}" method="post">
+                    <button type="submit">Move to cart</button>
+                </form>
+            </div>
+
+            <p class="delete" onclick="deleteWishlist('{{this._id}}')"><i class="fa-solid fa-trash"></i></p>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+{{!-- JS --}}
+<script src="/javascripts/user/wishlist.js"></script>

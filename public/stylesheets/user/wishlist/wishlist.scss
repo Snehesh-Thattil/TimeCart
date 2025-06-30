@@ -1,0 +1,181 @@
+.wishlist_page {
+    width: 100%;
+    min-height: 90vh;
+    padding: .5rem 5rem;
+    color: white;
+
+    .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 1rem 15rem;
+        background-color: rgb(22, 22, 22);
+
+        .title {
+            padding: 1.5rem;
+            color: #bb9533;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            outline: 1px solid peru;
+            background-color: rgb(15, 15, 15);
+        }
+
+        .card {
+            outline: 1px solid peru;
+            display: flex;
+            gap: .5rem;
+            height: 11rem;
+            position: relative;
+            background-color: rgb(15, 15, 15);
+
+            a {
+                img {
+                    width: 10rem;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .details-and-btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 1rem;
+                color: peru;
+
+                .details {
+                    .brand-name {
+                        font-size: 15px;
+                    }
+
+                    .product-name {
+                        font-size: 20px;
+                    }
+
+                    .price {
+                        font-size: 22px;
+
+                        span {
+                            font-size: 17.5px;
+                            color: rgba(128, 128, 128, 0.699);
+                            text-decoration: line-through 2px;
+
+                        }
+                    }
+                }
+
+                form {
+                    button {
+                        display: block;
+                        background-color: rgb(44, 41, 41);
+                        border: 1px solid peru;
+                        padding: .5rem .75rem;
+                        color: rgb(175, 106, 35);
+                        transition: .2s all ease-in-out;
+                        cursor: pointer;
+                        font-weight: 700;
+
+                        &:hover {
+                            background-color: #a78530;
+                            color: white;
+                            padding: .5rem 1rem;
+                        }
+                    }
+                }
+            }
+
+            .delete {
+                position: absolute;
+                top: .5rem;
+                right: .5rem;
+                padding: .5rem;
+                border: 1px solid peru;
+                border-radius: 5px;
+                cursor: pointer;
+
+                i {
+                    transition: .2s all ease-in-out;
+                    color: #a78530;
+
+                }
+
+                &:hover {
+                    border: 2px solid rgb(145, 35, 35);
+
+                    i {
+                        transform: rotate(50deg);
+                        color: rgb(145, 35, 35);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:767px) {
+    .wishlist_page {
+        padding: 1rem;
+
+        .cards {
+            padding: .5rem;
+
+            .card {
+                gap: .25rem;
+                height: 9rem;
+
+                a {
+                    img {
+                        width: 7rem;
+                    }
+                }
+
+                .details-and-btn {
+                    padding: .5rem;
+                    gap: 1rem;
+
+                    .details {
+                        .brand-name {
+                            font-size: 12.5px;
+                        }
+
+                        .product-name {
+                            font-size: 17px;
+                        }
+
+                        .price {
+                            font-size: 17.5px;
+
+                            span {
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }
+
+                .delete {
+                    padding: .25rem;
+                    border-radius: 2.5px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+    .wishlist_page {
+        padding: 1rem 2rem;
+
+        .cards {
+            padding: 1rem;
+
+            .card {
+                .delete {
+                    top: 1rem;
+                    right: 1rem;
+                }
+            }
+        }
+    }
+}

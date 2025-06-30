@@ -200,7 +200,7 @@ module.exports = {
             }
         })
     },
-    removeFromCart: ({ cartId, productId }) => {
+    removeFromCart: (productId, cartId) => {
         return new Promise(async (resolve, reject) => {
             try {
                 await db.get().collection(collections.CART_COLLECTION).updateOne(
@@ -324,6 +324,58 @@ module.exports = {
             catch (err) {
                 reject(err)
             }
+        })
+    },
+    getWishlist: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const wishlist = await db.get().collection(collections.WISHLIST_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId.createFromHexString(userId) }
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            localField: 'products',
+                            foreignField: '_id',
+                            as: 'productDetails'
+                        }
+                    },
+                    {
+                        $unwind: '$productDetails'
+                    },
+                    {
+                        $replaceRoot: { newRoot: '$productDetails' }
+                    }
+                ]).toArray()
+
+                resolve(wishlist)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    removeFromWishlist: (productId, userId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.WISHLIST_COLLECTION).updateOne(
+                {
+                    user: ObjectId.createFromHexString(userId)
+                },
+                {
+                    $pull: {
+                        products: ObjectId.createFromHexString(productId)
+                    }
+                })
+                .then(() => {
+                    resolve(true)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
         })
     },
     placeOrder: (orderDetails, products, cartTotal) => {
