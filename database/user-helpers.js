@@ -380,6 +380,22 @@ module.exports = {
     },
     placeOrder: (orderDetails, products, cartTotal) => {
         return new Promise(async (resolve, reject) => {
+
+            // Identify order date and expected delivery date:
+            const now = new Date()
+            const formatOptions = {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                timeZone: 'Asia/Kolkata'
+            }
+
+            const orderDate = now.toLocaleDateString('en-IN', formatOptions)
+            const expectedDate = new Date(now)
+            expectedDate.setDate(now.getDate() + 7)
+            const expectedDelivery = expectedDate.toLocaleDateString('en-IN', formatOptions)
+
+            // Payment status check
             const paymentStatus = orderDetails.paymentMethod === 'COD' ? 'paid' : 'pending'
 
             try {
@@ -391,17 +407,20 @@ module.exports = {
                         pincode: orderDetails.pincode,
                     },
                     userDetails: {
-                        userId: orderDetails.userId,
+                        userId: ObjectId.createFromHexString(orderDetails.userId),
                         mobile: orderDetails.mobile,
                         email: orderDetails.email
                     },
                     orderValue: { ...cartTotal },
                     paymentMethod: orderDetails.paymentMethod,
                     paymentStatus,
+                    orderStatus: 'placed',
                     products,
                     date: {
                         timestamp: Date.now(),
-                        iso: new Date().toISOString()
+                        iso: new Date().toISOString(),
+                        orderDate,
+                        expectedDelivery
                     }
                 }
 
@@ -424,6 +443,51 @@ module.exports = {
                 .catch((err) => {
                     reject(err)
                 })
+        })
+    },
+    getOrders: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const orders = await db.get().collection(collections.ORDERS_COLLCTION).aggregate([
+                    {
+                        $match: { 'userDetails.userId': ObjectId.createFromHexString(userId) }
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            localField: 'products.item',
+                            foreignField: '_id',
+                            as: 'productDetails'
+                        }
+                    },
+                    {
+                        $unwind: '$productDetails'
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            userDetails: 1,
+                            deliveryDetails: 1,
+                            paymentMethod: 1,
+                            paymentStatus: 1,
+                            orderStatus: 1,
+                            date: 1,
+                            orderValue: 1,
+                            quantity: '$products.quantity',
+                            product: '$productDetails'
+                        }
+                    }
+                ]).toArray()
+
+                console.log('ORDERS :', orders) //Temp
+                resolve(orders)
+            }
+            catch (err) {
+                reject(err)
+            }
         })
     }
 }

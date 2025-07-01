@@ -135,7 +135,7 @@ router.post('/change-product-qnty', async (req, res) => {
 })
 
 router.post('/remove-from-cart', (req, res) => {
-  userHelpers.removeFromCart(req.body)
+  userHelpers.removeFromCart(req.body.productId, req.body.cartId)
     .then(() => {
       res.json({ status: true })
     })
@@ -244,7 +244,14 @@ router.post('/move-to-cart/:productId', async (req, res) => {
 })
 
 router.get('/orders', verifyLogin, (req, res) => {
-  res.render('user/orders', { user: req.session.user })
+  userHelpers.getOrders(req.session.user._id)
+    .then((orders) => {
+      res.render('user/orders', { user: req.session.user, orders })
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res.redirect('/')
+    })
 })
 
 module.exports = router;

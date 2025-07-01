@@ -1,0 +1,175 @@
+.orders_page {
+  width: 100%;
+  min-height: 90vh;
+  padding: 0.5rem 5rem;
+  color: white;
+}
+.orders_page .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1rem 7.5rem;
+  min-height: 90vh;
+  background-color: rgb(22, 22, 22);
+}
+.orders_page .cards .title {
+  padding: 1.5rem;
+  color: #bb9533;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  outline: 1px solid peru;
+  background-color: rgb(15, 15, 15);
+}
+.orders_page .cards .card {
+  outline: 1px solid peru;
+  display: flex;
+  gap: 0.5rem;
+  height: 8rem;
+  position: relative;
+  background-color: rgb(15, 15, 15);
+}
+.orders_page .cards .card a img {
+  width: 10rem;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.orders_page .cards .card .details {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 2fr;
+  padding: 1rem;
+  color: peru;
+  width: 100%;
+}
+.orders_page .cards .card .details .name .brand-name {
+  font-size: 15px;
+}
+.orders_page .cards .card .details .name .product-name {
+  font-size: 20px;
+}
+.orders_page .cards .card .details .price h4 {
+  font-size: 20px;
+  text-align: start;
+}
+.orders_page .cards .card .details .price h4 span {
+  font-size: 15px;
+  color: rgba(128, 128, 128, 0.699);
+  -webkit-text-decoration: line-through 2px;
+          text-decoration: line-through 2px;
+}
+.orders_page .cards .card .details .price .quantity {
+  font-size: medium;
+  margin: 1rem 0;
+}
+.orders_page .cards .card .details .delivery {
+  border-left: 1px solid rgba(230, 170, 110, 0.25);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.orders_page .cards .card .details .delivery .date {
+  font-size: 15px;
+  margin: 0.25rem 0;
+}
+.orders_page .cards .card .details .delivery .order-status {
+  font-size: small;
+  margin: 0.25rem 0;
+}
+.orders_page .cards .card .details .delivery .actions-btn {
+  display: block;
+  width: -moz-max-content;
+  width: max-content;
+  border: 1px solid peru;
+  padding: 0.3rem 0.75rem;
+  margin: 0.25rem 0;
+  font-weight: 700;
+  background-color: rgb(44, 41, 41);
+  color: rgb(175, 106, 35);
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+.orders_page .cards .card .details .delivery .actions-btn:hover {
+  background-color: #a78530;
+  color: white;
+  padding: 0.3rem 1rem;
+}
+
+@media screen and (max-width: 767px) {
+  .orders_page {
+    padding: 1rem;
+  }
+  .orders_page .cards {
+    padding: 0.5rem;
+  }
+  .orders_page .cards .card {
+    gap: 0.25rem;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  .orders_page .cards .card a img {
+    width: 8rem;
+  }
+  .orders_page .cards .card .details {
+    padding: 0.5rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.51fr 0.51fr 1.5fr;
+  }
+  .orders_page .cards .card .details .name .brand-name {
+    font-size: 12.5px;
+  }
+  .orders_page .cards .card .details .name .product-name {
+    font-size: 17px;
+  }
+  .orders_page .cards .card .details .price {
+    margin: 0.5rem 0;
+  }
+  .orders_page .cards .card .details .price h4 {
+    font-size: 17.5px;
+  }
+  .orders_page .cards .card .details .price h4 span {
+    font-size: 15px;
+  }
+  .orders_page .cards .card .details .price .quantity {
+    font-size: 12.5px;
+    margin: 0.25rem 0;
+  }
+  .orders_page .cards .card .details .delivery {
+    border-top: 1px solid rgba(230, 170, 110, 0.25);
+    border-left: none;
+    padding-left: 0;
+    padding-top: 0.5rem;
+  }
+  .orders_page .cards .card .details .delivery .actions-btn {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .orders_page {
+    padding: 1rem 2rem;
+  }
+  .orders_page .cards {
+    padding: 1rem;
+  }
+  .orders_page .cards .card {
+    height: -moz-max-content;
+    height: max-content;
+  }
+  .orders_page .cards .card .details {
+    padding: 1rem 0.51rem;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .orders_page .cards .card .details .name {
+    grid-area: 1/1/2/3;
+  }
+  .orders_page .cards .card .details .price {
+    grid-area: 2/1/3/3;
+  }
+  .orders_page .cards .card .details .price .quantity {
+    margin: 0.5rem 0;
+  }
+  .orders_page .cards .card .details .delivery {
+    grid-area: 1/3/3/4;
+  }
+}/*# sourceMappingURL=orders.css.map */
