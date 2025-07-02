@@ -190,12 +190,24 @@ router.post('/place-order', async (req, res) => {
     const CartOverview = await userHelpers.getCartOverview(req.body.orderDetails.userId)
 
     const orderId = await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
-    res.json({ orderId })
+
+    if (req.body.orderDetails.paymentMethod === 'COD') {
+      res.json({ paymentMethod: 'COD', orderId })
+    }
+    else if (req.body.orderDetails.paymentMethod === 'ONLINE') {
+      const rzpayOrder = await userHelpers.generateRazorpay(orderId, cartTotal.final_payable)
+
+      res.json({ paymentMethod: 'ONLINE', rzpayOrder })
+    }
   }
   catch (err) {
     console.log(err.message)
     res.redirect('/')
   }
+})
+
+router.post('/verify-payment', (req, res) => {
+  console.log(req.body)
 })
 
 router.get('/order-success-msg', (req, res) => {

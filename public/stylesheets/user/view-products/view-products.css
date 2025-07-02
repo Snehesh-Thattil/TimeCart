@@ -13,7 +13,7 @@
   padding: 0.5rem;
   height: -moz-max-content;
   height: max-content;
-  border-radius: 5px;
+  border-radius: 1px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

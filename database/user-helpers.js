@@ -2,6 +2,10 @@ const db = require('./connection')
 const collections = require('./collections')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
+const Razorpay = require('razorpay')
+
+// Razorpay Instance for payment
+var instance = new Razorpay({ key_id: 'rzp_test_mHLYIG02JZQxRX', key_secret: 'MAuzzAZkbSi4kFxMvLzZV5iE' })
 
 module.exports = {
     doSignup: (formData) => {
@@ -395,8 +399,8 @@ module.exports = {
             expectedDate.setDate(now.getDate() + 7)
             const expectedDelivery = expectedDate.toLocaleDateString('en-IN', formatOptions)
 
-            // Payment status check
-            const paymentStatus = orderDetails.paymentMethod === 'COD' ? 'paid' : 'pending'
+            // Payment and Order status validation
+            const orderStatus = orderDetails.paymentMethod === 'COD' ? 'placed' : 'pending'
 
             try {
                 const order = {
@@ -412,10 +416,9 @@ module.exports = {
                         email: orderDetails.email
                     },
                     orderValue: { ...cartTotal },
-                    paymentMethod: orderDetails.paymentMethod,
-                    paymentStatus,
-                    orderStatus: 'placed',
                     products,
+                    paymentMethod: orderDetails.paymentMethod,
+                    orderStatus,
                     date: {
                         timestamp: Date.now(),
                         iso: new Date().toISOString(),
@@ -468,7 +471,7 @@ module.exports = {
                     },
                     {
                         $project: {
-                            _id: 1,
+                            orderId: '$_id',
                             userDetails: 1,
                             deliveryDetails: 1,
                             paymentMethod: 1,
@@ -488,6 +491,25 @@ module.exports = {
             catch (err) {
                 reject(err)
             }
+        })
+    },
+    generateRazorpay: (orderId, totalValue) => {
+        return new Promise((resolve, reject) => {
+            var options = {
+                amount: totalValue,
+                currency: "INR",
+                receipt: orderId
+            }
+            instance.orders.create(options, (err, order) => {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                else {
+                    console.log("New Order Created on Razorpay :", order)
+                    resolve(order)
+                }
+            })
         })
     }
 }

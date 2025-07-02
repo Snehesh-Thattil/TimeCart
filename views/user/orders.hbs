@@ -22,9 +22,9 @@
                     <p class="order-status">Order successfully placed</p>
 
                     {{#if (eq this.orderStatus 'delivered')}}
-                    <a href="/review-product" class="actions-btn">Review</a>
+                    <a href="/review-product/{{this.product._id}}" class="actions-btn">Review</a>
                     {{else}}
-                    <a href="/track-order" class="actions-btn">Track Order</a>
+                    <a href="/track-order/{{this.orderId}}" class="actions-btn">Track Order</a>
                     {{/if}}
                 </div>
             </div>
