@@ -3,6 +3,7 @@ const collections = require('./collections')
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 const Razorpay = require('razorpay')
+const crypto = require('crypto')
 
 // Razorpay Instance for payment
 var instance = new Razorpay({ key_id: 'rzp_test_mHLYIG02JZQxRX', key_secret: 'MAuzzAZkbSi4kFxMvLzZV5iE' })
@@ -222,17 +223,17 @@ module.exports = {
             }
         })
     },
-    getCartTotal: (data) => {
+    getCartTotal: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(data.userId) })
+                const cartExist = await db.get().collection(collections.CART_COLLECTION).findOne({ user: ObjectId.createFromHexString(userId) })
                 if (!cartExist) {
                     return resolve([])
                 }
 
                 const cartTotal = await db.get().collection(collections.CART_COLLECTION).aggregate([
                     {
-                        $match: { user: ObjectId.createFromHexString(data.userId) }
+                        $match: { user: ObjectId.createFromHexString(userId) }
                     },
                     {
                         $unwind: '$products'
@@ -428,7 +429,7 @@ module.exports = {
                 }
 
                 const result = await db.get().collection(collections.ORDERS_COLLCTION).insertOne(order)
-                await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
+                // await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
 
                 resolve(result.insertedId)
             }
@@ -485,7 +486,6 @@ module.exports = {
                     }
                 ]).toArray()
 
-                console.log('ORDERS :', orders) //Temp
                 resolve(orders)
             }
             catch (err) {
@@ -496,7 +496,7 @@ module.exports = {
     generateRazorpay: (orderId, totalValue) => {
         return new Promise((resolve, reject) => {
             var options = {
-                amount: totalValue,
+                amount: totalValue * 100,
                 currency: "INR",
                 receipt: orderId
             }
@@ -506,10 +506,41 @@ module.exports = {
                     reject(err)
                 }
                 else {
-                    console.log("New Order Created on Razorpay :", order)
                     resolve(order)
                 }
             })
+        })
+    },
+    verifyPayment: (rzpResponse) => {
+        return new Promise((resolve, reject) => {
+            try {
+                let hmac = crypto.createHmac('sha256', 'MAuzzAZkbSi4kFxMvLzZV5iE')
+
+                hmac.update(rzpResponse['response[razorpay_order_id]'] + '|' + rzpResponse['response[razorpay_payment_id]'])
+                hmac = hmac.digest('hex')
+
+                if (hmac === rzpResponse['response[razorpay_signature]']) {
+                    resolve(true)
+                } else {
+                    reject()
+                }
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    changeOrderStatus: (orderId) => {
+        return new Promise((resolve, reject) => {
+
+            db.get().collection(collections.ORDERS_COLLCTION).updateOne(
+                {
+                    _id: ObjectId.createFromHexString(orderId)
+                },
+                {
+                    $set: { orderStatus: 'placed' }
+                }
+            ).then(() => resolve(true)).catch((err) => reject(err))
         })
     }
 }

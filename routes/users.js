@@ -106,13 +106,9 @@ router.post('/add-to-cart/:productId', verifyLogin, async (req, res) => {
 })
 
 router.get('/cart', verifyLogin, async (req, res) => {
-  const data = {
-    userId: req.session.user._id
-  }
-
   try {
     const cartList = await userHelpers.getCartItems(req.session.user._id)
-    const cartTotal = await userHelpers.getCartTotal(data)
+    const cartTotal = await userHelpers.getCartTotal(req.session.user._id)
 
     res.render('user/cart', { user: req.session.user, cartList, cartTotal })
   }
@@ -125,7 +121,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
 router.post('/change-product-qnty', async (req, res) => {
   try {
     const response = await userHelpers.changeProductQnty(req.body)
-    response.cartTotal = await userHelpers.getCartTotal(req.body)
+    response.cartTotal = await userHelpers.getCartTotal(req.session.user._id)
     res.json(response)
   }
   catch (err) {
@@ -174,7 +170,7 @@ router.get('/checkout', verifyLogin, (req, res) => {
   const data = {
     userId: req.session.user._id
   }
-  userHelpers.getCartTotal(data)
+  userHelpers.getCartTotal(req.session.user._id)
     .then((cartTotal) => {
       res.render('user/checkout', { cartTotal, userId: data.userId })
     })
@@ -186,7 +182,7 @@ router.get('/checkout', verifyLogin, (req, res) => {
 
 router.post('/place-order', async (req, res) => {
   try {
-    const cartTotal = await userHelpers.getCartTotal(req.body.orderDetails)
+    const cartTotal = await userHelpers.getCartTotal(req.session.user._id)
     const CartOverview = await userHelpers.getCartOverview(req.body.orderDetails.userId)
 
     const orderId = await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
@@ -206,8 +202,17 @@ router.post('/place-order', async (req, res) => {
   }
 })
 
-router.post('/verify-payment', (req, res) => {
-  console.log(req.body)
+router.post('/verify-payment', async (req, res) => {
+  try {
+    await userHelpers.verifyPayment(req.body)
+    await userHelpers.changeOrderStatus(req.body['rzpayOrder[receipt]'])//orderId
+
+    res.json({ status: true })
+  }
+  catch (err) {
+    console.log(err)
+    res.redirect('back')
+  }
 })
 
 router.get('/order-success-msg', (req, res) => {

@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-
 function razorpayPayment(rzpayOrder) {
     var options = {
         "key": "rzp_test_mHLYIG02JZQxRX",
@@ -53,9 +52,9 @@ function razorpayPayment(rzpayOrder) {
         //     "contact": "6235902137" // customer's phone number
         // },
         "handler": function (response) {
-            alert(response.razorpay_payment_id)
-            alert(response.razorpay_order_id)
-            alert(response.razorpay_signature)
+            // alert("Payment_Id :", response.razorpay_payment_id)
+            // alert("Order_Id :", response.razorpay_order_id)
+            // alert("Signature :", response.razorpay_signature)
 
             verifyPayment(response, rzpayOrder)
         },
@@ -72,12 +71,26 @@ function razorpayPayment(rzpayOrder) {
 }
 
 function verifyPayment(response, rzpayOrder) {
+    console.log('rzpayOrder Reciept :', rzpayOrder.receipt)
+
     $.ajax({
         url: '/verify-payment',
         method: 'post',
         data: {
             response,
             rzpayOrder
+        },
+        success: (response) => {
+            if (response.status) {
+                location.href = '/order-success-msg?orderId=' + rzpayOrder.receipt
+                alert('Order placed successfully')
+            } else {
+                alert('Somthing went wrong! Try again later.')
+            }
+        },
+        error: (err) => {
+            console.error(err)
+            alert('Failed to verify payment')
         }
     })
 }
