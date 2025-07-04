@@ -4,7 +4,7 @@ const productHelpers = require('../database/product-helpers')
 const userHelpers = require('../database/user-helpers')
 
 const verifyLogin = (req, res, next) => {
-  if (req.session.user) {
+  if (req.session.userLoggedIn) {
     next()
   } else {
     res.redirect('/login')
@@ -31,7 +31,7 @@ router.get('/', async function (req, res, next) {
 })
 
 router.get('/signup', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.userLoggedIn) {
     res.redirect('/')
   } else {
     res.render('user/signup')
@@ -41,14 +41,14 @@ router.get('/signup', (req, res) => {
 router.post('/signup', (req, res) => {
   userHelpers.doSignup(req.body)
     .then((user) => {
-      req.session.loggedIn = true
+      req.session.userLoggedIn = true
       req.session.user = user
       res.redirect('/')
     })
     .catch((err) => {
       console.log(err)
       if (err = 'Email already exists') {
-        req.session.loginErr = 'Email already exist! 🤩, Please login here:'
+        req.session.userLoginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/login')
       } else {
         res.redirect('/signup')
@@ -57,29 +57,30 @@ router.post('/signup', (req, res) => {
 })
 
 router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.userLoggedIn) {
     res.redirect('/')
   } else {
-    res.render('user/login', { loginErr: req.session.loginErr })
-    req.session.loginErr = false
+    res.render('user/login', { loginErr: req.session.userLoginErr })
+    req.session.userLoginErr = false
   }
 })
 
 router.post('/login', (req, res) => {
   userHelpers.doLogin(req.body)
     .then((user) => {
-      req.session.loggedIn = true
+      req.session.userLoggedIn = true
       req.session.user = user
       res.redirect('/')
     })
     .catch((err) => {
-      req.session.loginErr = 'Invalid username or password! 😞'
+      req.session.userLoginErr = 'Invalid username or password! 😞'
       res.redirect('/login')
     })
 })
 
 router.get('/logout', (req, res) => {
-  req.session.destroy()
+  req.session.user = null
+  req.session.userLoggedIn = false
   res.redirect('/')
 })
 
@@ -167,12 +168,9 @@ router.post('/add-to-wishlist/:productId', async (req, res) => {
 })
 
 router.get('/checkout', verifyLogin, (req, res) => {
-  const data = {
-    userId: req.session.user._id
-  }
   userHelpers.getCartTotal(req.session.user._id)
     .then((cartTotal) => {
-      res.render('user/checkout', { cartTotal, userId: data.userId })
+      res.render('user/checkout', { cartTotal, userId: req.session.user._id })
     })
     .catch((err) => {
       console.log(err.message)

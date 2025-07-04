@@ -1,5 +1,5 @@
 {{!-- CSS --}}
-<link rel="stylesheet" href="/stylesheets/admin/manage-product/manage-product.css">
+<link rel="stylesheet" href="/stylesheets/seller/manage-product/manage-product.css">
 
 {{!-- HBS --}}
 <section class="manage-products_component">
@@ -36,8 +36,8 @@
                     </td>
 
                     <td class="buttons">
-                        <a href="/admin/edit-product/{{this._id}}" class="edit-btn">Edit</a>
-                        <a href="/admin/delete-product?id={{this._id}}" class="delete-btn"
+                        <a href="/seller/edit-product/{{this._id}}" class="edit-btn">Edit</a>
+                        <a href="/seller/delete-product?id={{this._id}}" class="delete-btn"
                             onclick="return confirm('Delete the product {{this.product_name}} ?')">Unlist</a>
                     </td>
                 </tr>
@@ -48,5 +48,5 @@
         <p>You have no product listings currently</p>
         {{/if}}
     </div>
-    <a href="/admin/add-product" class="add-btn">List new product</a>
+    <a href="/seller/add-product" class="add-btn">List new product</a>
 </section>

@@ -5,26 +5,42 @@ var productHelpers = require('../database/product-helpers');
 const { Timestamp } = require('mongodb');
 const fs = require('fs')
 
-/* GET admins page. */
+const verifyLogin = (req, res, next) => {
+  if (req.session.sellerLoggedIn) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+}
+
+/* GET sellers page. */
 router.get('/', function (req, res, next) {
   productHelpers.getProducts()
     .then((products) => {
-      res.render('admin/manage-products', { admin: true, products });
+      res.render('seller/manage-products', { seller: true, products });
     })
     .catch((err) => {
       console.log('Error getting products :', err)
     })
 })
 
+router.get('/signup', (req, res) => {
+  res.render('seller/signup')
+})
+
+router.get('/login', (req, res) => {
+  res.render('seller/login')
+})
+
 router.get('/add-product', (req, res) => {
-  res.render('admin/add-product')
+  res.render('seller/add-product')
 })
 
 router.post('/add-product', async (req, res) => {
   try {
     let images = req.files?.image
     if (!images) {
-      return res.render('admin/add-product', { admin: true, error: 'Product image is required' })
+      return res.render('seller/add-product', { seller: true, error: 'Product image is required' })
     }
 
     images = Array.isArray(images) ? images : [images]
@@ -60,22 +76,22 @@ router.post('/add-product', async (req, res) => {
 
     const uploadedImages = await Promise.all(uploadPromises)
     await productHelpers.addProduct(req.body, uploadedImages)
-    res.redirect('/admin')
+    res.redirect('/seller')
   }
   catch (err) {
     console.error('Error in /add-product:', err)
-    res.render('admin/add-product', { admin: true, error: 'Failed to upload product images or save product.' })
+    res.render('seller/add-product', { seller: true, error: 'Failed to upload product images or save product.' })
   }
 })
 
 router.get('/edit-product/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((product) => {
-      res.render('admin/edit-product', { product })
+      res.render('seller/edit-product', { product })
     })
     .catch((err) => {
       console.log(err)
-      res.redirect('/admin')
+      res.redirect('/seller')
     })
 })
 
@@ -86,44 +102,44 @@ router.post('/submit-update/:id', (req, res) => {
       let imagePath = path.join(__dirname, '../public/images/products/', req.params.id + '.jpeg')
       newImage.mv(imagePath, (mvErr) => {
         if (!mvErr) {
-          res.redirect('/admin')
+          res.redirect('/seller')
         } else {
           console.log('Uploading image failed!')
-          res.redirect('/admin')
+          res.redirect('/seller')
         }
       })
     })
     .catch((err) => {
       console.log(err)
-      res.redirect('/admin')
+      res.redirect('/seller')
     })
 })
 
 router.get('/delete-product', (req, res) => {
   productHelpers.deleteProduct(req.query.id)
     .then((data) => {
-      res.redirect('/admin')
+      res.redirect('/seller')
     })
     .catch((err) => {
       console.log(err)
-      res.redirect('/admin')
+      res.redirect('/seller')
     })
 })
 
 router.get('/orders', (req, res) => {
-  res.render('admin/orders', { admin: true })
+  res.render('seller/orders', { seller: true })
 })
 
 router.get('/products', (req, res) => {
-  res.render('admin/products', { admin: true })
+  res.render('seller/products', { seller: true })
 })
 
 router.get('/stats', (req, res) => {
-  res.render('admin/stats', { admin: true })
+  res.render('seller/stats', { seller: true })
 })
 
 router.get('/users', (req, res) => {
-  res.render('admin/users', { admin: true })
+  res.render('seller/users', { seller: true })
 })
 
 module.exports = router;

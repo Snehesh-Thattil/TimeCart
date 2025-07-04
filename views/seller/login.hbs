@@ -1,17 +1,17 @@
 {{!-- CSS --}}
-<link rel="stylesheet" href="/stylesheets/user/login/login.css">
+<link rel="stylesheet" href="/stylesheets/seller/login/login.css">
 
 {{!-- HBS --}}
-<div class="login login_component user_login">
-    <h2>Login</h2>
+<div class="login login_component seller_login">
+    <h2>Seller Login</h2>
     {{#if loginErr}}<p>{{loginErr}}</p>{{/if}}
 
-    <form action="/login" method="post">
+    <form action="/seller/login" method="post">
         <input type="email" name="email" required placeholder="Enter email address">
         <input type="password" name="password" minlength="3" maxlength="32" required placeholder="Enter password">
         <div class="actions">
             <button type="submit">Login</button>
-            <a href="/signup">Create new account ?</a>
+            <a href="/seller/signup">Create new account ?</a>
         </div>
     </form>
 </div>

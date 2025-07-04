@@ -121,7 +121,7 @@
     gap: 0.5rem;
     height: 8rem;
   }
-  .header_component.admin-header {
+  .header_component.seller-header {
     height: 4rem;
   }
   .header_component .icons {
@@ -205,7 +205,7 @@
     height: 8rem;
     padding: 1rem 2.5rem;
   }
-  .header_component.admin-header {
+  .header_component.seller-header {
     height: 4rem;
   }
   .header_component .nav-items li a i {

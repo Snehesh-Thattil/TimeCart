@@ -1,0 +1,18 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/seller/login/login.css">
+
+{{!-- HBS --}}
+<div class="signup login_component ">
+    <h2>Seller Register</h2>
+    <form action="/seller/signup" method="post">
+        <input type="text" minlength="2" maxlength="15" required placeholder="Enter your name">
+        <input type="email" name="email" required placeholder="Enter email address">
+        <input type="password" name="password" minlength="8" maxlength="32" required placeholder="Enter password">
+        <input type="password" name="ConfirmPassword" minlength="8" maxlength="32" required
+            placeholder="Confirm password">
+        <div class="actions">
+            <button type="submit">Create account</button>
+            <a href="/seller/login">Already have an account ?</a>
+        </div>
+    </form>
+</div>

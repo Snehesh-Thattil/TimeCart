@@ -429,7 +429,7 @@ module.exports = {
                 }
 
                 const result = await db.get().collection(collections.ORDERS_COLLCTION).insertOne(order)
-                // await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
+                await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
 
                 resolve(result.insertedId)
             }
