@@ -19,7 +19,12 @@ module.exports = {
             else {
                 formData.password = await bcrypt.hash(formData.password, 10)
 
-                db.get().collection(collections.USERS_COLLECTION).insertOne(formData)
+                db.get().collection(collections.USERS_COLLECTION).insertOne(
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        password: formData.password
+                    })
                     .then((data) => {
                         console.log('user data after doSignup :', data)
                         resolve(data.insertedId)
@@ -37,6 +42,7 @@ module.exports = {
                     if (!user) return reject('No user found')
 
                     const passwordValidate = await bcrypt.compare(formData.password, user.password)
+                    
                     if (passwordValidate) {
                         resolve(user)
                     }

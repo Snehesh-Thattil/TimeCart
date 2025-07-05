@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
       res.redirect('/')
     })
     .catch((err) => {
-      req.session.userLoginErr = 'Invalid username or password! 😞'
+      req.session.userLoginErr = 'Invalid email or password! 😞'
       res.redirect('/login')
     })
 })

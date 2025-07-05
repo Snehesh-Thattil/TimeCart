@@ -3,18 +3,19 @@ var router = express.Router();
 const path = require('path')
 var productHelpers = require('../database/product-helpers');
 const { Timestamp } = require('mongodb');
-const fs = require('fs')
+const fs = require('fs');
+const sellerHelpers = require('../database/seller-helpers');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.sellerLoggedIn) {
     next()
   } else {
-    res.redirect('/login')
+    res.redirect('/seller/login')
   }
 }
 
 /* GET sellers page. */
-router.get('/', function (req, res, next) {
+router.get('/', verifyLogin, function (req, res, next) {
   productHelpers.getProducts()
     .then((products) => {
       res.render('seller/manage-products', { seller: true, products });
@@ -28,8 +29,53 @@ router.get('/signup', (req, res) => {
   res.render('seller/signup')
 })
 
+router.post('/signup', (req, res) => {
+  sellerHelpers.doSignup(req.body)
+    .then((seller) => {
+      req.session.sellerLoggedIn = true
+      req.session.seller = seller
+      res.redirect('/seller')
+    })
+    .catch((err) => {
+      console.log(err)
+
+      if (err = 'Email already exists') {
+        req.session.sellerLoginErr = 'Email already exist! 🤩, Please login here:'
+        res.redirect('/seller/login')
+      } else {
+        req.session.sellerLoginErr = 'Something went wrong! 😱, Please Try again:'
+        res.redirect('/seller/signup')
+      }
+    })
+})
+
 router.get('/login', (req, res) => {
-  res.render('seller/login')
+  if (req.session.sellerLoggedIn) {
+    res.redirect('/seller')
+  }
+  else {
+    res.render('seller/login', { loginErr: req.session.sellerLoginErr })
+    req.session.sellerLoginErr = false
+  }
+})
+
+router.post('/login', (req, res) => {
+  sellerHelpers.doLogin(req.body)
+    .then((seller) => {
+      req.session.sellerLoggedIn = true
+      req.session.seller = seller
+      res.redirect('/')
+    })
+    .catch((err) => {
+      req.session.userLoginErr = 'Invalid email or password! 😞'
+      res.redirect('/login')
+    })
+})
+
+router.get('/logout', (req, res) => {
+  req.session.seller = null
+  req.session.sellerLoggedIn = false
+  res.redirect('/seller')
 })
 
 router.get('/add-product', (req, res) => {
