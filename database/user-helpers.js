@@ -12,26 +12,29 @@ module.exports = {
     doSignup: (formData) => {
         return new Promise(async (resolve, reject) => {
 
-            const alreadyExists = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
-            if (alreadyExists) {
-                reject('Email already exists')
-            }
-            else {
-                formData.password = await bcrypt.hash(formData.password, 10)
+            try {
+                if (formData.password !== formData.confirmPassword) return reject('Passwords do not match')
+                    
+                const alreadyExists = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
+                if (alreadyExists) {
+                    reject('Email already exists')
+                }
+                else {
+                    formData.password = await bcrypt.hash(formData.password, 10)
 
-                db.get().collection(collections.USERS_COLLECTION).insertOne(
-                    {
-                        name: formData.name,
-                        email: formData.email,
-                        password: formData.password
-                    })
-                    .then((data) => {
-                        console.log('user data after doSignup :', data)
-                        resolve(data.insertedId)
-                    })
-                    .catch((err) => {
-                        reject(err)
-                    })
+                    await db.get().collection(collections.USERS_COLLECTION).insertOne(
+                        {
+                            name: formData.name,
+                            email: formData.email,
+                            password: formData.password
+                        })
+
+                    const user = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
+                    resolve(user)
+                }
+            }
+            catch (err) {
+                reject(err)
             }
         })
     },
@@ -42,7 +45,7 @@ module.exports = {
                     if (!user) return reject('No user found')
 
                     const passwordValidate = await bcrypt.compare(formData.password, user.password)
-                    
+
                     if (passwordValidate) {
                         resolve(user)
                     }

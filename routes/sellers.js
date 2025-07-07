@@ -26,7 +26,11 @@ router.get('/', verifyLogin, function (req, res, next) {
 })
 
 router.get('/signup', (req, res) => {
-  res.render('seller/signup')
+  if (req.session.sellerLoggedIn) {
+    res.redirect('/seller')
+  } else {
+    res.render('seller/signup')
+  }
 })
 
 router.post('/signup', (req, res) => {
@@ -37,12 +41,15 @@ router.post('/signup', (req, res) => {
       res.redirect('/seller')
     })
     .catch((err) => {
-      console.log(err)
-
       if (err = 'Email already exists') {
         req.session.sellerLoginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/seller/login')
-      } else {
+      }
+      else if (err = 'Passwords do not match') {
+        req.session.sellerLoginErr = 'Passwords do not match! ⚠️'
+        res.redirect('/seller/signup')
+      }
+      else {
         req.session.sellerLoginErr = 'Something went wrong! 😱, Please Try again:'
         res.redirect('/seller/signup')
       }
@@ -78,7 +85,7 @@ router.get('/logout', (req, res) => {
   res.redirect('/seller')
 })
 
-router.get('/add-product', (req, res) => {
+router.get('/add-product', verifyLogin, (req, res) => {
   res.render('seller/add-product')
 })
 

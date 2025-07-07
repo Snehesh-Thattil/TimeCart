@@ -46,11 +46,14 @@ router.post('/signup', (req, res) => {
       res.redirect('/')
     })
     .catch((err) => {
-      console.log(err)
       if (err = 'Email already exists') {
         req.session.userLoginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/login')
+      } else if (err = 'Passwords do not match') {
+        req.session.userLoginErr = 'Passwords do not match! ⚠️'
+        res.redirect('/signup')
       } else {
+        req.session.userLoginErr = 'Something went wrong! 😱, Please Try again:'
         res.redirect('/signup')
       }
     })

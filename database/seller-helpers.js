@@ -7,6 +7,8 @@ module.exports = {
     doSignup: (formData) => {
         return new Promise(async (resolve, reject) => {
             try {
+                if (formData.password !== formData.confirmPassword) return reject('Passwords do not match')
+
                 const alreadyExists = await db.get().collection(collections.SELLERS_COLLECTION).findOne({ email: formData.email })
                 if (alreadyExists) {
                     reject('Seller Email Already Exists')
@@ -14,14 +16,14 @@ module.exports = {
                 else {
                     formData.password = await bcrypt.hash(formData.password, 10)
 
-                    const insertedData = await db.get().collection(collections.SELLERS_COLLECTION).insertOne(
+                    await db.get().collection(collections.SELLERS_COLLECTION).insertOne(
                         {
                             name: formData.sellerName,
                             email: formData.email,
                             password: formData.password
                         })
-
-                    resolve(insertedData.insertedId)
+                    const seller = await db.get().collection(collections.SELLERS_COLLECTION).findOne({ email: formData.email })
+                    resolve(seller)
                 }
             }
             catch (err) {
