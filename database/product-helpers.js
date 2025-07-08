@@ -3,27 +3,44 @@ const collections = require('./collections')
 const { ObjectId } = require('mongodb')
 
 module.exports = {
-    addProduct: (product, imgNames) => {
+    addProduct: (product, imgNames, seller) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).insertOne({ ...product, selling_price: parseInt(product.selling_price), original_price: parseInt(product.original_price), imgNames: imgNames, coverImg: imgNames[0] })
-                .then((data) => {
-                    console.log('data added to collection :-', data)
-                    resolve(data.insertedId)
+            db.get().collection(collections.PRODUCTS_COLLECTION).insertOne(
+                {
+                    ...product,
+                    selling_price: parseInt(product.selling_price),
+                    original_price: parseInt(product.original_price),
+                    imgNames: imgNames,
+                    coverImg: imgNames[0],
+                    seller: {
+                        _id: seller._id,
+                        name: seller.name,
+                        email: seller.email,
+                    }
+                }
+            ).then((data) => resolve(data.insertedId)).catch((err) => reject(err))
+        })
+    },
+    getProducts: () => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).find().toArray()
+                .then((products) => {
+                    resolve(products)
                 })
                 .catch((err) => {
                     reject(err)
                 })
         })
     },
-    getProducts: () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const products = await db.get().collection(collections.PRODUCTS_COLLECTION).find().toArray()
-                resolve(products)
-            }
-            catch (err) {
-                reject(err)
-            }
+    getSellerProducts: (sellerId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).find({ 'seller._id': sellerId }).toArray()
+                .then((products) => {
+                    resolve(products)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
         })
     },
     deleteProduct: (productId) => {

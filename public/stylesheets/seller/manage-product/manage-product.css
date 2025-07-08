@@ -65,6 +65,10 @@
   background-color: rgb(56, 54, 54);
   color: #CBA74E;
 }
+.manage-products_component .table-wrapper .empty-products {
+  padding: 5rem;
+  text-align: center;
+}
 .manage-products_component .add-btn {
   padding: 0.5rem 1rem;
   width: 15rem;

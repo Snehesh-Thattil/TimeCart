@@ -16,7 +16,7 @@ const verifyLogin = (req, res, next) => {
 
 /* GET sellers page. */
 router.get('/', verifyLogin, function (req, res, next) {
-  productHelpers.getProducts()
+  productHelpers.getSellerProducts(req.session.seller._id)
     .then((products) => {
       res.render('seller/manage-products', { seller: true, products });
     })
@@ -71,11 +71,11 @@ router.post('/login', (req, res) => {
     .then((seller) => {
       req.session.sellerLoggedIn = true
       req.session.seller = seller
-      res.redirect('/')
+      res.redirect('/seller')
     })
     .catch((err) => {
-      req.session.userLoginErr = 'Invalid email or password! 😞'
-      res.redirect('/login')
+      req.session.sellerLoginErr = 'Invalid email or password! 😞'
+      res.redirect('/seller/login')
     })
 })
 
@@ -128,7 +128,7 @@ router.post('/add-product', async (req, res) => {
     })
 
     const uploadedImages = await Promise.all(uploadPromises)
-    await productHelpers.addProduct(req.body, uploadedImages)
+    await productHelpers.addProduct(req.body, uploadedImages, req.session.seller)
     res.redirect('/seller')
   }
   catch (err) {
