@@ -13,12 +13,15 @@ module.exports = {
                     imgNames: imgNames,
                     coverImg: imgNames[0],
                     seller: {
-                        _id: seller._id,
+                        _id: ObjectId.createFromHexString(seller._id),
                         name: seller.name,
                         email: seller.email,
                     }
-                }
-            ).then((data) => resolve(data.insertedId)).catch((err) => reject(err))
+                }).then((data) => {
+                    resolve(data.insertedId)
+                }).catch((err) => {
+                    reject(err)
+                })
         })
     },
     getProducts: () => {
@@ -34,7 +37,7 @@ module.exports = {
     },
     getSellerProducts: (sellerId) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).find({ 'seller._id': sellerId }).toArray()
+            db.get().collection(collections.PRODUCTS_COLLECTION).find({ 'seller._id': ObjectId.createFromHexString(sellerId) }).toArray()
                 .then((products) => {
                     resolve(products)
                 })
@@ -43,20 +46,12 @@ module.exports = {
                 })
         })
     },
-    deleteProduct: (productId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).deleteOne({ _id: ObjectId.createFromHexString(productId) })
-                .then(() => {
-                    resolve(true)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
-        })
-    },
     getProductDetails: (productId) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(productId) })
+            db.get().collection(collections.PRODUCTS_COLLECTION).findOne(
+                {
+                    _id: ObjectId.createFromHexString(productId)
+                })
                 .then((data) => {
                     resolve(data)
                 })
@@ -65,18 +60,25 @@ module.exports = {
                 })
         })
     },
-    updateProduct: (productId, update) => {
+    updateProduct: (productId, update, newImages, sellerId) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).updateOne({ _id: ObjectId.createFromHexString(productId) }, {
-                $set: {
-                    name: update.name,
-                    category: update.category,
-                    price: update.price,
-                    description: update.description
-                }
-            })
-                .then((res) => {
-                    console.log(res)
+            db.get().collection(collections.PRODUCTS_COLLECTION).updateOne(
+                {
+                    _id: ObjectId.createFromHexString(productId),
+                    'seller._id': ObjectId.createFromHexString(sellerId)
+                },
+                {
+                    $set: {
+                        brand_name: update.brand_name,
+                        product_name: update.product_name,
+                        type: update.type,
+                        selling_price: parseFloat(update.selling_price),
+                        original_price: parseFloat(update.original_price),
+                        description: update.description,
+                        imgNames: newImages.map((_, i) => `${productId}_${i}.jpeg`)
+                    }
+                })
+                .then(() => {
                     resolve(true)
                 })
                 .catch((err) => {
@@ -84,4 +86,19 @@ module.exports = {
                 })
         })
     },
+    deleteProduct: (productId, sellerId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCTS_COLLECTION).deleteOne(
+                {
+                    _id: ObjectId.createFromHexString(productId),
+                    'seller._id': ObjectId.createFromHexString(sellerId)
+                })
+                .then(() => {
+                    resolve(true)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    }
 }

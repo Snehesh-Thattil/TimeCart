@@ -90,6 +90,7 @@ router.get('/logout', (req, res) => {
 router.get('/view-item/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((data) => {
+      console.log(data)
       res.render('user/view-item', { product: data, user: req.session.user })
     })
     .catch((err) => {

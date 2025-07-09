@@ -140,6 +140,7 @@ router.post('/add-product', async (req, res) => {
 router.get('/edit-product/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((product) => {
+      console.log(product)
       res.render('seller/edit-product', { product })
     })
     .catch((err) => {
@@ -149,11 +150,14 @@ router.get('/edit-product/:id', (req, res) => {
 })
 
 router.post('/submit-update/:id', (req, res) => {
-  productHelpers.updateProduct(req.params.id, req.body)
+  let newImages = req.files.image
+  newImages = Array.isArray(images) ? images : [images]
+
+  productHelpers.updateProduct(req.params.id, req.body, newImages, req.session.seller._id)
     .then(() => {
-      let newImage = req.files.image
       let imagePath = path.join(__dirname, '../public/images/products/', req.params.id + '.jpeg')
-      newImage.mv(imagePath, (mvErr) => {
+      
+      newImages.mv(imagePath, (mvErr) => {
         if (!mvErr) {
           res.redirect('/seller')
         } else {
@@ -169,8 +173,8 @@ router.post('/submit-update/:id', (req, res) => {
 })
 
 router.get('/delete-product', (req, res) => {
-  productHelpers.deleteProduct(req.query.id)
-    .then((data) => {
+  productHelpers.deleteProduct(req.query.id, req.session.seller._id)
+    .then(() => {
       res.redirect('/seller')
     })
     .catch((err) => {
