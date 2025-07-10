@@ -14,7 +14,7 @@ module.exports = {
 
             try {
                 if (formData.password !== formData.confirmPassword) return reject('Passwords do not match')
-                    
+
                 const alreadyExists = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: formData.email })
                 if (alreadyExists) {
                     reject('Email already exists')
@@ -283,6 +283,7 @@ module.exports = {
                     },
                     {
                         $project: {
+                            _id: 0,
                             original_total: 1,
                             discounted_total: 1,
                             coupon_discount: 1,
@@ -392,8 +393,14 @@ module.exports = {
                 })
         })
     },
-    placeOrder: (orderDetails, products, cartTotal) => {
+    placeOrder: (orderDetails, user, cartInfo) => {
         return new Promise(async (resolve, reject) => {
+
+            // Payment and Order status validation
+            const orderStatus = orderDetails.paymentMethod === 'COD' ? 'placed' : 'pending'
+
+            // Generate same orderId for each product order element
+            const orderId = new ObjectId()
 
             // Identify order date and expected delivery date:
             const now = new Date()
@@ -409,38 +416,80 @@ module.exports = {
             expectedDate.setDate(now.getDate() + 7)
             const expectedDelivery = expectedDate.toLocaleDateString('en-IN', formatOptions)
 
-            // Payment and Order status validation
-            const orderStatus = orderDetails.paymentMethod === 'COD' ? 'placed' : 'pending'
+            const date = {
+                timestamp: Date.now(),
+                iso: new Date().toISOString(),
+                orderDate,
+                expectedDelivery
+            }
+
+            // Delivery address
+            const deliveryDetails = {
+                addressLine1: orderDetails.addressLine1,
+                addressLine2: orderDetails.addressLine2,
+                district: orderDetails.district,
+                pincode: orderDetails.pincode,
+            }
+
+            // User contact details
+            const userDetails = {
+                userId: ObjectId.createFromHexString(user._id),
+                name: user.name,
+                mobile: orderDetails.mobile,
+                email: orderDetails.email
+            }
 
             try {
-                const order = {
-                    deliveryDetails: {
-                        addressLine1: orderDetails.addressLine1,
-                        addressLine2: orderDetails.addressLine2,
-                        district: orderDetails.district,
-                        pincode: orderDetails.pincode,
+                const productOverviews = await db.get().collection(collections.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId.createFromHexString(user._id) }
                     },
-                    userDetails: {
-                        userId: ObjectId.createFromHexString(orderDetails.userId),
-                        mobile: orderDetails.mobile,
-                        email: orderDetails.email
+                    {
+                        $unwind: '$products'
                     },
-                    orderValue: { ...cartTotal },
-                    products,
-                    paymentMethod: orderDetails.paymentMethod,
-                    orderStatus,
-                    date: {
-                        timestamp: Date.now(),
-                        iso: new Date().toISOString(),
-                        orderDate,
-                        expectedDelivery
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            localField: 'products.item',
+                            foreignField: '_id',
+                            as: 'productFetched'
+                        }
+                    },
+                    {
+                        $addFields: {
+                            productDetails: { $arrayElemAt: ['$productFetched', 0] }
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            productId: '$productDetails._id',
+                            sellerId: '$productDetails.seller._id',
+                            price: '$productDetails.selling_price',
+                            quantity: '$products.quantity',
+                            total: { $multiply: ['$products.quantity', '$productDetails.selling_price'] }
+                        }
                     }
+                ]).toArray()
+
+                for (const overview of productOverviews) {
+                    const order = {
+                        orderId,
+                        deliveryDetails,
+                        userDetails,
+                        productInfo: overview,
+                        paymentMethod: orderDetails.paymentMethod,
+                        cartInfo,
+                        date,
+                        orderStatus
+                    }
+
+                    await db.get().collection(collections.ORDERS_COLLECTION).insertOne(order)
                 }
 
-                const result = await db.get().collection(collections.ORDERS_COLLCTION).insertOne(order)
-                await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(orderDetails.userId) })
+                // await db.get().collection(collections.CART_COLLECTION).deleteOne({ user: ObjectId.createFromHexString(user._id) })
 
-                resolve(result.insertedId)
+                resolve(orderId)
             }
             catch (err) {
                 reject(err)
@@ -449,7 +498,7 @@ module.exports = {
     },
     getOrderDetails: (orderId) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.ORDERS_COLLCTION).findOne({ _id: ObjectId.createFromHexString(orderId) })
+            db.get().collection(collections.ORDERS_COLLECTION).findOne({ orderId: ObjectId.createFromHexString(orderId) })
                 .then((result) => {
                     resolve(result)
                 })
@@ -461,17 +510,14 @@ module.exports = {
     getOrders: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const orders = await db.get().collection(collections.ORDERS_COLLCTION).aggregate([
+                const orders = await db.get().collection(collections.ORDERS_COLLECTION).aggregate([
                     {
                         $match: { 'userDetails.userId': ObjectId.createFromHexString(userId) }
                     },
                     {
-                        $unwind: '$products'
-                    },
-                    {
                         $lookup: {
                             from: collections.PRODUCTS_COLLECTION,
-                            localField: 'products.item',
+                            localField: 'productInfo.productId',
                             foreignField: '_id',
                             as: 'productDetails'
                         }
@@ -481,14 +527,13 @@ module.exports = {
                     },
                     {
                         $project: {
-                            orderId: '$_id',
+                            orderId,
                             userDetails: 1,
                             deliveryDetails: 1,
+                            cartInfo: 1,
                             paymentMethod: 1,
-                            paymentStatus: 1,
                             orderStatus: 1,
                             date: 1,
-                            orderValue: 1,
                             quantity: '$products.quantity',
                             product: '$productDetails'
                         }
@@ -540,16 +585,20 @@ module.exports = {
         })
     },
     changeOrderStatus: (orderId) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!ObjectId.isValid(orderId)) return reject(new Error("Invalid orderId"))
 
-            db.get().collection(collections.ORDERS_COLLCTION).updateOne(
-                {
-                    _id: ObjectId.createFromHexString(orderId)
-                },
-                {
-                    $set: { orderStatus: 'placed' }
-                }
-            ).then(() => resolve(true)).catch((err) => reject(err))
+                const result = await db.get().collection(collections.ORDERS_COLLECTION).updateMany(
+                    { orderId: ObjectId.createFromHexString(orderId) },
+                    { $set: { orderStatus: 'placed' } }
+                )
+
+                resolve(result.modifiedCount > 0)
+            }
+            catch (err) {
+                reject(err)
+            }
         })
     }
 }

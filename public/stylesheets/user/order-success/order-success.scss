@@ -1,6 +1,6 @@
 .order-success_page {
     width: 100%;
-    height: 85vh;
+    height: 88.5vh;
     color: goldenrod;
     display: flex;
     align-items: center;
@@ -47,6 +47,10 @@
 
             .content {
                 padding: 1rem;
+
+                hr {
+                    margin: 3px 0;
+                }
 
                 p {
                     display: flex;

@@ -72,8 +72,8 @@ module.exports = {
                         brand_name: update.brand_name,
                         product_name: update.product_name,
                         type: update.type,
-                        selling_price: parseFloat(update.selling_price),
-                        original_price: parseFloat(update.original_price),
+                        selling_price: parseInt(update.selling_price),
+                        original_price: parseInt(update.original_price),
                         description: update.description,
                         imgNames: newImages.map((_, i) => `${productId}_${i}.jpeg`)
                     }

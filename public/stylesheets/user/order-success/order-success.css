@@ -1,6 +1,6 @@
 .order-success_page {
   width: 100%;
-  height: 85vh;
+  height: 88.5vh;
   color: goldenrod;
   display: flex;
   align-items: center;
@@ -49,6 +49,11 @@
 .order-success_page .order-infos .contact .content,
 .order-success_page .order-infos .summary .content {
   padding: 1rem;
+}
+.order-success_page .order-infos .address .content hr,
+.order-success_page .order-infos .contact .content hr,
+.order-success_page .order-infos .summary .content hr {
+  margin: 3px 0;
 }
 .order-success_page .order-infos .address .content p,
 .order-success_page .order-infos .contact .content p,

@@ -4,8 +4,8 @@
 {{!-- HBS --}}
 <section class="add-product product-form_component">
     <h2>Edit Product</h2>
-    <form action="/seller/submit-update/{{product._id}}" method="post" enctype="multipart/form-data">
 
+    <form action="/seller/submit-update/{{product._id}}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="">Name and brand</label>
             <input type="text" name="brand_name" placeholder="Brand name" value="{{product.brand_name}}" required>
@@ -64,13 +64,15 @@
 
         <div class="form-group">
             <label for="image">Images</label>
+            
             <div class="img-upload" >
                 <img src="/images/resources/image-upload-icon.png" alt="">
                 <div class="upload-right">
                     <h4>UPLOAD YOUR PRODUCT IMAGES</h4>
-                    <p>You can upload upto 10 images</p>
+                    <p>You can upload upto 10 images in total</p>
                 </div>
             </div>
+
             <div class="preview-container" id="imagePreviewContainer">
                 {{#each product.imgNames}}
                 <div class="wrapper">
@@ -79,7 +81,8 @@
                 </div>
                 {{/each}}
             </div>
-            <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;" required>
+
+            <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;">
         </div>
 
         <div class="form-group">
@@ -87,7 +90,6 @@
         </div>
     </form>
 </section>
-
 
 {{!-- JS --}}
 <script src="/javascripts/seller/edit-product.js"></script>

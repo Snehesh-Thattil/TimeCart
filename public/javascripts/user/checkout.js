@@ -71,8 +71,6 @@ function razorpayPayment(rzpayOrder) {
 }
 
 function verifyPayment(response, rzpayOrder) {
-    console.log('rzpayOrder Reciept :', rzpayOrder.receipt)
-
     $.ajax({
         url: '/verify-payment',
         method: 'post',

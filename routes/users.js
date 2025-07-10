@@ -184,10 +184,8 @@ router.get('/checkout', verifyLogin, (req, res) => {
 
 router.post('/place-order', async (req, res) => {
   try {
-    const cartTotal = await userHelpers.getCartTotal(req.session.user._id)
-    const CartOverview = await userHelpers.getCartOverview(req.body.orderDetails.userId)
-
-    const orderId = await userHelpers.placeOrder(req.body.orderDetails, CartOverview, cartTotal)
+    const cartInfo = await userHelpers.getCartTotal(req.session.user._id)
+    const orderId = await userHelpers.placeOrder(req.body.orderDetails, req.session.user, cartInfo)
 
     if (req.body.orderDetails.paymentMethod === 'COD') {
       res.json({ paymentMethod: 'COD', orderId })

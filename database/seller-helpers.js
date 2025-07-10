@@ -50,5 +50,32 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    getOrders: (sellerId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const orders = await db.get().collection(collections.ORDERS_COLLECTION).aggregate([
+                    {
+                        $match: { 'productInfo.sellerId': ObjectId.createFromHexString(sellerId) }
+                    },
+                    {
+                        $lookup: {
+                            from: collections.PRODUCTS_COLLECTION,
+                            localField: 'productInfo.productId',
+                            foreignField: '_id',
+                            as: 'productDetails'
+                        }
+                    },
+                    {
+                        $unwind: '$productDetails'
+                    }
+                ]).toArray()
+
+                resolve(orders)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }

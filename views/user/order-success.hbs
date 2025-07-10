@@ -9,27 +9,30 @@
 
     <div class="order-infos">
         <div class="address">
-            <p class="heading"><i class="fa-solid fa-truck"></i>Delivery Address</p>
-            <p class="content">{{user.name}}, {{order.deliveryDetails.addressLine1}},
+            <p class="heading"><i class="fa-solid fa-truck"></i>Delivery Details</p>
+            <p class="content">Address: {{order.deliveryDetails.addressLine1}},
                 {{order.deliveryDetails.addressLine2}},
-                {{order.deliveryDetails.district}}-{{order.deliveryDetails.pincode}} </p>
+                {{order.deliveryDetails.district}}-{{order.deliveryDetails.pincode}}
+                <br> <br>
+                Delivery Expected: {{order.date.expectedDelivery}}
+            </p>
         </div>
 
         <div class="contact">
             <p class="heading"><i class="fa-solid fa-phone"></i>Contact Details</p>
-            <p class="content">Email: {{order.userDetails.email}} <br> Phone: +91 {{order.userDetails.mobile}}</p>
+            <p class="content">Name: {{order.userDetails.name}} <br> Phone: +91 {{order.userDetails.mobile}}
+                <br> Email: {{order.userDetails.email}}
+            </p>
         </div>
 
         <div class="summary">
             <p class="heading"><i class="fa-solid fa-clipboard-list"></i>Order Summary</p>
             <div class="content">
-                <p>Sub Total: <span>₹ {{order.orderValue.discounted_total}}</span> </p>
-                <p>Coupon Value: <span>₹ {{order.orderValue.coupon_discount}}</span> </p>
-                <p>Delivery Charges: <span>₹ {{order.orderValue.delivery_charges}}</span> </p>
-                <br>
+                <p>Sub Total: <span>₹ {{order.cartInfo.discounted_total}}</span> </p>
+                <p>Coupon Value: <span>₹ {{order.cartInfo.coupon_discount}}</span> </p>
+                <p>Delivery Charges: <span>₹ {{order.cartInfo.delivery_charges}}</span> </p>
                 <hr>
-                <br>
-                <p>Total: <span>₹ {{order.orderValue.final_payable}}</span> </p>
+                <p>Total: <span>₹ {{order.cartInfo.final_payable}}</span> </p>
             </div>
         </div>
 
