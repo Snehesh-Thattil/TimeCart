@@ -1,1 +1,56 @@
-<h1>Yet to Design</h1>
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/seller/orders/orders.css">
+
+<div class="orders_page">
+    <div class="cards">
+        <p class="title">Orders</p>
+        {{#each orders}}
+        <div class="card">
+            <a href="/view-item/{{this.productDetails._id}}"> <img
+                    src="/images/products/{{this.productDetails.coverImg}}" alt=""></a>
+            <div class="details">
+                <div class="name">
+                    <p class="brand-name">{{this.productDetails.brand_name}}</p>
+                    <p class="product-name">{{this.productDetails.product_name}}</p>
+                </div>
+                <div class="price">
+                    <h4>₹{{this.productInfo.price}} <span>₹{{this.productDetails.original_price}}</span></h4>
+                    <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
+                </div>
+                <div class="order-status" id="{{this._id}}">
+                    <p>Order placed on : {{this.date.orderDate}} 🛍️</p>
+
+                    {{#if (eq this.orderStatus 'placed')}}
+                    <button class="actions-btn" onclick="orderStatusChange('{{this._id}}','packaged')">Mark as
+                        packaged 📦</button>
+
+                    {{else if (eq this.orderStatus 'packaged')}}
+                    <p>Item packaged on : {{this.date.packaged}} 📦</p>
+                    <button class="actions-btn" onclick="orderStatusChange('{{this._id}}','shipped')">Mark as
+                        shipped 🏪</button>
+
+                    {{else if (eq this.orderStatus 'shipped')}}
+                    <p>Item shipped on : {{this.date.shipped}} 🏪</p>
+                    <button class="actions-btn" onclick="orderStatusChange('{{this._id}}','outForDelivery')">Mark as out
+                        for delivery ☎️</button>
+
+                    {{else if (eq this.orderStatus 'outForDelivery')}}
+                    <p>Item shipped on : {{this.date.shipped}} 🏪</p>
+                    <p>Item out for delivery : {{this.date.outForDelivery}} ☎️</p>
+                    <button class="actions-btn" onclick="orderStatusChange('{{this._id}}','delivered')">Mark as
+                        Delivered ✅</button>
+
+                    {{else if (eq this.orderStatus 'delivered')}}
+                    <p>Item shipped on : {{this.date.shipped}} 🏪</p>
+                    <p>Item delivered on : {{this.date.delivered}} ✅</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+{{!-- JS --}}
+<script src="/javascripts/seller/orders.js"></script>

@@ -18,7 +18,7 @@ const verifyLogin = (req, res, next) => {
 router.get('/', verifyLogin, function (req, res, next) {
   productHelpers.getSellerProducts(req.session.seller._id)
     .then((products) => {
-      res.render('seller/manage-products', { seller: true, products });
+      res.render('seller/manage-products', { seller: req.session.seller, products });
     })
     .catch((err) => {
       console.log('Error getting products :', err)
@@ -86,14 +86,14 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/add-product', verifyLogin, (req, res) => {
-  res.render('seller/add-product')
+  res.render('seller/add-product', { seller: req.session.seller })
 })
 
 router.post('/add-product', async (req, res) => {
   try {
     let images = req.files?.image
     if (!images) {
-      return res.render('seller/add-product', { seller: true, error: 'Product image is required' })
+      return res.render('seller/add-product', { error: 'Product image is required', seller: req.session.seller })
     }
 
     images = Array.isArray(images) ? images : [images]
@@ -133,14 +133,14 @@ router.post('/add-product', async (req, res) => {
   }
   catch (err) {
     console.error('Error in /add-product:', err)
-    res.render('seller/add-product', { seller: true, error: 'Failed to upload product images or save product.' })
+    res.render('seller/add-product', { seller: req.session.seller, error: 'Failed to upload product images or save product.' })
   }
 })
 
 router.get('/edit-product/:id', (req, res) => {
   productHelpers.getProductDetails(req.params.id)
     .then((product) => {
-      res.render('seller/edit-product', { product })
+      res.render('seller/edit-product', { product, seller: req.session.seller })
     })
     .catch((err) => {
       console.log(err)
@@ -151,8 +151,6 @@ router.get('/edit-product/:id', (req, res) => {
 router.post('/submit-update/:id', (req, res) => {
   let newImages = req.files.image
   newImages = Array.isArray(images) ? images : [images]
-
-  console.log('NEW IMAGES :', newImages)
 
   productHelpers.updateProduct(req.params.id, req.body, newImages, req.session.seller._id)
     .then(() => {
@@ -184,30 +182,38 @@ router.get('/delete-product', (req, res) => {
     })
 })
 
-router.get('/orders', async (req, res) => {
+router.get('/orders', verifyLogin, async (req, res) => {
   try {
-    // const sellerProducts = await productHelpers.getSellerProducts(req.session.seller._id)
     const orders = await sellerHelpers.getOrders(req.session.seller._id)
-
-    res.render('/seller/orders')
+    res.render('seller/orders', { orders, seller: req.session.seller })
   }
   catch (err) {
     console.log(err)
     res.redirect('/seller')
   }
+})
 
+router.post('/change-order-status', (req, res) => {
+  sellerHelpers.changeOrderStatus(req.body._id, req.body.action)
+    .then((updatedOrder) => {
+      res.json(updatedOrder)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.redirect('/')
+    })
 })
 
 router.get('/products', (req, res) => {
-  res.render('seller/products', { seller: true })
+  res.render('seller/products', { seller: req.session.seller })
 })
 
 router.get('/stats', (req, res) => {
-  res.render('seller/stats', { seller: true })
+  res.render('seller/stats', { seller: req.session.seller })
 })
 
 router.get('/users', (req, res) => {
-  res.render('seller/users', { seller: true })
+  res.render('seller/users', { seller: req.session.seller })
 })
 
 module.exports = router;

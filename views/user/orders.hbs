@@ -6,25 +6,46 @@
         <p class="title">Orders</p>
         {{#each orders}}
         <div class="card">
-            <a href="/view-item/{{this._id}}"> <img src="/images/products/{{this.product.coverImg}}" alt=""></a>
+            <a href="/view-item/{{this.product._id}}"> <img src="/images/products/{{this.product.coverImg}}" alt=""></a>
             <div class="details">
                 <div class="name">
                     <p class="brand-name">{{this.product.brand_name}}</p>
                     <p class="product-name">{{this.product.product_name}}</p>
                 </div>
                 <div class="price">
-                    <h4>₹{{this.product.selling_price}} <span>₹{{this.product.original_price}}</span></h4>
-
-                    <p class="quantity">Quantity : {{this.quantity}}</p>
+                    <h4>₹{{this.productInfo.price}} <span>₹{{this.product.original_price}}</span></h4>
+                    <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
                 </div>
-                <div class="delivery">
-                    <h4 class="date">Delivery expected on : <br> {{this.date.expectedDelivery}}</h4>
-                    <p class="order-status">Order successfully placed</p>
+                <div class="order-status">
+                    {{#if (eq this.orderStatus 'pending')}}
+                    <p class="order-status">Order payment is incomplete</p>
+                    <a href="/make-payment/{{this.product._id}}" class="actions-btn">Make Payment</a>
 
-                    {{#if (eq this.orderStatus 'delivered')}}
-                    <a href="/review-product/{{this.product._id}}" class="actions-btn">Review</a>
-                    {{else}}
+                    {{else if (eq this.orderStatus 'placed')}}
+                    <h4 class="date">Delivery expected on : {{this.date.expectedDelivery}}</h4>
+                    <p class="order-status">Order placed successfully 🛍️</p>
                     <a href="/track-order/{{this.orderId}}" class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'packaged')}}
+                    <h4 class="date">Delivery expected on : {{this.date.packaged}}</h4>
+                    <p class="order-status">Order packaged and sent to ship 📦</p>
+                    <a href="/track-order/{{this.orderId}}" class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'shipped')}}
+                    <h4 class="date">Delivery expected on : {{this.date.shipped}}</h4>
+                    <p class="order-status">Items shipped to your nearest hub 🏪</p>
+                    <a href="/track-order/{{this.orderId}}" class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'outForDelivery')}}
+                    <h4 class="date">Delivery expected on : {{this.date.outForDelivery}}</h4>
+                    <p class="order-status">Order is out for delivery ☎️</p>
+                    <a href="/track-order/{{this.orderId}}" class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'delivered')}}
+                    <h4 class="date">✅ Order delivered successfully</h4>
+                    <p class="order-status">Item Delivered on : {{this.date.delivered}}</p>
+                    <a href="/review-product/{{this.product._id}}" class="actions-btn">Review Product</a>
+
                     {{/if}}
                 </div>
             </div>

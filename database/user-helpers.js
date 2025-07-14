@@ -527,9 +527,10 @@ module.exports = {
                     },
                     {
                         $project: {
-                            orderId,
+                            orderId: 1,
                             userDetails: 1,
                             deliveryDetails: 1,
+                            productInfo: 1,
                             cartInfo: 1,
                             paymentMethod: 1,
                             orderStatus: 1,

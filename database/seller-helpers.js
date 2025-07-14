@@ -77,5 +77,40 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    changeOrderStatus: (_id, action) => {
+        return new Promise(async (resolve, reject) => {
+
+            // Identify order date and expected delivery date:
+            const formatOptions = {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                timeZone: 'Asia/Kolkata'
+            }
+
+            const now = new Date()
+            const date = now.toLocaleDateString('en-IN', formatOptions)
+
+            try {
+                await db.get().collection(collections.ORDERS_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(_id)
+                    },
+                    {
+                        $set: {
+                            'orderStatus': action,
+                            [`date.${action}`]: date
+                        }
+                    }
+                )
+
+                const updatedOrder = await db.get().collection(collections.ORDERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(_id) })
+                resolve(updatedOrder)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }

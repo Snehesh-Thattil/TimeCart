@@ -12,21 +12,29 @@ const verifyLogin = (req, res, next) => {
 }
 
 /* GET home page. */
-router.get('/', async function (req, res, next) {
-  const user = req.session.user
-  let cartCount = null
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await productHelpers.getProducts()
+    res.render('landing', { user: req.session.user })
+  }
+  catch (err) {
+    console.log(err)
+  }
+})
 
+router.get('/products', async (req, res) => {
   try {
     const products = await productHelpers.getProducts()
 
-    if (user) {
-      cartCount = await userHelpers.getCartCount(user._id)
+    let cartCount = null
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
     }
-
-    res.render('user/view-products', { products, cartCount, user, admin: false })
+    res.render('user/view-products', { products, cartCount, user: req.session.user, admin: false })
   }
   catch (err) {
     console.log('Error getting products :', err)
+    res.redirect('/')
   }
 })
 

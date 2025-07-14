@@ -68,7 +68,11 @@
   padding-left: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.orders_page .cards .card .details .order-status p {
+  font-size: 12.5px;
 }
 .orders_page .cards .card .details .order-status .date {
   font-size: 15px;
