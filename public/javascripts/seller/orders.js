@@ -11,8 +11,9 @@ function orderStatusChange(_id, action) {
         },
         success: (updatedOrder) => {
             alert('Order status changed')
-            const html = renderDeliveryHtml(updatedOrder);
-            $(`#${updatedOrder._id}`).html(html);
+            const updatedHtml = renderUpdatedHtml(updatedOrder)
+            $(`#${updatedOrder._id}`).html(updatedHtml)
+            $('button').prop('disabled', false)
         },
         error: (err) => {
             console.error(err)
@@ -22,7 +23,7 @@ function orderStatusChange(_id, action) {
     })
 }
 
-function renderDeliveryHtml(order) {
+function renderUpdatedHtml(order) {
     let html = `<p>Order placed on : ${order.date.orderDate} 🛍️</p>`
 
     switch (order.orderStatus) {

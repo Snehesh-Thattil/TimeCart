@@ -2,5 +2,145 @@
 <link rel="stylesheet" href="/stylesheets/common/landing/landing.css">
 
 <div class="landing_page">
-    <img src="/images/resources/TimeCart Banner.png" class="banner" alt="">
+    <div class="banner">
+        <img src="/images/resources/TimeCart Banner.png" class="bannerImg" alt="">
+    </div>
+
+    <div class="card-sections analog">
+        <h4 class="heading">Best Analog Watch Picks Of The Year</h4>
+        <p class="scroll-note">Scroll to view more →</p>
+
+        <div class="cards">
+            {{#each products}}
+            {{#if (eq this.type 'analog')}}
+            <a href="/view-item/{{this._id}}" class="card">
+                <div class="details">
+                    <img src="/images/products/{{this.coverImg}}" alt="product-photo">
+                    <div class="infos">
+                        <h5 class="brand-name">{{this.brand_name}}</h5>
+                        <h4 class="product-name">{{this.product_name}}</h4>
+                        <p class="description">{{this.description}}</p>
+                        <h3 class="price">
+                            <span>₹{{this.selling_price}}</span>
+                            <strike>₹{{this.original_price}}</strike>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <div class="scroll-hint">➤</div>
+    </div>
+
+    <div class="card-sections smartwatch">
+        <h4 class="heading">Best Smartwatch Picks Of The Year</h4>
+        <p class="scroll-note">Scroll to view more →</p>
+
+        <div class="cards">
+            {{#each products}}
+            {{#if (eq this.type 'smartwatch')}}
+            <a href="/view-item/{{this._id}}" class="card">
+                <div class="details">
+                    <img src="/images/products/{{this.coverImg}}" alt="product-photo">
+                    <div class="infos">
+                        <h5 class="brand-name">{{this.brand_name}}</h5>
+                        <h4 class="product-name">{{this.product_name}}</h4>
+                        <p class="description">{{this.description}}</p>
+                        <h3 class="price">
+                            <span>₹{{this.selling_price}}</span>
+                            <strike>₹{{this.original_price}}</strike>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <div class="scroll-hint">➤</div>
+    </div>
+
+    <div class="card-sections smartwatch">
+        <h4 class="heading">Best Budget Friendly Picks</h4>
+        <p class="scroll-note">Scroll to view more →</p>
+
+        <div class="cards">
+            {{#each products}}
+            {{#if (lt this.selling_price 5000)}}
+            <a href="/view-item/{{this._id}}" class="card">
+                <div class="details">
+                    <img src="/images/products/{{this.coverImg}}" alt="product-photo">
+                    <div class="infos">
+                        <h5 class="brand-name">{{this.brand_name}}</h5>
+                        <h4 class="product-name">{{this.product_name}}</h4>
+                        <p class="description">{{this.description}}</p>
+                        <h3 class="price">
+                            <span>₹{{this.selling_price}}</span>
+                            <strike>₹{{this.original_price}}</strike>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <div class="scroll-hint">➤</div>
+    </div>
+
+    <div class="seller-section">
+        <div class="container">
+            <div class="seller-content">
+                <div class="seller-text">
+                    <h2 class="seller-title">List Your Brand On TimeCart</h2>
+                    <p class="seller-subtitle">Join thousands of premium watch brands and reach millions of timepiece
+                        enthusiasts worldwide. Your story deserves to be told.</p>
+
+                    <ul class="benefits-list">
+                        <li>Access to millions of watch collectors and enthusiasts</li>
+                        <li>Premium brand showcase with detailed analytics</li>
+                        <li>Zero listing fees for the first 100 products</li>
+                        <li>Dedicated seller support and marketing assistance</li>
+                        <li>Secure payment processing and buyer protection</li>
+                        <li>Mobile-optimized storefront for maximum reach</li>
+                    </ul>
+
+                    <a href="/seller/signup" class="cta-button">Start Selling Today</a>
+                </div>
+
+                <div class="seller-visual">
+                    <div class="watch-showcase">
+                        <div class="watch-icon">⌚</div>
+                    </div>
+                    <div class="floating-elements">
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Active Sellers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2M+</span>
+                    <span class="stat-label">Monthly Visitors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Premium Brands</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Seller Satisfaction</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

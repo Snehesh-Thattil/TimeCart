@@ -5,6 +5,7 @@
   align-items: center;
   background-color: #181717;
   padding: 0.75rem 1.25rem;
+  z-index: 3;
 }
 .header_component .icons {
   color: #bb9533;

@@ -15,7 +15,12 @@ const verifyLogin = (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const products = await productHelpers.getProducts()
-    res.render('landing', { user: req.session.user })
+
+    let cartCount = null
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
+    }
+    res.render('landing', { user: req.session.user, cartCount, products })
   }
   catch (err) {
     console.log(err)

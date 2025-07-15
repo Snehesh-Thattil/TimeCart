@@ -8,17 +8,21 @@
         grid-template-columns: repeat(5, 1fr);
 
         .card {
-            border: 2px solid #E5C76A;
-            background: linear-gradient(90deg, #A56C2D, #CBA74E, #F9E794, #CBA74E, #A56C2D);
-
             padding: .5rem;
             height: max-content;
-            border-radius: 1px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: .5rem;
-            color: #0A0A0A;
+            border-radius: 12px;
+            color: #f4e3c1;
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            border: 1px solid #c59a4a;
+            box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+            transition: .2s transform ease-in-out;
+
+            &:hover {
+                transform: scale(1.02);
+            }
 
             .details {
                 display: flex;
@@ -73,6 +77,7 @@
         }
     }
 }
+
 
 // MEDIA-QUERIES RESPONSIVENESS
 @media screen and (max-width:767px) {
