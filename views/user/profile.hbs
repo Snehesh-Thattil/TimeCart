@@ -1,0 +1,70 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/common/profile/profile.css">
+
+<div class="profile_page">
+    <div class="wrapper">
+
+        <div class="left-section">
+            <h4 class="heading">My Profile</h4>
+
+            <div class="info-box">
+                <div class="photo">
+                    <img src="https://swcusa.com/cdn/shop/files/ARK-Web-Blue-Grey-Lifestyle-Bracelet.jpg?height=1200&v=1736883634"
+                        alt="">
+                </div>
+
+                <div class="basic-infos">
+                    <p><span>Name</span> {{user.name}}</p>
+                    <p><span>Mobile</span> {{#if user.mobile}} {{user.mobile}} {{else}} --- {{/if}}</p>
+                    <p><span>Gender</span> {{#if user.gender}} {{user.gender}} {{else}} --- {{/if}}</p>
+                    <p><span>Email</span> {{user.email}} </p>
+                </div>
+
+                <a href="/edit-profile-infos" class="button">Edit</a>
+            </div>
+        </div>
+
+        <div class="right-section">
+
+            <div class="address-box">
+                <h4 class="heading">Address</h4>
+
+                {{#if user.address}}
+                <div class="address">
+                    {{#each user.address}}
+                    <p>{{this.addressline1}},
+                        <br> {{this.addressline1}},
+                        <br> {{this.district}}-{{this.pincode}},
+                        <br> INDIA
+                        <br> Phone: {{user.mobile}}
+                        <br> Email: {{user.email}}
+                    </p>
+                    {{/each}}
+                </div>
+
+                <div class="address edit">
+                    <a href="/edit-address" class=".button">Edit Your Address</a>
+                </div>
+
+                {{else}}
+                <div class="address">
+                    <p>Ohh No! <br> You dont have any saved address with us ...</p>
+                </div>
+                <div class="address add-new">
+                    <a href="/add-new-address" class="button">Add Your Address</a>
+                </div>
+                {{/if}}
+            </div>
+
+            <form action="/change-password" method="post" class="password-box">
+                <h4 class="heading">Change Password</h4>
+
+                <input type="password" name="" placeholder="Current password">
+                <input type="password" placeholder="New password">
+                <input type="password" placeholder="Confirm new password">
+
+                <button type="submit" class="button">Change Password</button>
+            </form>
+        </div>
+    </div>
+</div>

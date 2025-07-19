@@ -27,22 +27,6 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/products', async (req, res) => {
-  try {
-    const products = await productHelpers.getProducts()
-
-    let cartCount = null
-    if (req.session.user) {
-      cartCount = await userHelpers.getCartCount(req.session.user._id)
-    }
-    res.render('user/view-products', { products, cartCount, user: req.session.user, admin: false })
-  }
-  catch (err) {
-    console.log('Error getting products :', err)
-    res.redirect('/')
-  }
-})
-
 router.get('/signup', (req, res) => {
   if (req.session.userLoggedIn) {
     res.redirect('/')
@@ -98,6 +82,26 @@ router.get('/logout', (req, res) => {
   req.session.user = null
   req.session.userLoggedIn = false
   res.redirect('/')
+})
+
+router.get('/profile', verifyLogin, (req, res) => {
+  res.render('user/profile', { user: req.session.user })
+})
+
+router.get('/products', async (req, res) => {
+  try {
+    const products = await productHelpers.getProducts()
+
+    let cartCount = null
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
+    }
+    res.render('user/view-products', { products, cartCount, user: req.session.user, admin: false })
+  }
+  catch (err) {
+    console.log('Error getting products :', err)
+    res.redirect('/')
+  }
 })
 
 router.get('/view-item/:id', (req, res) => {

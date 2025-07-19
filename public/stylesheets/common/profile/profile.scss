@@ -1,0 +1,194 @@
+.profile_page {
+    width: 100%;
+    color: white;
+    padding: 2rem 8rem;
+    min-height: 80vh;
+
+    .wrapper {
+        display: flex;
+        gap: 2rem;
+        height: 47.5rem;
+        padding: 2.5rem;
+        color: #f4e3c1;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+
+        /// Common Designs
+        .heading {
+            padding: 1rem;
+            border-radius: 12px 12px 0 0;
+            border: 1px solid #c59a4a;
+            background-color: #2c2c2c;
+        }
+
+        .left-section,
+        .right-section {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .button {
+            width: 100%;
+            display: block;
+            text-align: center;
+            font-family: 'DM Serif Display';
+            font-size: 12px;
+            letter-spacing: .75px;
+            min-width: 10rem;
+            padding: .5rem .75rem;
+            background-color: peru;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-right: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2c2c2c;
+            transition: color .25s ease-in-out;
+
+            &:hover {
+                color: white;
+            }
+        }
+
+        ///
+
+        .left-section {
+            height: 100%;
+            padding: 2rem;
+            border-radius: 12px;
+            background: linear-gradient(20deg, #1a1a1a, #2c2c2c);
+            border: 1px solid #c59a4a;
+            box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+
+            .info-box {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                .photo {
+                    img {
+                        width: 100%;
+                        border-radius: 5px;
+                    }
+                }
+
+                .basic-infos {
+                    width: 100%;
+
+                    p {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        margin-top: 1rem;
+                        border-bottom: 1px solid rgba(205, 134, 63, 0.1);
+                    }
+                }
+            }
+        }
+
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .address-box {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+
+                border-radius: 12px;
+                background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+                border: 1px solid #c59a4a;
+                box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+
+
+                .address {
+                    padding: 2rem;
+                    box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    gap: 1rem;
+                }
+            }
+
+            .password-box {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+
+                border-radius: 12px;
+                background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+                border: 1px solid #c59a4a;
+                box-shadow: 0 4px 15px rgba(197, 154, 74, 0.3);
+
+
+                input {
+                    padding: .5rem .75rem;
+                    border-radius: 3px;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width:767px) {
+    .profile_page {
+        padding: 1rem 1.5rem;
+
+        .wrapper {
+            flex-direction: column;
+            padding: 1rem;
+            height: unset;
+
+            .right-section,
+            .left-section {
+                width: 100%;
+            }
+
+            .left-section {
+                padding: 1rem;
+            }
+
+            .right-section {
+
+                .address-box,
+                .password-box {
+                    padding: 1rem;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+    .profile_page {
+        padding: 2rem;
+
+        .wrapper {
+            padding: 1rem;
+            height: 43rem;
+
+            .left-section {
+                padding: 1rem;
+            }
+
+            .right-section {
+
+                .address-box,
+                .password-box {
+                    padding: 1rem;
+                }
+            }
+        }
+    }
+}
