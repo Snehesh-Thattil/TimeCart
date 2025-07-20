@@ -2,27 +2,24 @@
 <link rel="stylesheet" href="/stylesheets/common/profile/profile.css">
 
 <div class="profile_page">
-    {{#if message}}<p class="note">{{message}}</p>{{/if}}
-
     <div class="wrapper">
+
         <div class="left-section">
-            <h4 class="heading">My Profile</h4>
+            <h4 class="heading">Seller Profile</h4>
 
             <div class="info-box">
                 <div class="photo">
-                    {{#if user.photo}}
-                    <img src="/public/images/users/{{user.photo}}" alt="">
+                    {{#if seller.photo}}
+                    <img src="/public/images/users/{{seller.photo}}" alt="">
                     {{else}}
                     <img src="/images/resources/No-Profile-photo.png" alt="">
                     {{/if}}
                 </div>
 
                 <div class="basic-infos">
-                    <h4>Basic Informations</h4>
-                    <p><span>Name</span> {{user.name}}</p>
-                    <p><span>Mobile</span> {{#if user.mobile}} {{user.mobile}} {{else}} --- {{/if}}</p>
-                    <p><span>Gender</span> {{#if user.gender}} {{user.gender}} {{else}} --- {{/if}}</p>
-                    <p><span>Email</span> {{user.email}} </p>
+                    <p><span>Name</span> {{seller.name}}</p>
+                    <p><span>Mobile</span> {{#if seller.mobile}} {{seller.mobile}} {{else}} --- {{/if}}</p>
+                    <p><span>Email</span> {{seller.email}} </p>
                 </div>
 
                 <a href="/edit-profile-infos" class="button">Edit</a>
@@ -32,29 +29,31 @@
         <div class="right-section">
 
             <div class="address-box">
-                <h4 class="heading">Address</h4>
+                <h4 class="heading">Location</h4>
 
-                {{#if user.address}}
+                {{#if seller.location}}
                 <div class="address">
-                    <p>{{user.address.addressLine1}},
-                        <br> {{user.address.addressLine2}},
-                        <br> {{user.address.landmark}},
-                        <br> {{user.address.district}}-{{user.address.pincode}},
+                    {{#each seller.address}}
+                    <p>{{this.addressline1}},
+                        <br> {{this.addressline1}},
+                        <br> {{this.district}}-{{this.pincode}},
                         <br> INDIA
-                        {{!-- <br> Email: {{user.email}} --}}
+                        <br> Phone: {{seller.mobile}}
+                        <br> Email: {{seller.email}}
                     </p>
+                    {{/each}}
                 </div>
 
                 <div class="address edit">
-                    <a href="/edit-address" class="button">Edit Your Address</a>
+                    <a href="/edit-address" class=".button">Edit Shop Location</a>
                 </div>
 
                 {{else}}
                 <div class="address">
-                    <p>Ohh No! <br> You dont have any saved address with us ...</p>
+                    <p>Ohh No! <br> Your location is not saved with us ...</p>
                 </div>
                 <div class="address add-new">
-                    <a href="/add-new-address" class="button">Add Your Address</a>
+                    <a href="/add-new-address" class="button">Add Your Location</a>
                 </div>
                 {{/if}}
             </div>
@@ -62,10 +61,10 @@
             <div class="sections-box">
                 <h4 class="heading">Your Sections</h4>
 
-                <a href="/cart" class="button">Cart</a>
-                <a href="/wishlist" class="button">Wishlist</a>
-                <a href="/orders" class="button">Orders</a>
-                <a href="/seller" class="button seller">Sell on TimeCart</a>
+                <a href="/seller/products" class="button">Products</a>
+                <a href="/seller/orders" class="button">Orders</a>
+                <a href="/seller/returns" class="button">Returns</a>
+                <a href="/seller/stats" class="button">Stats</a>
             </div>
         </div>
     </div>

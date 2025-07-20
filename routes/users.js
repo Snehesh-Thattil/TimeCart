@@ -85,7 +85,42 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/profile', verifyLogin, (req, res) => {
-  res.render('user/profile', { user: req.session.user })
+  const message = req.session.user.message
+  req.session.user.message = null
+
+  res.render('user/profile', { user: req.session.user, message })
+})
+
+router.get('/add-new-address', verifyLogin, (req, res) => {
+  const message = req.session.user.message
+  const error = req.session.user.error
+  req.session.user.error = null
+
+  res.render('user/manage-address', { user: req.session.user, message, error })
+})
+
+router.post('/submit-address', verifyLogin, async (req, res) => {
+  try {
+    const updatedUser = await userHelpers.editUserAddress(req.body, req.session.user.email)
+    req.session.user = updatedUser;
+
+    req.session.user.message = 'Address updated successfully ✅'
+    res.redirect('/profile')
+  }
+  catch (err) {
+    req.session.user.error = (err === 'Invalid Password' ? 'Incorrect password ⚠️. Please try again...' : 'Oops! Something went wrong ⚠️. Please try again...')
+    res.redirect('/add-new-address')
+  }
+})
+
+router.get('/edit-address', verifyLogin, (req, res) => {
+  const message = req.session.user.message
+  const error = req.session.user.error
+
+  req.session.user.message = null
+  req.session.user.error = null
+
+  res.render('user/manage-address', { currentAddress: req.session.user.address, user: req.session.user, message, error })
 })
 
 router.get('/products', async (req, res) => {

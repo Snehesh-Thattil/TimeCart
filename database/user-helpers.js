@@ -601,5 +601,42 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    editUserAddress: (formData, email) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: email })
+                const passwordValidate = await bcrypt.compare(formData.password, user.password)
+
+                if (passwordValidate) {
+                    await db.get().collection(collections.USERS_COLLECTION).updateOne(
+                        {
+                            email: email
+                        },
+                        {
+                            $set: {
+                                'address': {
+                                    addressLine1: formData.addressLine1,
+                                    addressLine2: formData.addressLine2,
+                                    landmark: formData.landmark,
+                                    pincode: formData.pincode,
+                                    district: formData.district
+                                }
+                            }
+                        }
+                    )
+
+                    const updatedUser = await db.get().collection(collections.USERS_COLLECTION).findOne({ email: email })
+
+                    resolve(updatedUser)
+                }
+                else {
+                    reject('Invalid Password')
+                }
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }

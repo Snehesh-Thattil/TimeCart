@@ -85,6 +85,10 @@ router.get('/logout', (req, res) => {
   res.redirect('/seller')
 })
 
+router.get('/profile', (req, res) => {
+  res.render('seller/profile', { seller: req.session.seller })
+})
+
 router.get('/add-product', verifyLogin, (req, res) => {
   res.render('seller/add-product', { seller: req.session.seller })
 })
