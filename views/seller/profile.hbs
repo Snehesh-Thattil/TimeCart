@@ -2,8 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/common/profile/profile.css">
 
 <div class="profile_page">
-    <div class="wrapper">
+    {{#if message}}<p class="note">{{message}}</p>{{/if}}
 
+    <div class="profile-wrapper">
         <div class="left-section">
             <h4 class="heading">Seller Profile</h4>
 
@@ -22,7 +23,7 @@
                     <p><span>Email</span> {{seller.email}} </p>
                 </div>
 
-                <a href="/edit-profile-infos" class="button">Edit</a>
+                <a href="/seller/edit-profile-infos" class="button">Edit</a>
             </div>
         </div>
 
@@ -33,19 +34,16 @@
 
                 {{#if seller.location}}
                 <div class="address">
-                    {{#each seller.address}}
-                    <p>{{this.addressline1}},
-                        <br> {{this.addressline1}},
-                        <br> {{this.district}}-{{this.pincode}},
+                    <p>{{seller.location.addressLine1}},
+                        <br> {{seller.location.addressLine2}},
+                        <br> {{seller.location.landmark}},
+                        <br> {{seller.location.district}}-{{seller.location.pincode}},
                         <br> INDIA
-                        <br> Phone: {{seller.mobile}}
-                        <br> Email: {{seller.email}}
                     </p>
-                    {{/each}}
                 </div>
 
                 <div class="address edit">
-                    <a href="/edit-address" class=".button">Edit Shop Location</a>
+                    <a href="/seller/edit-location" class="button">Edit Shop Location</a>
                 </div>
 
                 {{else}}
@@ -53,7 +51,7 @@
                     <p>Ohh No! <br> Your location is not saved with us ...</p>
                 </div>
                 <div class="address add-new">
-                    <a href="/add-new-address" class="button">Add Your Location</a>
+                    <a href="/seller/add-new-location" class="button">Add Your Location</a>
                 </div>
                 {{/if}}
             </div>
@@ -69,7 +67,7 @@
         </div>
     </div>
     <div class="password-wrapper">
-        <form action="/change-password" method="post">
+        <form action="/seller/change-password" method="post">
             <h4 class="heading">Change Password</h4>
 
             <input type="password" name="" placeholder="Current password">
@@ -78,5 +76,8 @@
 
             <button type="submit" class="button">Change Password</button>
         </form>
+    </div>
+    <div class="logout-wrapper">
+        <a href="/seller/logout" class="button logout">Logout</a>
     </div>
 </div>

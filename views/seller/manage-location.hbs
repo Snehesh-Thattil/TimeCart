@@ -1,0 +1,32 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/common/manage-address/manage-address.css">
+
+<div class="manage-address_page">
+    {{#if error}}<p class="note">{{error}}</p>{{/if}}
+
+    <form action="/seller/submit-location" method="post" class="section address">
+        <h3 class="section-titles">Address</h3>
+        <input type="text" name="addressLine1" minlength="3" maxlength="30" required
+            value="{{currLocation.addressLine1}}" placeholder="Address line 1">
+        <input type="text" name="addressLine2" minlength="3" maxlength="30" required
+            value="{{currLocation.addressLine2}}" placeholder="Address line 2">
+        <input type="text" name="landmark" minlength="3" maxlength="30" required value="{{currLocation.landmark}}"
+            placeholder="Landmark">
+
+        <div class="pin-distr">
+            <input class="pin" name="pincode" type="number" required value="{{currLocation.pincode}}"
+                placeholder="Pincode">
+            <input class="distr" name="district" type="text" minlength="2" maxlength="20" required
+                value="{{currLocation.district}}" placeholder="District">
+        </div>
+
+        <div class="line"></div>
+
+        <div class="password">
+            <input type="password" name="password" class="pswrd-input" required placeholder="Confirm your password">
+        </div>
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

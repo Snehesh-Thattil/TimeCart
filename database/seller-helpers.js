@@ -112,5 +112,42 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    editSellerLocation: (formData, email) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const seller = await db.get().collection(collections.SELLERS_COLLECTION).findOne({ email: email })
+                const passwordValidate = await bcrypt.compare(formData.password, seller.password)
+
+                if (passwordValidate) {
+                    await db.get().collection(collections.SELLERS_COLLECTION).updateOne(
+                        {
+                            email: email
+                        },
+                        {
+                            $set: {
+                                'location': {
+                                    addressLine1: formData.addressLine1,
+                                    addressLine2: formData.addressLine2,
+                                    landmark: formData.landmark,
+                                    pincode: formData.pincode,
+                                    district: formData.district
+                                }
+                            }
+                        }
+                    )
+
+                    const updatedSeller = await db.get().collection(collections.SELLERS_COLLECTION).findOne({ email: email })
+
+                    resolve(updatedSeller)
+                }
+                else {
+                    reject('Invalid Password')
+                }
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
     }
 }

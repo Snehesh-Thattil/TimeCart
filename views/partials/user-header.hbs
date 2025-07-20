@@ -25,7 +25,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/cart"> <i class="fa-solid fa-cart-shopping"></i> Cart</a>
+            {{#if (gt cartCount 0)}}
             <p class="cart-count" id="cart-count">{{cartCount}}</p>
+            {{/if}}
         </li>
         <li class="nav-item mobile-only">
             <a class="nav-link" href="/seller"> <i class="fa-solid fa-boxes-packing"></i> Seller Home</a>

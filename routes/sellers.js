@@ -85,8 +85,43 @@ router.get('/logout', (req, res) => {
   res.redirect('/seller')
 })
 
-router.get('/profile', (req, res) => {
-  res.render('seller/profile', { seller: req.session.seller })
+router.get('/profile', verifyLogin, (req, res) => {
+  const message = req.session.seller.message
+  req.session.seller.message = null
+
+  res.render('seller/profile', { seller: req.session.seller, message })
+})
+
+router.get('/add-new-location', verifyLogin, (req, res) => {
+  const message = req.session.seller.message
+  const error = req.session.seller.error
+  req.session.seller.error = null
+
+  res.render('seller/manage-location', { seller: req.session.seller, message, error })
+})
+
+router.post('/submit-location', verifyLogin, async (req, res) => {
+  try {
+    const updatedSeller = await sellerHelpers.editSellerLocation(req.body, req.session.seller.email)
+    req.session.seller = updatedSeller;
+
+    req.session.seller.message = 'Location updated successfully ✅'
+    res.redirect('/seller/profile')
+  }
+  catch (err) {
+    req.session.seller.error = (err === 'Invalid Password' ? 'Incorrect password ⚠️. Please try again...' : 'Oops! Something went wrong ⚠️. Please try again...')
+    res.redirect('/seller/add-new-location')
+  }
+})
+
+router.get('/edit-location', verifyLogin, (req, res) => {
+  const message = req.session.seller.message
+  const error = req.session.seller.error
+
+  req.session.seller.message = null
+  req.session.seller.error = null
+
+  res.render('seller/manage-location', { currLocation: req.session.seller.location, seller: req.session.seller, message, error })
 })
 
 router.get('/add-product', verifyLogin, (req, res) => {
