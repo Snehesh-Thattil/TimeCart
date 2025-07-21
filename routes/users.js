@@ -139,16 +139,22 @@ router.get('/products', async (req, res) => {
   }
 })
 
-router.get('/view-item/:id', (req, res) => {
-  productHelpers.getProductDetails(req.params.id)
-    .then((data) => {
-      console.log(data)
-      res.render('user/view-item', { product: data, user: req.session.user })
-    })
-    .catch((err) => {
-      console.log(err.message)
-      res.redirect('/')
-    })
+router.get('/view-item/:id', async (req, res) => {
+  try {
+    const product = await productHelpers.getProductDetails(req.params.id)
+    const reviews = await productHelpers.getProductReviews(req.params.id)
+
+    // calculate average rating
+    const ratingAvg = reviews.length > 0
+      ? (reviews.reduce((acc, review) => acc + parseInt(review.rating), 0) / reviews.length).toFixed(1)
+      : null
+
+    res.render('user/view-item', { product, reviews, ratingAvg, user: req.session.user })
+  }
+  catch (err) {
+    console.error('Error fetching product or reviews:', err)
+    res.redirect('/')
+  }
 })
 
 router.post('/add-to-cart/:productId', verifyLogin, async (req, res) => {
@@ -321,6 +327,30 @@ router.get('/orders', verifyLogin, (req, res) => {
       console.log(err.message)
       res.redirect('/')
     })
+})
+
+router.get('/review-product/:productId', verifyLogin, (req, res) => {
+  productHelpers.getProductDetails(req.params.productId)
+    .then((product) => {
+      const ratingValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      res.render('user/review-product', { product, ratingValues })
+    })
+    .catch((err) => {
+      res.redirect('/orders', { error: err })
+    })
+})
+
+router.post('/submit-review', (req, res) => {
+  console.log(req.body)
+
+  productHelpers.addReview(req.body, req.session.user)
+    .then(() => {
+      res.redirect(`/view-item/${req.body.productId}`)
+    })
+    .catch((error) => {
+      res.redirect('/', { error })
+    })
+
 })
 
 module.exports = router;

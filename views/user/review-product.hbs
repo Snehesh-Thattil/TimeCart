@@ -1,0 +1,43 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/user/review-product/review-product.css">
+
+<div class="review-product_page">
+    <div class="product-card" id="{{product._id}}">
+        <a href="/view-item/{{product._id}}"> <img src="/images/products/{{product.coverImg}}" alt=""></a>
+
+        <div class="details">
+            <div class="names">
+                <p class="brand-name">{{product.brand_name}}</p>
+                <p class="product-name">{{product.product_name}}</p>
+            </div>
+            <h4 class="price">₹{{product.selling_price}} <span>₹{{product.original_price}}</span> </h4>
+        </div>
+    </div>
+
+    <form action="/submit-review" method="post" class="review">
+        <div class="rating">
+            <p>Rate this product</p>
+
+            <div class="custom-dropdown" id="customDropdown">
+                <div class="selected">🔽</div>
+                <ul class="dropdown-options">
+                    {{#each ratingValues}}
+                    <li data-value="{{this}}">{{this}}</li>
+                    {{/each}}
+                </ul>
+                <input type="hidden" name="rating" required id="ratingInput">
+            </div>
+
+            <p> out of 10</p>
+        </div>
+
+        <textarea name="review" id="" minlength="10" required maxlength="400"
+            placeholder="Describe your experience with this product"></textarea>
+
+        <input type="hidden" name="productId" value="{{product._id}}">
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+
+{{!-- JS --}}
+<script src="/javascripts/common/dropdown.js"></script>

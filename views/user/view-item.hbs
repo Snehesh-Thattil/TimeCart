@@ -2,68 +2,99 @@
 <link rel="stylesheet" href="/stylesheets/user/view-item/view-item.css">
 
 <div class="view-item">
-    <div class="photos-and-actions">
-        <div class="photos">
-            <div class="photos-list">
-                {{#each product.imgNames}}
-                <img src="/images/products/{{this}}" alt=""
-                    class="{{#if (eq this ../product.coverImg)}} selected {{/if}}" onclick="viewImg('{{this}}')">
-                {{/each}}
+    <div class="details-wrapper">
+        <div class="photos-and-actions">
+            <div class="photos">
+                <div class="photos-list">
+                    {{#each product.imgNames}}
+                    <img src="/images/products/{{this}}" alt=""
+                        class="{{#if (eq this ../product.coverImg)}} selected {{/if}}" onclick="viewImg('{{this}}')">
+                    {{/each}}
+                </div>
+                <div class="photo-viewed">
+                    <img src="/images/products/{{product.coverImg}}" id="viewed-img" alt="">
+                </div>
             </div>
-            <div class="photo-viewed">
-                <img src="/images/products/{{product.coverImg}}" id="viewed-img" alt="">
+            <div class="actions">
+                <form action="/add-to-cart/{{product._id}}" method="POST">
+                    <button type="submit" class="buttons">Add to Cart</button>
+                </form>
+
+                <form action="/add-to-wishlist/{{product._id}}" method="POST">
+                    <button type="submit" class="buttons">Save to Wishlist</button>
+                </form>
             </div>
         </div>
-        <div class="actions">
-            <form action="/add-to-cart/{{product._id}}" method="POST">
-                <button type="submit" class="buttons">Add to Cart</button>
-            </form>
 
-            <form action="/add-to-wishlist/{{product._id}}" method="POST">
-                <button type="submit" class="buttons">Save to Wishlist</button>
-            </form>
+        <div class="details">
+            <div class="overview">
+                <div class="name">
+                    <h3>{{product.brand_name}}</h3>
+                    <h2>{{product.product_name}}</h2>
+                    <p>{{product.description}}</p>
+                </div>
+
+                <div class="price">
+                    <h4>Special Price</h4>
+                    <h3>
+                        <span>₹</span>{{product.selling_price}}
+                        <strike><span>₹</span>{{product.original_price}}</strike>
+                    </h3>
+                </div>
+
+                <div class="offers">
+                    <h4>Available offers</h4>
+                    <p> <span>Bank Offer 🏷️</span> 100% Cashback upto 500Rs on Axis SuperMoney Rupay CC UPI
+                        transactions on
+                        super.money UPI</p>
+                    <p> <span>Bank Offer 🏷️</span> Flat ₹750 on HDFC Bank Pixel Credit Card EMI on 6 months tenure. Min
+                        Txn
+                        Value: ₹7500</p>
+                    <p><span>Bank Offer 🏷️</span> 10% instant discount on SBI Credit Card EMI Transactions, up to
+                        ₹1,500 on
+                        orders of ₹5,000 and above </p>
+                    <p><span>Bank Offer 🏷️</span> Flat ₹300 on HDFC Bank Credit Card EMI on 6 months and above tenure.
+                        Min.
+                        Txn Value: ₹3000</p>
+                    <p><span>Bank Offer 🏷️</span> Flat ₹1250 on HDFC Bank Credit Card EMI on 6 months tenure. Min Txn
+                        Value: ₹15000</p>
+                    <p><span>Bank Offer 🏷️</span> 0% off up to ₹1500 on Canara Bank Credit Card Transactions, on orders
+                        of
+                        ₹5,000 and above</p>
+                    <p><span>Bank Offer 🏷️</span> 5% Unlimited Cashback on Flipkart Axis Bank Credit Card</p>
+                    <p><span>Combo Offer 🏷️</span> Buy 2 items save 5%; Buy 3 save 7%; Buy 4+ save 10%</p>
+                    <p><span>Bank Offer 🏷️</span> 5% cashback on Axis Bank Flipkart Debit Card up to ₹750</p>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="reviews-wrapper">
+        <h2 class="title">Product Reviews</h2>
 
-    <div class="details">
-        <div class="overview">
-            <div class="name">
-                <h3>{{product.brand_name}}</h3>
-                <h2>{{product.product_name}}</h2>
-                <p>{{product.description}}</p>
-            </div>
+        <div class="total-rating">
+            {{#if ratingAvg}}
+            <h1>Rating: {{ratingAvg}} / 10</h1>
+            {{else}}
+            <h1>Ohh! No Ratings so far</h1>
+            {{/if}}
+        </div>
 
-            <div class="price">
-                <h4>Special Price</h4>
-                <h3>
-                    <span>₹</span>{{product.selling_price}}
-                    <strike><span>₹</span>{{product.original_price}}</strike>
-                </h3>
-            </div>
+        <p class="scroll-note">Scroll to view more →</p>
 
-            <div class="offers">
-                <h4>Available offers</h4>
-                <p> <span>Bank Offer 🏷️</span> 100% Cashback upto 500Rs on Axis SuperMoney Rupay CC UPI transactions on
-                    super.money UPI</p>
-                <p> <span>Bank Offer 🏷️</span> Flat ₹750 on HDFC Bank Pixel Credit Card EMI on 6 months tenure. Min Txn
-                    Value: ₹7500</p>
-                <p><span>Bank Offer 🏷️</span> 10% instant discount on SBI Credit Card EMI Transactions, up to ₹1,500 on
-                    orders of ₹5,000 and above </p>
-                <p><span>Bank Offer 🏷️</span> Flat ₹300 on HDFC Bank Credit Card EMI on 6 months and above tenure. Min.
-                    Txn Value: ₹3000</p>
-                <p><span>Bank Offer 🏷️</span> Flat ₹1250 on HDFC Bank Credit Card EMI on 6 months tenure. Min Txn
-                    Value: ₹15000</p>
-                <p><span>Bank Offer 🏷️</span> 0% off up to ₹1500 on Canara Bank Credit Card Transactions, on orders of
-                    ₹5,000 and above</p>
-                <p><span>Bank Offer 🏷️</span> 5% Unlimited Cashback on Flipkart Axis Bank Credit Card</p>
-                <p><span>Combo Offer 🏷️</span> Buy 2 items save 5%; Buy 3 save 7%; Buy 4+ save 10%</p>
-                <p><span>Bank Offer 🏷️</span> 5% cashback on Axis Bank Flipkart Debit Card up to ₹750</p>
-            </div>
-
-            <div class="reviews">
-                {{!-- Yet to Design --}}
+        <div class="reviews">
+            <div class="cards-wrapper">
+                {{#each reviews}}
+                <div class="review-card">
+                    <div class="info">
+                        <p class="reviewer">{{this.username}}</p>
+                        <p class="rating">{{this.rating}}/10</p>
+                    </div>
+                    <p class="review-msg">{{this.review}}</p>
+                </div>
+                {{/each}}
             </div>
         </div>
+
     </div>
 </div>
 

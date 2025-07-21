@@ -100,5 +100,36 @@ module.exports = {
                     reject(err)
                 })
         })
+    },
+    addReview: (reviewData, user) => {
+        return new Promise((resolve, reject) => {
+            const newReview = {
+                review: reviewData.review,
+                rating: reviewData.rating,
+                userId: user._id,
+                username: user.name
+            }
+
+            db.get().collection(collections.REVIEW_COLLECTION).updateOne(
+                {
+                    productId: ObjectId.createFromHexString(reviewData.productId)
+                },
+                {
+                    $push: { reviewsList: newReview }
+                },
+                { upsert: true } // create if no doc exist
+            ).then(() => resolve(true)).catch((err) => reject(err))
+        })
+    },
+    getProductReviews: (productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.REVIEW_COLLECTION).find({ productId: ObjectId.createFromHexString(productId) }).toArray()
+                .then((data) => {
+                    data.length > 0 ? resolve(data[0]?.reviewsList) : resolve([])
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
     }
 }

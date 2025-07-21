@@ -1,0 +1,160 @@
+.review-product_page {
+    width: 100%;
+    padding: 2rem 15rem;
+
+    .product-card {
+        outline: 1px solid peru;
+        display: flex;
+        gap: .5rem;
+        height: 12.5rem;
+        position: relative;
+        background-color: rgb(15, 15, 15);
+
+        a {
+            img {
+                width: 15rem;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 1rem;
+            color: peru;
+
+            .names {
+                .brand-name {
+                    font-size: 15px;
+                }
+
+                .product-name {
+                    font-size: 20px;
+                }
+            }
+
+            .price {
+                font-size: 22px;
+
+                span {
+                    font-size: 17.5px;
+                    color: rgba(128, 128, 128, 0.699);
+                    text-decoration: line-through 2px;
+
+                }
+            }
+        }
+    }
+
+    .review {
+        outline: 1px solid peru;
+        display: flex;
+        flex-direction: column;
+        margin-top: 3rem;
+        padding: 2rem;
+        gap: .5rem;
+        overflow: visible;
+        position: relative;
+        background-color: rgb(15, 15, 15);
+
+
+        .rating {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 1rem;
+
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                color: peru;
+            }
+
+            .custom-dropdown {
+                position: relative;
+                user-select: none;
+                cursor: pointer;
+                border: 1px solid #ccc;
+                border-radius: 2.5px;
+
+                .selected {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 2.5rem;
+                    min-width: 2.5rem;
+                    text-align: center;
+                    background-color: #f8f8f8;
+                }
+
+                .dropdown-options {
+                    display: none;
+                    list-style: none;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0;
+                    border: 1px solid #ccc;
+                    position: absolute;
+                    width: 100%;
+                    background-color: white;
+                    max-height: 150px;
+                    overflow-y: auto;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    z-index: 10;
+
+                    li {
+                        padding: 10px;
+                        border-bottom: 1px solid #eee;
+
+                        &:hover {
+                            background-color: #e6e6e6;
+                        }
+                    }
+                }
+            }
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            background-color: rgba(205, 134, 63, 0.185);
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+
+            &:focus {
+                outline: none;
+                border-color: white;
+            }
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            background-color: rgba(205, 134, 63, 0.5);
+
+            &:hover {
+                background-color: rgba(205, 134, 63, 0.75);
+            }
+
+            &:active {
+                background-color: #004494;
+            }
+        }
+    }
+}

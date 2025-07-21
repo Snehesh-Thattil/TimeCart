@@ -109,7 +109,7 @@
   cursor: pointer;
 }
 .checkout_page form .payment .button:hover {
-  background: #ffe6cc;
+  background: rgb(255, 229.5, 204);
 }
 .checkout_page form .summary-box {
   background: #1a1a1a;
