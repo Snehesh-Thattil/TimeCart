@@ -6,7 +6,7 @@
         <p class="title">Orders</p>
         {{#each orders}}
         <div class="card">
-            <a href="/view-item/{{this.product._id}}"> <img src="/images/products/{{this.product.coverImg}}" alt=""></a>
+            <a href="/view-item/{{this.product._id}}" class="image-link"> <img src="/images/products/{{this.product.coverImg}}" alt=""></a>
             <div class="details">
                 <div class="name">
                     <p class="brand-name">{{this.product.brand_name}}</p>

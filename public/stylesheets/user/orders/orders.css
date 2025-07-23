@@ -23,14 +23,17 @@
 .orders_page .cards .card {
   outline: 1px solid peru;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   position: relative;
   background-color: rgb(15, 15, 15);
 }
-.orders_page .cards .card a img {
-  width: 10rem;
+.orders_page .cards .card .image-link {
   height: 10rem;
+}
+.orders_page .cards .card .image-link img {
+  width: 10rem;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -109,7 +112,7 @@
     height: -moz-max-content;
     height: max-content;
   }
-  .orders_page .cards .card a img {
+  .orders_page .cards .card .image-link img {
     width: 8rem;
   }
   .orders_page .cards .card .details {

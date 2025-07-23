@@ -24,15 +24,17 @@
         .card {
             outline: 1px solid peru;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: .5rem;
             position: relative;
             background-color: rgb(15, 15, 15);
 
-            a {
+            .image-link {
+                height: 10rem;
+
                 img {
                     width: 10rem;
-                    height: 10rem;
+                    height: 100%;
                     object-fit: cover;
                 }
             }
@@ -129,7 +131,7 @@
                 gap: .25rem;
                 height: max-content;
 
-                a {
+                .image-link {
                     img {
                         width: 8rem;
                     }

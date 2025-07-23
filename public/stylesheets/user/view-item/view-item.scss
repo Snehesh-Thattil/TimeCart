@@ -8,6 +8,7 @@
         display: flex;
         gap: 2rem;
         padding-bottom: 2rem;
+        border-bottom: 1px solid rgba(160, 81, 45, 0.397); //Temp
 
         .photos-and-actions {
             width: 50%;
@@ -143,14 +144,13 @@
                 }
             }
         }
-
-        border-bottom: 1px solid rgba(160, 81, 45, 0.397); //Temp
     }
 
     .reviews-wrapper {
         color: #a07e17;
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         .title {
             color: peru;
@@ -160,6 +160,11 @@
             width: 100%;
             text-align: center;
             padding: 2rem;
+
+            span {
+                font-weight: bolder;
+                font-size: 3.5rem;
+            }
         }
 
         .scroll-note {
@@ -167,28 +172,27 @@
             right: 1rem;
             text-align: right;
             font-size: 0.8rem;
-            color: #a89164;
-            margin: -0.5rem 1rem 1rem 0;
+            color: #d3b67b;
             opacity: 0.7;
             font-style: italic;
         }
 
         .reviews {
             overflow-x: scroll;
+            scroll-behavior: smooth;
             padding: 1rem;
             width: 100%;
 
             .cards-wrapper {
+                width: max-content;
                 display: grid;
                 grid-auto-flow: column;
-                grid-template-rows: repeat(3, 1fr);
-                grid-template-columns: repeat(auto-fill, 25rem);
                 gap: 1rem;
-                width: max-content;
+                grid-template-rows: repeat(3, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
                 scroll-snap-type: x mandatory;
 
                 .review-card {
-                    width: 25rem;
                     border-radius: 10px;
                     padding: 1.5rem;
                     background-color: rgba(31, 27, 27, 0.5);
@@ -199,6 +203,7 @@
                         display: flex;
                         justify-content: space-between;
                         margin-bottom: 1rem;
+                        font-size: 1.25rem;
                     }
 
                     .review-msg {
@@ -218,24 +223,65 @@
         flex-direction: column;
         padding: 1.75rem;
 
-        .photos-and-actions {
-            width: 100%;
+        .details-wrapper {
+            flex-direction: column;
 
-            .photos {
-                height: 22.5rem;
-                gap: .5rem;
-                padding: .25rem;
+            .photos-and-actions {
+                width: 100%;
 
-                .photos-list {
-                    img {
-                        min-height: 4rem;
+                .photos {
+                    height: 22.5rem;
+                    gap: .5rem;
+                    padding: .25rem;
+
+                    .photos-list {
+                        img {
+                            min-height: 4rem;
+                        }
                     }
                 }
             }
+
+            .details {
+                width: 100%;
+            }
         }
 
-        .details {
-            width: 100%;
+        .reviews-wrapper {
+            .total-rating {
+                h1 {
+                    font-size: 1rem;
+
+                    span {
+                        font-size: 1.75rem;
+                    }
+                }
+            }
+
+            .scroll-note {
+                top: .5rem;
+                right: 0;
+                font-size: .5rem;
+            }
+
+            .reviews {
+                .cards-wrapper {
+                    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+
+                    .review-card {
+                        padding: 1rem;
+                        font-size: 0.75rem;
+
+                        .info {
+                            font-size: 1rem;
+                        }
+
+                        .review-msg {
+                            font-size: 0.75rem;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -245,16 +291,50 @@
         flex-direction: column;
         padding: 1.5rem 4rem;
 
-        .photos-and-actions {
-            width: 100%;
+        .details-wrapper {
+            .photos-and-actions {
+                width: 100%;
 
-            .photos {
-                height: 25rem;
+                .photos {
+                    height: 25rem;
+                }
+
+                .actions {
+                    flex-direction: column;
+
+                    form {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .details {
+                width: 100%;
+
+                .overview {
+                    gap: .5rem;
+
+                    .offers {
+                        max-height: 23rem;
+                        overflow: scroll;
+
+                        span {
+                            bottom: -2rem;
+                            left: 2rem;
+                            color: #c4b175;
+                        }
+                    }
+                }
             }
         }
 
-        .details {
-            width: 100%;
+        .reviews-wrapper {
+            .reviews {
+                .cards-wrapper {
+                    scroll-snap-type: x mandatory;
+                    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+                }
+            }
         }
     }
 }
