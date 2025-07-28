@@ -66,35 +66,48 @@
   font-size: 17.5px;
   margin: 1rem 0;
 }
-.orders_page .cards .card .details .order-status {
+.orders_page .cards .card .details .status {
   border-left: 1px solid rgba(230, 170, 110, 0.25);
   padding-left: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.orders_page .cards .card .details .order-status .date {
+.orders_page .cards .card .details .status .box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: -moz-max-content;
+  width: max-content;
+  border-radius: 5px;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.orders_page .cards .card .details .status .date {
   font-size: 15px;
   margin: 0.25rem 0;
 }
-.orders_page .cards .card .details .order-status .order-status {
+.orders_page .cards .card .details .status .order-status {
   font-size: small;
   margin: 0.5rem 0;
 }
-.orders_page .cards .card .details .order-status .actions-btn {
+.orders_page .cards .card .details .status .actions-btn {
   display: block;
+  text-align: center;
   width: -moz-max-content;
   width: max-content;
   border: 1px solid peru;
   padding: 0.3rem 0.75rem;
   margin: 0.25rem 0;
+  width: 9rem;
   font-weight: 700;
   background-color: rgb(44, 41, 41);
   color: rgb(175, 106, 35);
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 }
-.orders_page .cards .card .details .order-status .actions-btn:hover {
+.orders_page .cards .card .details .status .actions-btn:hover {
   background-color: #a78530;
   color: white;
   padding: 0.3rem 1rem;

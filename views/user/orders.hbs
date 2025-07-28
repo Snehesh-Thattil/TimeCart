@@ -14,10 +14,11 @@
                     <p class="product-name">{{this.product.product_name}}</p>
                 </div>
                 <div class="price">
-                    <h4>₹{{formatPrice this.productInfo.price}} <span>₹{{formatPrice this.product.original_price}}</span></h4>
+                    <h4>₹{{formatPrice this.productInfo.price}} <span>₹{{formatPrice
+                            this.product.original_price}}</span></h4>
                     <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
                 </div>
-                <div class="order-status">
+                <div class="status">
                     {{#if (eq this.orderStatus 'pending')}}
                     <p class="order-status">Order payment is incomplete</p>
                     <a href="/make-payment/{{this.product._id}}" class="actions-btn">Make Payment</a>
@@ -50,6 +51,8 @@
                     <h4 class="date">✅ Order delivered successfully</h4>
                     <p class="order-status">Item Delivered on : {{this.date.delivered}}</p>
                     <a href="/review-product/{{this.product._id}}" class="actions-btn">Review Product</a>
+                    <a href="/track-order?orderId={{this.orderId}}&productId={{this.product._id}}"
+                        class="actions-btn">Track Order</a>
 
                     {{/if}}
                 </div>

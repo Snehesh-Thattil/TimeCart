@@ -334,6 +334,9 @@ router.get('/track-order', async (req, res) => {
     const orderDetails = await userHelpers.getProductOrder(req.query.orderId, req.query.productId)
     const productDetails = await productHelpers.getProductDetails(req.query.productId)
 
+    console.log('ORDER DETAILS :', orderDetails)
+    console.log('PRODUCT DETAILS :', productDetails)
+
     res.render('user/track-order', { order: orderDetails, product: productDetails })
   }
   catch (err) {

@@ -15,6 +15,8 @@
                 <p class="quantity">quantity : {{order.productInfo.quantity}}</p>
             </div>
         </div>
+
+        <a href="/review-product/{{this.product._id}}" class="btn review-btn">Review Product</a>
     </div>
 
     <div class="pricing">
@@ -59,7 +61,7 @@
         <div class="progress-bar">
             <div class="step {{#if (neq order.orderStatus 'pending')}} completed {{/if}}">
                 <div class="circle"><span> {{#if (neq order.orderStatus 'pending')}} ✅ {{else}} ⌛ {{/if}}</span></div>
-                <p>Order Placed</p>
+                <p>Placed</p>
             </div>
             <div class="step {{#if order.date.packaged}} completed {{else}} curent {{/if}}">
                 <div class="circle"><span> {{#if order.date.packaged}} ✅ {{else}} ⌛ {{/if}}</span></div>
@@ -71,7 +73,7 @@
             </div>
             <div class="step {{#if order.date.outForDelivery}} completed {{else}} curent {{/if}}">
                 <div class="circle"><span> {{#if order.date.outForDelivery}} ✅ {{else}} ⌛ {{/if}}</span></div>
-                <p>Out for Delivery</p>
+                <p>Arrived</p>
             </div>
             <div class="step {{#if order.date.delivered}} completed {{else}} curent {{/if}}">
                 <div class="circle"><span> {{#if order.date.delivered}} ✅ {{else}} ⌛ {{/if}}</span></div>
@@ -110,8 +112,10 @@
             </div>
 
             <div class="cancel">
-                <a class="cancel-btn" href="/cancel-item={{this.orderId}}&productId={{this.product._id}}"
+                {{#if (or (neq order.orderStatus 'delivered') (neq order.orderStatus 'cancelled'))}}
+                <a class="btn cancel-btn" href="/cancel-item={{this.orderId}}&productId={{this.product._id}}"
                     onclick=" return confirm('Are you sure you want to cancel this order?')">Cancel Order</a>
+                {{/if}}
             </div>
         </div>
     </div>

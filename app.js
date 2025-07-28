@@ -31,12 +31,17 @@ app.engine('hbs', engine({
     neq: function (a, b) {
       return a !== b
     },
+
+    gt: (a, b) => Number(a) > Number(b),
+    lt: (a, b) => Number(a) < Number(b),
+
+    or: (a, b) => a || b,
+    and: (a, b) => a && b,
+
     subtract: (a, b) => Number(a) - Number(b),
     addition: (a, b) => Number(a) + Number(b),
     division: (a, b) => Number(a) / Number(b),
     multiply: (a, b) => Number(a) * Number(b),
-    gt: (a, b) => Number(a) > Number(b),
-    lt: (a, b) => Number(a) < Number(b),
 
     cartValue: (a, b, c) => Number(a) - Number(b) + Number(c),
     formatPrice: (value) => Number(value).toLocaleString('en-IN')
