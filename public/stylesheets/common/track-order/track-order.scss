@@ -1,0 +1,243 @@
+.track-order_page {
+    width: 100%;
+    // min-height: 85vh;
+    padding: 1rem 4rem;
+    color: peachpuff;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-rows: 45% 55%;
+
+    .heading {
+        margin-bottom: 1rem;
+    }
+
+    .address,
+    .pricing,
+    .status {
+        border: 1px solid peru;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .product {
+        grid-area: 1/1/2/3;
+        padding: 1rem;
+        border: 1px solid peru;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        position: relative;
+        background-color: rgb(15, 15, 15);
+
+        .image-link {
+            height: 100%;
+            width: 20rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .details {
+            display: flex;
+            outline: 2px solid rgba(255, 255, 255, 0.05);
+            gap: 2rem;
+            color: peru;
+            padding: 1rem;
+            width: 100%;
+
+            .name {
+                .brand-name {
+                    font-size: 15px;
+                }
+
+                .product-name {
+                    font-size: 20px;
+                }
+            }
+
+            .price {
+                h4 {
+                    font-size: 20px;
+                    text-align: start;
+                    font-family: Cinzel;
+
+                    span {
+                        font-size: 15px;
+                        color: rgba(128, 128, 128, 0.699);
+                        text-decoration: line-through 2px;
+                    }
+                }
+
+                .quantity {
+                    font-family: 'Playfair Display';
+                    font-size: 17.5px;
+                    margin: 1rem 0;
+                }
+            }
+        }
+    }
+
+    .address {
+        grid-area: 2/1/3/2;
+
+        p {
+            span {
+                color: rgb(180, 180, 180);
+                font-style: oblique;
+            }
+        }
+    }
+
+    .pricing {
+        grid-area: 1/3/2/4;
+        width: 100%;
+
+        p {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .og-price {
+            color: gray;
+            text-decoration: line-through;
+        }
+
+        .payment-status {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: .5rem;
+            color: rgb(194, 191, 191);
+            font-style: oblique;
+        }
+
+        hr {
+            opacity: .35;
+        }
+    }
+
+    .status {
+        grid-area: 2/2/3/4;
+        gap: 1rem;
+
+        .progress-bar {
+            padding: 1rem;
+            width: 100%;
+            outline: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+
+            .step {
+                text-align: center;
+                flex: 1;
+                position: relative;
+
+                &:not(:last-child)::after {
+                    content: '';
+                    background-color: rgba(205, 134, 63, 0.5);
+                    position: absolute;
+                    top: 15px;
+                    bottom: 50%;
+                    left: 50%;
+                    width: 100%;
+                    height: 3px;
+                    z-index: -1;
+                    // transform: translate(0%, 0%);
+                }
+
+                &.completed:not(:last-child)::after {
+                    background-color: #4caf50;
+                }
+
+                .circle {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 30%;
+                    background-color: peru;
+                    margin: 0 auto 8px;
+                    line-height: 28px;
+                    font-weight: bold;
+                    color: #fff;
+
+                    span {
+                        display: inline-block;
+                        padding: 0.5rem 0.7rem;
+                        border-radius: 50%;
+                        background-color: rgba(255, 255, 255, 0.75);
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                    }
+
+                    // State-specific
+                    .step.completed & {
+                        background-color: #4caf50;
+                    }
+
+                    .step.current & {
+                        background-color: #ff9800;
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .msg-and-cancel {
+            width: 100%;
+            margin-top: 1rem;
+            display: flex;
+
+            .status-msg {
+                max-width: 70%;
+
+                p {
+                    &.qstn {
+                        color: rgb(180, 180, 180);
+                        font-style: oblique;
+                    }
+
+                    .exp-del-date {
+                        font-weight: 600;
+                        color: rgba(218, 165, 32, 0.7);
+                    }
+                }
+            }
+
+            .cancel {
+                display: flex;
+                flex: 1;
+                justify-content: flex-end;
+                align-items: end;
+
+                .cancel-btn {
+                    display: block;
+                    padding: .5rem 1rem;
+                    border-radius: 4px;
+                    color: whitesmoke;
+                    font-weight: bold;
+                    background-color: rgb(150, 100, 40);
+                    outline: 2px solid rgba(150, 100, 40, 0.75);
+                    transition: all .3s ease-in-out;
+
+                    &:hover {
+                        background-color: rgba(255, 0, 0, 0.5);
+                        outline: 2px solid rgba(255, 0, 0, 0.8);
+                    }
+                }
+            }
+        }
+
+    }
+}

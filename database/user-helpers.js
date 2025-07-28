@@ -496,17 +496,6 @@ module.exports = {
             }
         })
     },
-    getOrderDetails: (orderId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collections.ORDERS_COLLECTION).findOne({ orderId: ObjectId.createFromHexString(orderId) })
-                .then((result) => {
-                    resolve(result)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
-        })
-    },
     getOrders: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -546,6 +535,27 @@ module.exports = {
             catch (err) {
                 reject(err)
             }
+        })
+    },
+    getOrderDetails: (orderId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.ORDERS_COLLECTION).findOne({ orderId: ObjectId.createFromHexString(orderId) })
+                .then((result) => {
+                    resolve(result)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
+    },
+    getProductOrder: (orderId, productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.ORDERS_COLLECTION).findOne(
+                {
+                    orderId: ObjectId.createFromHexString(orderId),
+                    'productInfo.productId': ObjectId.createFromHexString(productId)
+                }
+            ).then((result) => resolve(result)).catch((err) => reject(err))
         })
     },
     generateRazorpay: (orderId, totalValue) => {

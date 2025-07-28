@@ -15,8 +15,8 @@
                 <h2 class="product-name">{{this.product.product_name}}</h2>
                 <h4 class="brand-name">{{this.product.brand_name}}</h4>
                 <p class="description">{{this.product.description}}</p>
-                <h1 class="price"> <span class="currency">₹</span> {{this.product.selling_price}}
-                    <strike> <span class="currency">₹</span>{{this.product.original_price}}</strike>
+                <h1 class="price"> <span class="currency">₹</span> {{formatPrice this.product.selling_price}}
+                    <strike> <span class="currency">₹</span>{{formatPrice this.product.original_price}}</strike>
                 </h1>
                 <div class="actions">
                     <div class="qnty">
@@ -50,12 +50,12 @@
                     <tr>
                         <td>Original price</td>
                         <td><span class="currency">₹</span> <span
-                                id="original_price">{{cartTotal.original_total}}</span></td>
+                                id="original_price">{{formatPrice cartTotal.original_total}}</span></td>
                     </tr>
                     <tr>
                         <td>Discounted Price</td>
                         <td><span class="currency">₹</span>
-                            <span id="discounted_price">{{cartTotal.discounted_total}}</span>
+                            <span id="discounted_price">{{formatPrice cartTotal.discounted_total}}</span>
                         </td>
                     </tr>
                     <tr>
@@ -65,20 +65,20 @@
                     <tr>
                         <td>Coupon Discount</td>
                         <td><span class="currency">₹</span>
-                            <span id="coupon-value">{{cartTotal.coupon_discount}}</span>
+                            <span id="coupon-value">{{formatPrice cartTotal.coupon_discount}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td>Delivery Charges</td>
                         <td><span class="currency">₹</span>
-                            <span id="delivery-charges">{{cartTotal.delivery_charges}}</span>
+                            <span id="delivery-charges">{{formatPrice cartTotal.delivery_charges}}</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="price-and-btn">
                 <h3><span class="currency">₹</span>
-                    <span id="final_price">{{cartTotal.final_payable}}</span>
+                    <span id="final_price">{{formatPrice cartTotal.final_payable}}</span>
                 </h3>
                 <a href="/checkout" class="checkout">Checkout</a>
             </div>

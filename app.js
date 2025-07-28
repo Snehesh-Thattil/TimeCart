@@ -28,6 +28,9 @@ app.engine('hbs', engine({
     eq: function (a, b) {
       return a === b;
     },
+    neq: function (a, b) {
+      return a !== b
+    },
     subtract: (a, b) => Number(a) - Number(b),
     addition: (a, b) => Number(a) + Number(b),
     division: (a, b) => Number(a) / Number(b),
@@ -35,7 +38,8 @@ app.engine('hbs', engine({
     gt: (a, b) => Number(a) > Number(b),
     lt: (a, b) => Number(a) < Number(b),
 
-    cartValue: (a, b, c) => Number(a) - Number(b) + Number(c)
+    cartValue: (a, b, c) => Number(a) - Number(b) + Number(c),
+    formatPrice: (value) => Number(value).toLocaleString('en-IN')
   }
 }))
 

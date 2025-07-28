@@ -31,11 +31,11 @@
         <div class="section summary-box">
             <h3 class="section-titles">Summary</h3>
             <div class="summary">
-                <p>Original price: <span>₹{{cartTotal.original_total}}</span></p>
-                <p>Discounted price: <span>₹{{cartTotal.discounted_total}}</span></p>
+                <p>Original price: <span>₹{{formatPrice cartTotal.original_total}}</span></p>
+                <p>Discounted price: <span>₹{{formatPrice cartTotal.discounted_total}}</span></p>
                 <p>Coupon Code: <span>WINTER200</span></p>
-                <p>Coupon Discount: <span>₹{{cartTotal.coupon_discount}}</span></p>
-                <p>Delivery Charges: <span>₹{{cartTotal.delivery_charges}}</span></p>
+                <p>Coupon Discount: <span>₹{{formatPrice cartTotal.coupon_discount}}</span></p>
+                <p>Delivery Charges: <span>₹{{formatPrice cartTotal.delivery_charges}}</span></p>
             </div>
             <div class="total">
                 <h3>Total: ₹{{cartTotal.final_payable}}</h3>

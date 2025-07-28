@@ -329,6 +329,18 @@ router.get('/orders', verifyLogin, (req, res) => {
     })
 })
 
+router.get('/track-order', async (req, res) => {
+  try {
+    const orderDetails = await userHelpers.getProductOrder(req.query.orderId, req.query.productId)
+    const productDetails = await productHelpers.getProductDetails(req.query.productId)
+
+    res.render('user/track-order', { order: orderDetails, product: productDetails })
+  }
+  catch (err) {
+    res.render('landing', { error: err.message })
+  }
+})
+
 router.get('/review-product/:productId', verifyLogin, (req, res) => {
   productHelpers.getProductDetails(req.params.productId)
     .then((product) => {
@@ -350,7 +362,6 @@ router.post('/submit-review', (req, res) => {
     .catch((error) => {
       res.redirect('/', { error })
     })
-
 })
 
 module.exports = router;

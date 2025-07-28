@@ -1,0 +1,119 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/common/track-order/track-order.css">
+
+<div class="track-order_page">
+    <div class="product">
+        <a href="/view-item/{{product._id}}" class="image-link"> <img src="/images/products/{{this.product.coverImg}}"
+                alt=""></a>
+        <div class="details">
+            <div class="name">
+                <p class="brand-name">{{product.brand_name}}</p>
+                <p class="product-name">{{product.product_name}}</p>
+            </div>
+            <div class="price">
+                <h4>₹{{formatPrice order.productInfo.price}} <span>₹{{formatPrice product.original_price}}</span></h4>
+                <p class="quantity">quantity : {{order.productInfo.quantity}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing">
+        <h4 class="heading">Pricing Details</h4>
+
+        <p class="og-price">Original Price : <span>{{formatPrice product.original_price}}</span></p>
+        <p>Purchased Price : <span>{{formatPrice order.productInfo.price}}</span></p>
+        <p>Shipping Fee (Total Order) : <span>{{formatPrice order.cartInfo.delivery_charges}}</span> </p>
+        <hr>
+
+        <p>Final Price : <span>{{formatPrice (cartValue order.productInfo.price 0
+                order.cartInfo.delivery_charges)}}</span></p>
+        <hr>
+        <hr>
+
+        {{#if (eq order.paymentMethod 'COD')}}
+        <p class="payment-status">⏳ Amount yet to be paid as COD</p>
+        {{else if (eq order.orderStatus 'placed')}}
+        <p class="payment-status">💵 Amount paid successfully online</p>
+        {{/if}}
+    </div>
+
+    <div class="address">
+        <h4 class="heading">Delivery Details</h4>
+
+        <p><span>Address : </span> {{order.deliveryDetails.addressLine1}}, <br> {{order.deliveryDetails.addressLine2}},
+            <br>
+            {{order.deliveryDetails.district}}, Pincode:{{order.deliveryDetails.pincode}} <br>
+            Kerala, INDIA
+        </p>
+
+        <div class="user-details">
+            <p><span>Name : </span> {{order.userDetails.name}}</p>
+            <p><span>Phone : </span> {{order.userDetails.mobile}} </p>
+            <p><span>Email : </span> {{order.userDetails.email}} </p>
+        </div>
+    </div>
+
+    <div class="status">
+        <h4 class="heading">Delivery Status</h4>
+
+        <div class="progress-bar">
+            <div class="step {{#if (neq order.orderStatus 'pending')}} completed {{/if}}">
+                <div class="circle"><span> {{#if (neq order.orderStatus 'pending')}} ✅ {{else}} ⌛ {{/if}}</span></div>
+                <p>Order Placed</p>
+            </div>
+            <div class="step {{#if order.date.packaged}} completed {{else}} curent {{/if}}">
+                <div class="circle"><span> {{#if order.date.packaged}} ✅ {{else}} ⌛ {{/if}}</span></div>
+                <p>Packaged</p>
+            </div>
+            <div class="step {{#if order.date.shipped}} completed {{else}} curent {{/if}}">
+                <div class="circle"><span> {{#if order.date.shipped}} ✅ {{else}} ⌛ {{/if}}</span></div>
+                <p>Shipped</p>
+            </div>
+            <div class="step {{#if order.date.outForDelivery}} completed {{else}} curent {{/if}}">
+                <div class="circle"><span> {{#if order.date.outForDelivery}} ✅ {{else}} ⌛ {{/if}}</span></div>
+                <p>Out for Delivery</p>
+            </div>
+            <div class="step {{#if order.date.delivered}} completed {{else}} curent {{/if}}">
+                <div class="circle"><span> {{#if order.date.delivered}} ✅ {{else}} ⌛ {{/if}}</span></div>
+                <p>Delivered</p>
+            </div>
+        </div>
+
+        <div class="msg-and-cancel">
+            <div class="status-msg">
+                <p class="qstn">What happened to my order?</p>
+
+                {{#if (eq order.orderStatus 'placed')}}
+                <p>Your order has been successfully placed and is now being prepared for packaging.
+                    Expected delivery on <span class="exp-del-date"> {{order.date.expectedDelivery}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'packaged')}}
+                <p>Your order has been securely packaged and is on its way to the nearest shipping facility.
+                    Expected delivery on <span class="exp-del-date"> {{order.date.expectedDelivery}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'shipped')}}
+                <p>Your order has been shipped and is currently in transit to your local delivery center.
+                    Expected delivery on <span class="exp-del-date"> {{order.date.expectedDelivery}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'outForDelivery')}}
+                <p>Your order is out for delivery and will arrive at your doorstep soon.
+                    Expected delivery on <span class="exp-del-date"> {{order.date.expectedDelivery}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'delivered')}}
+                <p>Your order has been successfully delivered. Thank you for shopping with us!</p>
+
+                {{/if}}
+            </div>
+
+            <div class="cancel">
+                <a class="cancel-btn" href="/cancel-item={{this.orderId}}&productId={{this.product._id}}"
+                    onclick=" return confirm('Are you sure you want to cancel this order?')">Cancel Order</a>
+            </div>
+        </div>
+    </div>
+
+</div>
