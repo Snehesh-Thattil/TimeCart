@@ -1,0 +1,23 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/common/edit-profileInfo/edit-profileInfo.css">
+
+<div class="edit-profileInfo_page">
+    <h3 class="title">Edit Profile Informations</h3>
+    
+    <form action="/seller/submit-profileInfo" method="post">
+        <input class="fixed-input" type="text" placeholder="Name" name="name" value="{{seller.name}}" required readonly>
+        <input class="fixed-input" type="email" placeholder="Email address" name="email" value="{{seller.email}}"
+            required readonly>
+
+        <input type="text" minlength="3" maxlength="20" placeholder="Main Branch" name="main_branch"
+            value="{{seller.main_branch}}">
+
+        <input type="number" min=0000000001 max=9999999999 placeholder="Phone Number" name="phone"
+            value="{{seller.phone}}" required>
+
+        <input type="number" min=0000000001 max=9999999999 placeholder="Alternative Phone" name="phone_alt"
+            value="{{seller.phone}}">
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

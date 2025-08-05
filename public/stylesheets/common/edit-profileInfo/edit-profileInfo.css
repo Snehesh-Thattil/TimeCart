@@ -1,0 +1,109 @@
+.edit-profileInfo_page {
+  width: 100%;
+  min-height: 90vh;
+  padding: 2rem 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  color: rgb(155, 106, 58);
+}
+.edit-profileInfo_page form {
+  width: 50%;
+  background-color: rgb(46, 45, 45);
+  padding: 2rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.edit-profileInfo_page form input {
+  padding: 0.7rem;
+  outline: 2px solid rgba(182, 117, 52, 0.342);
+  border-radius: 2.5px;
+  border: none;
+  font-weight: bold;
+}
+.edit-profileInfo_page form input.fixed-input {
+  opacity: 0.95;
+  background-color: rgba(194, 132, 75, 0.651);
+  color: white;
+}
+.edit-profileInfo_page form input:focus {
+  outline: 2px solid peru;
+}
+.edit-profileInfo_page form .gender {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.edit-profileInfo_page form .gender .radio-items {
+  display: flex;
+  gap: 1rem;
+}
+.edit-profileInfo_page form .gender .radio-items .radio-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 2px;
+  gap: 0.5rem;
+  outline: 1px peru solid;
+}
+.edit-profileInfo_page form .gender .radio-items .radio-item label {
+  cursor: pointer;
+  font-size: 13px;
+}
+.edit-profileInfo_page form .gender .radio-items .radio-item input {
+  transform: scale(1.25);
+  outline: none;
+  cursor: pointer;
+}
+.edit-profileInfo_page form button {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: rgb(177, 129, 81);
+  font-weight: bold;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+.edit-profileInfo_page form button:hover {
+  background-color: peru;
+}
+
+@media screen and (max-width: 767px) {
+  .edit-profileInfo_page {
+    padding: 2rem 1rem;
+  }
+  .edit-profileInfo_page .title {
+    font-size: 17.5px;
+  }
+  .edit-profileInfo_page form {
+    width: 100%;
+  }
+  .edit-profileInfo_page form .gender {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7.5px;
+  }
+  .edit-profileInfo_page form .gender .radio-items {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .edit-profileInfo_page {
+    padding: 3rem;
+  }
+  .edit-profileInfo_page form {
+    width: 80%;
+    gap: 1.5rem;
+  }
+  .edit-profileInfo_page form button {
+    padding: 0.65rem;
+  }
+}/*# sourceMappingURL=edit-profileInfo.css.map */

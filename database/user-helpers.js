@@ -58,6 +58,55 @@ module.exports = {
                 })
         })
     },
+    editProfileInfo: (formData, userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await db.get().collection(collections.USERS_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(userId)
+                    },
+                    {
+                        $set: { ...formData }
+                    }
+                )
+
+                const newUserData = db.get().collection(collections.USERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(userId) })
+
+                resolve(newUserData)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    changePassword: (formData, userId) => {
+        return new Promise(async (resolve, reject) => {
+
+            if (formData.newPassword !== formData.confirmPassword) return reject('New passwords do not match! ⚠️')
+
+            const user = await db.get().collection(collections.USERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(userId) })
+
+            const passwordValidate = await bcrypt.compare(formData.currentPassword, user.password)
+
+            if (passwordValidate) {
+                const passwordReset = await bcrypt.hash(formData.newPassword, 10)
+
+                await db.get().collection(collections.USERS_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(userId)
+                    },
+                    {
+                        $set: { password: passwordReset }
+                    }
+                )
+
+                resolve(true)
+            }
+            else {
+                reject('Incorrect current password! ⚠️. Try again')
+            }
+        })
+    },
     addToCart: (productId, userId) => {
         const productObj = {
             item: ObjectId.createFromHexString(productId),

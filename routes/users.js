@@ -123,6 +123,31 @@ router.get('/edit-address', verifyLogin, (req, res) => {
   res.render('user/manage-address', { currentAddress: req.session.user.address, user: req.session.user, message, error })
 })
 
+router.get('/edit-profile-info', verifyLogin, (req, res) => {
+  res.render('user/edit-profileInfo', { user: req.session.user })
+})
+
+router.post('/submit-profileInfo', (req, res) => {
+  userHelpers.editProfileInfo(req.body, req.session.user._id)
+    .then((newUserData) => {
+      req.session.user = newUserData
+      res.render('user/profile', { message: 'Profile Updated Successfully ✅' })
+    })
+    .catch((err) => {
+      res.render('user/profile', { error: 'Something Went Wrong! ⚠️. Try again' })
+    })
+})
+
+router.post('/change-password', (req, res) => {
+  userHelpers.changePassword(req.body, req.session.user._id)
+    .then(() => {
+      res.render('user/profile', { message: 'Password Changed Successfully ✅' })
+    })
+    .catch((err) => {
+      res.render('user/profile', { error: err })
+    })
+})
+
 router.get('/products', async (req, res) => {
   try {
     const products = await productHelpers.getProducts()

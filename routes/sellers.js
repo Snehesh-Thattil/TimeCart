@@ -124,6 +124,32 @@ router.get('/edit-location', verifyLogin, (req, res) => {
   res.render('seller/manage-location', { currLocation: req.session.seller.location, seller: req.session.seller, message, error })
 })
 
+router.get('/edit-profile-info', verifyLogin, (req, res) => {
+  res.render('seller/edit-profileInfo', { seller: req.session.seller })
+})
+
+router.post('/submit-profileInfo', (req, res) => {
+  sellerHelpers.editProfileInfo(req.body, req.session.seller._id)
+    .then((newSellerData) => {
+      req.session.seller = newSellerData
+      res.render('seller/profile', { seller: req.session.seller, message: 'Profile Updated Successfully ✅' })
+    })
+    .catch((err) => {
+      res.render('seller/profile', { error: 'Somtheing Went Wrong! ⚠️. Try again' })
+    })
+})
+
+router.post('/change-password', (req, res) => {
+  console.log(req.body)
+  sellerHelpers.changePassword(req.body, req.session.seller._id)
+    .then(() => {
+      res.render('seller/profile', { seller: req.session.seller, message: 'Password Updated Successfully ✅' })
+    })
+    .catch((err) => {
+      res.render('seller/profile', { error: err })
+    })
+})
+
 router.get('/add-product', verifyLogin, (req, res) => {
   res.render('seller/add-product', { seller: req.session.seller })
 })

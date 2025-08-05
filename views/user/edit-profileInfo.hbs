@@ -1,0 +1,40 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/common/edit-profileInfo/edit-profileInfo.css">
+
+<div class="edit-profileInfo_page">
+    <h2 class="title">Edit Profile Informations</h2>
+
+    <form action="/submit-profileInfo" method="post">
+        <input class="fixed-input" type="text" placeholder="Name" name="name" value="{{user.name}}" required readonly>
+        <input class="fixed-input" type="email" placeholder="Email address" name="email" value="{{user.email}}" required
+            readonly>
+
+        <input type="number" min=0000000001 max=9999999999 placeholder="Phone Number" name="phone"
+            value="{{user.phone}}" required>
+        <input type="number" min=0000000001 max=9999999999 placeholder="Alternative Phone" name="phone_alt"
+            value="{{user.phone}}">
+
+        <div class="gender">
+            <p>Gender :</p>
+
+            <div class="radio-items">
+                <div class="radio-item">
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+                </div>
+
+                <div class="radio-item">
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                </div>
+
+                <div class="radio-item">
+                    <input type="radio" id="other" name="gender" value="Other">
+                    <label for="other">Others</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

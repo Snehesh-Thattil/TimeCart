@@ -51,6 +51,54 @@ module.exports = {
             }
         })
     },
+    editProfileInfo: (formData, sellerId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await db.get().collection(collections.SELLERS_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(sellerId)
+                    },
+                    {
+                        $set: { ...formData }
+                    }
+                )
+                const newSellerData = db.get().collection(collections.SELLERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(sellerId) })
+
+                resolve(newSellerData)
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    },
+    changePassword: (formData, sellerId) => {
+        return new Promise(async (resolve, reject) => {
+
+            if (formData.newPassword !== formData.confirmPassword) return reject('New passwords do not match! ⚠️')
+
+            const seller = await db.get().collection(collections.SELLERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(sellerId) })
+
+            const passwordValidate = await bcrypt.compare(formData.currentPassword, seller.password)
+
+            if (passwordValidate) {
+                const passwordReset = await bcrypt.hash(formData.newPassword, 10)
+
+                await db.get().collection(collections.USERS_COLLECTION).updateOne(
+                    {
+                        _id: ObjectId.createFromHexString(sellerId)
+                    },
+                    {
+                        $set: { password: passwordReset }
+                    }
+                )
+
+                resolve(true)
+            }
+            else {
+                reject('Incorrect current password! ⚠️. Try again')
+            }
+        })
+    },
     getOrders: (sellerId) => {
         return new Promise(async (resolve, reject) => {
             try {

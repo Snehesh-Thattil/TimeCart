@@ -3,6 +3,7 @@
 
 <div class="profile_page">
     {{#if message}}<p class="note">{{message}}</p>{{/if}}
+    {{#if error}}<p class="note">{{error}}</p>{{/if}}
 
     <div class="profile-wrapper">
         <div class="left-section">
@@ -18,12 +19,14 @@
                 </div>
 
                 <div class="basic-infos">
-                    <p><span>Name</span> {{seller.name}}</p>
-                    <p><span>Mobile</span> {{#if seller.mobile}} {{seller.mobile}} {{else}} --- {{/if}}</p>
+                    <p><span>Name</span>{{seller.name}}</p>
+                    <p><span>Phone</span>{{#if seller.phone}} {{seller.phone}} {{else}} ---{{/if}}</p>
+                    <p><span>Main Branch</span>{{#if seller.main_branch}} {{seller.main_branch}} {{else}} ---{{/if}}
+                    </p>
                     <p><span>Email</span> {{seller.email}} </p>
                 </div>
 
-                <a href="/seller/edit-profile-infos" class="button">Edit</a>
+                <a href="/seller/edit-profile-info" class="button">Edit</a>
             </div>
         </div>
 
@@ -70,9 +73,10 @@
         <form action="/seller/change-password" method="post">
             <h4 class="heading">Change Password</h4>
 
-            <input type="password" name="" placeholder="Current password">
-            <input type="password" placeholder="New password">
-            <input type="password" placeholder="Confirm new password">
+            <input type="password" name="currentPassword" placeholder="Current password">
+            <input type="password" minlength="8" maxlength="16" name="newPassword" placeholder="New password">
+            <input type="password" minlength="8" maxlength="16" name="confirmPassword"
+                placeholder="Confirm new password">
 
             <button type="submit" class="button">Change Password</button>
         </form>
