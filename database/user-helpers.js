@@ -644,7 +644,7 @@ module.exports = {
             }
         })
     },
-    changeOrderStatus: (orderId) => {
+    changeOrderStatus: (orderId) => { // after payment
         return new Promise(async (resolve, reject) => {
             try {
                 if (!ObjectId.isValid(orderId)) return reject(new Error("Invalid orderId"))
@@ -659,6 +659,38 @@ module.exports = {
             catch (err) {
                 reject(err)
             }
+        })
+    },
+    cancelOrder: (orderId, productId) => {
+        return new Promise((resolve, reject) => {
+
+            // Identify and set cancelling date:
+            const now = new Date()
+            const formatOptions = {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                timeZone: 'Asia/Kolkata'
+            }
+
+            const cancelDate = now.toLocaleDateString('en-IN', formatOptions)
+            const expectedRefund = new Date(now)
+            expectedRefund.setDate(now.getDate() + 7) // refund within 7 days
+            const refundExp = expectedRefund.toLocaleDateString('en-IN', formatOptions)
+
+            db.get().collection(collections.ORDERS_COLLECTION).updateOne(
+                {
+                    orderId: ObjectId.createFromHexString(orderId),
+                    'productInfo.productId': ObjectId.createFromHexString(productId)
+                },
+                {
+                    $set: {
+                        orderStatus: 'cancelled',
+                        'date.cancelled': cancelDate,
+                        'date.refundExpected': refundExp
+                    }
+                }
+            ).then((result) => resolve(result)).catch((err) => reject(err))
         })
     },
     editUserAddress: (formData, email) => {

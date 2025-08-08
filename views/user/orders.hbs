@@ -18,8 +18,17 @@
                             this.product.original_price}}</span></h4>
                     <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
                 </div>
+
                 <div class="status">
-                    {{#if (eq this.orderStatus 'pending')}}
+                    {{#if (eq this.orderStatus 'cancelled')}}
+                    <h4 class="date">✖️ Your order has been cancelled</h4>
+                    <p class="order-status">Refund is expected by :
+                        <span class="exp-del-date">{{this.date.refundExpected}}</span>.
+                    </p>
+                    <a href="/track-order?orderId={{this.orderId}}&productId={{this.product._id}}"
+                        class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'pending')}}
                     <p class="order-status">Order payment is incomplete</p>
                     <a href="/make-payment/{{this.product._id}}" class="actions-btn">Make Payment</a>
 

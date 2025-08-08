@@ -8,24 +8,25 @@ var session = require('express-session')
 var { engine } = require('express-handlebars')
 var fileUpload = require('express-fileupload')
 var db = require('./database/connection')
+var flash = require('connect-flash')
 
 var cartCountMW = require('./middlewares/cartCount')
 
-var usersRouter = require('./routes/users');
-var sellersRouter = require('./routes/sellers');
+var usersRouter = require('./routes/users')
+var sellersRouter = require('./routes/sellers')
 
-var app = express();
+var app = express()
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Handlebars engine
 app.engine('hbs', engine({
   extname: 'hbs',
   defaultLayout: 'layout',
   layoutsDir: path.join(__dirname, 'views/layout'),
   partialsDir: path.join(__dirname, 'views/partials'),
-
   helpers: {
     eq: function (a, b) {
       return a === b;
@@ -56,6 +57,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Session
 app.use((session({
   secret: process.env.EXPRESS_SESSION_SECRET_KEY,
   resave: false,
@@ -63,25 +65,27 @@ app.use((session({
   cookie: { maxAge: 6000000 }
 })))
 
-app.use((req, res, next) => {
-  res.locals.message = req.session.message
-  res.locals.error = req.session.error
-  delete req.session.message
-  delete req.session.error
-  next()
-})
-
 app.use(cartCountMW)
 
 app.use(fileUpload())
+
+// Flash
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success')
+  res.locals.error_msg = req.flash('error')
+  next()
+})
+
+// MongoDB Connection
 db.connect((err) => {
   if (err) console.log('Error connecting database :', err.message)
   else console.log('Connected to database successfully')
 })
 
+// Routes
 app.use('/', usersRouter);
 app.use('/seller', sellersRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

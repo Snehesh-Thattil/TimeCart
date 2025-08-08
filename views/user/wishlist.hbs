@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/stylesheets/user/wishlist/wishlist.css">
 
 <div class="wishlist_page">
+    {{#if wishlist}}
     <div class="cards">
         <p class="title">Wishlist</p>
         {{#each wishlist}}
@@ -22,6 +23,12 @@
         </div>
         {{/each}}
     </div>
+    {{else}}
+    <div class="empty-wishlist">
+        <h1>Your wishlist is empty</h1>
+        <a href="/">Add Items</a>
+    </div>
+    {{/if}}
 </div>
 
 {{!-- JS --}}

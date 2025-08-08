@@ -5,10 +5,16 @@ const userHelpers = require('../database/user-helpers')
 
 const verifyLogin = (req, res, next) => {
   if (req.session.userLoggedIn) {
-    next()
-  } else {
-    res.redirect('/login')
+    return next()
   }
+
+  if (req.method === 'POST') {
+    req.session.returnTo = req.get('Referrer') || '/'
+  } else {
+    req.session.returnTo = req.originalUrl
+  }
+
+  res.redirect('/login')
 }
 
 /* GET home page. */
@@ -18,7 +24,8 @@ router.get('/', async (req, res, next) => {
     res.render('landing', { user: req.session.user, products })
   }
   catch (err) {
-    console.log(err)
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -35,13 +42,17 @@ router.post('/signup', (req, res) => {
     .then((user) => {
       req.session.userLoggedIn = true
       req.session.user = user
-      res.redirect('/')
+
+      const redirectURL = req.session.returnTo || '/'
+      delete req.session.returnTo
+
+      res.redirect(redirectURL)
     })
     .catch((err) => {
-      if (err = 'Email already exists') {
+      if (err === 'Email already exists') {
         req.session.userLoginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/login')
-      } else if (err = 'Passwords do not match') {
+      } else if (err === 'Passwords do not match') {
         req.session.userLoginErr = 'Passwords do not match! ⚠️'
         res.redirect('/signup')
       } else {
@@ -65,7 +76,11 @@ router.post('/login', (req, res) => {
     .then((user) => {
       req.session.userLoggedIn = true
       req.session.user = user
-      res.redirect('/')
+
+      const redirectURL = req.session.returnTo || '/'
+      delete req.session.returnTo
+
+      res.redirect(redirectURL)
     })
     .catch((err) => {
       req.session.userLoginErr = 'Invalid email or password! 😞'
@@ -90,6 +105,7 @@ router.get('/add-new-address', verifyLogin, (req, res) => {
   const message = req.session.user.message
   const error = req.session.user.error
   req.session.user.error = null
+  req.session.user.message = null
 
   res.render('user/manage-address', { user: req.session.user, message, error })
 })
@@ -139,6 +155,7 @@ router.post('/change-password', (req, res) => {
       res.render('user/profile', { message: 'Password Changed Successfully ✅' })
     })
     .catch((err) => {
+      req.flash('error', err.message)
       res.render('user/profile', { error: err })
     })
 })
@@ -154,8 +171,8 @@ router.get('/products', async (req, res) => {
     res.render('user/view-products', { products, cartCount, user: req.session.user, admin: false })
   }
   catch (err) {
-    console.log('Error getting products :', err)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -172,19 +189,20 @@ router.get('/view-item/:id', async (req, res) => {
     res.render('user/view-item', { product, reviews, ratingAvg, user: req.session.user })
   }
   catch (err) {
-    console.error('Error fetching product or reviews:', err)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
 router.post('/add-to-cart/:productId', verifyLogin, async (req, res) => {
   userHelpers.addToCart(req.params.productId, req.session.user._id)
     .then(() => {
+      req.flash('success', 'Product added to cart')
       res.redirect('/cart')
     })
     .catch((err) => {
-      console.log('Error adding product to the cart :', err)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -196,8 +214,8 @@ router.get('/cart', verifyLogin, async (req, res) => {
     res.render('user/cart', { user: req.session.user, cartList, cartTotal })
   }
   catch (err) {
-    console.log(err.message)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -208,8 +226,8 @@ router.post('/change-product-qnty', async (req, res) => {
     res.json(response)
   }
   catch (err) {
-    console.log(err.message)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -219,8 +237,8 @@ router.post('/remove-from-cart', (req, res) => {
       res.json({ status: true })
     })
     .catch((err) => {
-      console.log(err)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -232,8 +250,8 @@ router.post('/move-to-wishlist', async (req, res) => {
     res.json({ status: true })
   }
   catch (err) {
-    console.log('Error moving item to wishlist')
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -241,11 +259,12 @@ router.post('/add-to-wishlist/:productId', async (req, res) => {
   userHelpers.addToWishlist(req.params.productId, req.session.user._id)
     .then((response) => {
       req.session.message = response.message
+      req.flash('success', 'Product added to your wishlist')
       res.redirect('back')
     })
     .catch((err) => {
-      console.log('Error adding to wishlist :', err.message)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -255,8 +274,8 @@ router.get('/checkout', verifyLogin, (req, res) => {
       res.render('user/checkout', { cartTotal, userId: req.session.user._id })
     })
     .catch((err) => {
-      console.log(err.message)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -275,8 +294,8 @@ router.post('/place-order', async (req, res) => {
     }
   }
   catch (err) {
-    console.log(err.message)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -288,7 +307,7 @@ router.post('/verify-payment', async (req, res) => {
     res.json({ status: true })
   }
   catch (err) {
-    console.log(err)
+    req.flash('error', err.message)
     res.redirect('back')
   }
 })
@@ -299,8 +318,8 @@ router.get('/order-success-msg', (req, res) => {
       res.render('user/order-success', { order: data, user: req.session.user })
     })
     .catch((err) => {
-      console.log('Error getting order details:', err.message)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -310,8 +329,8 @@ router.get('/wishlist', verifyLogin, (req, res) => {
       res.render('user/wishlist', { user: req.session.user, wishlist })
     })
     .catch((err) => {
-      console.log(err.message)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -321,7 +340,8 @@ router.delete('/remove-from-wishlist/:productId', (req, res) => {
       res.json({ status: true })
     })
     .catch((err) => {
-      console.log(err.message)
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -333,8 +353,8 @@ router.post('/move-to-cart/:productId', async (req, res) => {
     res.redirect('/cart')
   }
   catch (err) {
-    console.log(err.message)
-    res.redirect('/')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -344,8 +364,8 @@ router.get('/orders', verifyLogin, (req, res) => {
       res.render('user/orders', { user: req.session.user, orders })
     })
     .catch((err) => {
-      console.log(err.message)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -357,13 +377,21 @@ router.get('/track-order', verifyLogin, async (req, res) => {
     res.render('user/track-order', { order: orderDetails, product: productDetails })
   }
   catch (err) {
-    res.render('landing', { error: err.message })
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
 router.get('/cancel-order', (req, res) => {
-
-  console.log('CANCEL ORDER CALL :', req.query)
+  userHelpers.cancelOrder(req.query.orderId, req.query.productId)
+    .then(() => {
+      req.flash('success', 'Your order has been cancelled 😔')
+      res.redirect('back')
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
+    })
 })
 
 router.get('/review-product/:productId', verifyLogin, (req, res) => {
@@ -373,7 +401,8 @@ router.get('/review-product/:productId', verifyLogin, (req, res) => {
       res.render('user/review-product', { product, ratingValues })
     })
     .catch((err) => {
-      res.redirect('/orders', { error: err })
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -384,8 +413,9 @@ router.post('/submit-review', (req, res) => {
     .then(() => {
       res.redirect(`/view-item/${req.body.productId}`)
     })
-    .catch((error) => {
-      res.redirect('/', { error })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 

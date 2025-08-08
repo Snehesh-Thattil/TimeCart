@@ -1,34 +1,35 @@
-.cart_component {
+.cart_page {
   width: 100%;
+  min-height: 90vh;
   padding: 2.5rem 7.5rem;
   display: flex;
   gap: 5rem;
   color: #CBA74E;
   background-color: rgb(14, 13, 13);
 }
-.cart_component .cards {
+.cart_page .cards {
   width: 70%;
   display: flex;
   flex-direction: column;
 }
-.cart_component .cards .card {
+.cart_page .cards .card {
   display: flex;
   outline: 1px solid peru;
   height: 12rem;
   margin-bottom: 1rem;
 }
-.cart_component .cards .card img {
+.cart_page .cards .card img {
   width: 12.5rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.cart_component .cards .card .details {
+.cart_page .cards .card .details {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   padding: 0.5rem 1rem;
 }
-.cart_component .cards .card .details .product-name {
+.cart_page .cards .card .details .product-name {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -38,12 +39,12 @@
   -webkit-box-orient: vertical;
   text-align: justify;
 }
-.cart_component .cards .card .details .price strike {
+.cart_page .cards .card .details .price strike {
   color: rgba(189, 166, 144, 0.75);
   -webkit-text-decoration: line-through 3px rgb(61, 56, 56);
           text-decoration: line-through 3px rgb(61, 56, 56);
 }
-.cart_component .cards .card .details p {
+.cart_page .cards .card .details p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -52,11 +53,11 @@
   -webkit-box-orient: vertical;
   text-align: justify;
 }
-.cart_component .cards .card .details .actions {
+.cart_page .cards .card .details .actions {
   display: flex;
   gap: 1rem;
 }
-.cart_component .cards .card .details .actions .qnty {
+.cart_page .cards .card .details .actions .qnty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,12 +67,12 @@
   width: max-content;
   padding: 4px;
 }
-.cart_component .cards .card .details .actions .qnty p {
+.cart_page .cards .card .details .actions .qnty p {
   width: 1rem;
   align-content: center;
   text-align: center;
 }
-.cart_component .cards .card .details .actions .qnty button {
+.cart_page .cards .card .details .actions .qnty button {
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -82,10 +83,10 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-.cart_component .cards .card .details .actions .qnty button:hover {
+.cart_page .cards .card .details .actions .qnty button:hover {
   background-color: #CBA74E;
 }
-.cart_component .cards .card .details .actions .move {
+.cart_page .cards .card .details .actions .move {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,37 +95,37 @@
   cursor: pointer;
   transition: all 0.25s ease-in-out;
 }
-.cart_component .cards .card .details .actions .move span {
+.cart_page .cards .card .details .actions .move span {
   margin-right: 7.5px;
 }
-.cart_component .cards .card .details .actions .move:hover {
+.cart_page .cards .card .details .actions .move:hover {
   border: 2px solid rgba(205, 134, 63, 0.5);
   background-color: black;
 }
-.cart_component .cards .card .details .actions .move.remove:hover {
+.cart_page .cards .card .details .actions .move.remove:hover {
   border: 2px solid rgba(250, 30, 30, 0.25);
 }
-.cart_component .right-section {
+.cart_page .right-section {
   width: 30%;
   height: -moz-max-content;
   height: max-content;
 }
-.cart_component .right-section .total-summary {
+.cart_page .right-section .total-summary {
   outline: 1px solid peru;
 }
-.cart_component .right-section .total-summary table {
+.cart_page .right-section .total-summary table {
   outline: 1px solid peru;
   padding: 1rem;
   width: 100%;
   height: 12.5rem;
 }
-.cart_component .right-section .total-summary .price-and-btn {
+.cart_page .right-section .total-summary .price-and-btn {
   padding: 1rem;
 }
-.cart_component .right-section .total-summary .price-and-btn h3 {
+.cart_page .right-section .total-summary .price-and-btn h3 {
   margin: 1rem 0;
 }
-.cart_component .right-section .total-summary .price-and-btn .checkout {
+.cart_page .right-section .total-summary .price-and-btn .checkout {
   display: block;
   text-align: center;
   width: 100%;
@@ -140,10 +141,10 @@
   color: black;
   transition: background-color 0.2s ease-in-out;
 }
-.cart_component .right-section .total-summary .price-and-btn .checkout:hover {
+.cart_page .right-section .total-summary .price-and-btn .checkout:hover {
   background-color: #CBA74E;
 }
-.cart_component .empty-cart {
+.cart_page .empty-cart {
   outline: 2px solid peru;
   width: 100%;
   padding: 5rem 2rem;
@@ -153,7 +154,7 @@
   justify-content: center;
   gap: 1rem;
 }
-.cart_component .empty-cart a {
+.cart_page .empty-cart a {
   display: block;
   text-decoration: none;
   color: black;
@@ -166,56 +167,56 @@
   font-weight: 700;
   cursor: pointer;
 }
-.cart_component .empty-cart a:hover {
+.cart_page .empty-cart a:hover {
   background-color: #af892a;
 }
-.cart_component #section-title {
+.cart_page #section-title {
   margin-bottom: 1rem;
 }
 
 @media screen and (max-width: 767px) {
-  .cart_component {
+  .cart_page {
     padding: 2.25rem;
     flex-direction: column;
     gap: 1.5rem;
   }
-  .cart_component .cards {
+  .cart_page .cards {
     width: 100%;
   }
-  .cart_component .cards .card {
+  .cart_page .cards .card {
     position: relative;
     height: 10rem;
   }
-  .cart_component .cards .card img {
+  .cart_page .cards .card img {
     width: 7rem;
   }
-  .cart_component .cards .card .details {
+  .cart_page .cards .card .details {
     padding: 0.5rem 0.75rem;
   }
-  .cart_component .cards .card .details .product-name {
+  .cart_page .cards .card .details .product-name {
     font-size: 15px;
   }
-  .cart_component .cards .card .details .brand-name {
+  .cart_page .cards .card .details .brand-name {
     font-size: 12.5px;
   }
-  .cart_component .cards .card .details .description {
+  .cart_page .cards .card .details .description {
     font-size: 11px;
   }
-  .cart_component .cards .card .details .price {
+  .cart_page .cards .card .details .price {
     font-size: 16px;
   }
-  .cart_component .cards .card .details .actions .qnty {
+  .cart_page .cards .card .details .actions .qnty {
     gap: 0.5rem;
   }
-  .cart_component .cards .card .details .actions .qnty p {
+  .cart_page .cards .card .details .actions .qnty p {
     width: 0.5rem;
     font-size: 15px;
   }
-  .cart_component .cards .card .details .actions .qnty button {
+  .cart_page .cards .card .details .actions .qnty button {
     width: 1rem;
     height: 1rem;
   }
-  .cart_component .cards .card .details .actions .move {
+  .cart_page .cards .card .details .actions .move {
     position: absolute;
     top: unset;
     bottom: 10px;
@@ -223,64 +224,64 @@
     padding: 0.2rem 0.5rem;
     font-size: 12.5px;
   }
-  .cart_component .cards .card .details .actions .move.remove {
+  .cart_page .cards .card .details .actions .move.remove {
     top: 10px;
     bottom: unset;
     padding: 0.25rem;
   }
-  .cart_component .cards .card .details .actions .move.remove span {
+  .cart_page .cards .card .details .actions .move.remove span {
     display: none;
   }
-  .cart_component .cards .card .details .actions .move.wishlist {
+  .cart_page .cards .card .details .actions .move.wishlist {
     height: 2rem;
   }
-  .cart_component .right-section {
+  .cart_page .right-section {
     width: 100%;
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
-  .cart_component {
+  .cart_page {
     padding: 2.25rem;
     gap: 1.5rem;
     flex-direction: row;
   }
-  .cart_component .cards {
+  .cart_page .cards {
     width: 65%;
   }
-  .cart_component .cards .card {
+  .cart_page .cards .card {
     height: 9rem;
     position: relative;
   }
-  .cart_component .cards .card img {
+  .cart_page .cards .card img {
     width: 8rem;
   }
-  .cart_component .cards .card .details {
+  .cart_page .cards .card .details {
     padding: 0.5rem 0.75rem;
   }
-  .cart_component .cards .card .details .product-name {
+  .cart_page .cards .card .details .product-name {
     font-size: 15px;
   }
-  .cart_component .cards .card .details .brand-name {
+  .cart_page .cards .card .details .brand-name {
     font-size: 12.5px;
   }
-  .cart_component .cards .card .details .description {
+  .cart_page .cards .card .details .description {
     font-size: 11px;
   }
-  .cart_component .cards .card .details .price {
+  .cart_page .cards .card .details .price {
     font-size: 16px;
   }
-  .cart_component .cards .card .details .actions .qnty {
+  .cart_page .cards .card .details .actions .qnty {
     gap: 0.5rem;
   }
-  .cart_component .cards .card .details .actions .qnty p {
+  .cart_page .cards .card .details .actions .qnty p {
     width: 0.75rem;
     font-size: 17.5px;
   }
-  .cart_component .cards .card .details .actions .qnty button {
+  .cart_page .cards .card .details .actions .qnty button {
     width: 1.75rem;
     height: 1.5rem;
   }
-  .cart_component .cards .card .details .actions .move {
+  .cart_page .cards .card .details .actions .move {
     position: absolute;
     top: unset;
     bottom: 10px;
@@ -289,31 +290,31 @@
     padding: 0.2rem 0.5rem;
     font-size: 12.5px;
   }
-  .cart_component .cards .card .details .actions .move.remove {
+  .cart_page .cards .card .details .actions .move.remove {
     top: 10px;
     bottom: unset;
     padding: 0.25rem;
   }
-  .cart_component .cards .card .details .actions .move.remove span {
+  .cart_page .cards .card .details .actions .move.remove span {
     display: none;
   }
-  .cart_component .cards .card .details .actions .move.wishlist {
+  .cart_page .cards .card .details .actions .move.wishlist {
     height: 2rem;
   }
-  .cart_component .right-section {
+  .cart_page .right-section {
     width: 35%;
   }
-  .cart_component .right-section .total-summary table tbody {
+  .cart_page .right-section .total-summary table tbody {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
-  .cart_component .right-section .total-summary table tbody tr {
+  .cart_page .right-section .total-summary table tbody tr {
     font-size: 0.85rem;
     display: flex;
     justify-content: space-between;
   }
-  .cart_component .right-section .total-summary table tbody tr td {
+  .cart_page .right-section .total-summary table tbody tr td {
     text-align: start;
   }
 }/*# sourceMappingURL=cart.css.map */

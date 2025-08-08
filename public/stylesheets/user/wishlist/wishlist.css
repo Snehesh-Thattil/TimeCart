@@ -1,14 +1,16 @@
 .wishlist_page {
   width: 100%;
   min-height: 90vh;
-  padding: 0.5rem 5rem;
+  padding: 2.5rem 7.5rem;
   color: white;
+  display: flex;
 }
 .wishlist_page .cards {
+  width: 100%;
+  padding: 1rem 15rem;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 1rem 15rem;
   min-height: 90vh;
   background-color: rgb(22, 22, 22);
 }
@@ -90,6 +92,33 @@
 .wishlist_page .cards .card .delete:hover i {
   transform: rotate(50deg);
   color: rgb(145, 35, 35);
+}
+.wishlist_page .empty-wishlist {
+  outline: 2px solid peru;
+  width: 100%;
+  padding: 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #CBA74E;
+}
+.wishlist_page .empty-wishlist a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: 0.2s ease-in-out;
+  background-color: #CBA74E;
+  font-weight: 700;
+  cursor: pointer;
+}
+.wishlist_page .empty-wishlist a:hover {
+  background-color: #af892a;
 }
 
 @media screen and (max-width: 767px) {

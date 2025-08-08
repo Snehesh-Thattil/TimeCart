@@ -1,5 +1,6 @@
-.cart_component {
+.cart_page {
     width: 100%;
+    min-height: 90vh;
     padding: 2.5rem 7.5rem;
     display: flex;
     gap: 5rem;
@@ -202,7 +203,7 @@
 
 // MEDIA-QUERIES RESPONSIVENESS
 @media screen and (max-width:767px) {
-    .cart_component {
+    .cart_page {
         padding: 2.25rem;
         flex-direction: column;
         gap: 1.5rem;
@@ -286,7 +287,7 @@
 }
 
 @media (min-width:768px) and (max-width:1024px) {
-    .cart_component {
+    .cart_page {
         padding: 2.25rem;
         gap: 1.5rem;
         flex-direction: row;

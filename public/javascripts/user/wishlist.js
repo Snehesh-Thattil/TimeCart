@@ -1,5 +1,5 @@
 
-function deleteWishlist(productId, userId) {
+function deleteWishlist(productId) {
     $.ajax({
         url: '/remove-from-wishlist/' + productId,
         method: 'DELETE',

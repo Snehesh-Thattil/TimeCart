@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>InstaCart</title>
-    {{!-- CSS --}}
+    <!-- CSS -->
     <link rel='stylesheet' href='/stylesheets/main.css' />
-    {{!-- fontAwsome --}}
+    <!-- FontAwsome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{!-- Google Fonts --}}
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=DM+Serif+Display:ital@0;1&family=Fira+Code:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    {{!-- Razorpay --}}
+    <!-- Razorpay -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
@@ -34,15 +34,30 @@
 
     {{>footer}}
 
-    {{#if message}}
-    <script> alert('{{message}}') </script>
+    {{#if error_msg}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{error_msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {{/if}}
 
-    {{#if error}}
-    <script> alert('{{error}}') </script>
+    {{#if success_msg}}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{success_msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {{/if}}
 
-    {{!-- JS --}}
+    <!-- Auto Hide Alert Box -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(el => {
+                el.classList.remove('show');
+            })
+        }, 3000) // auto-hide in 3sec
+    </script>
+
+    <!-- JS -->
     <script src="/javascripts/main.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>

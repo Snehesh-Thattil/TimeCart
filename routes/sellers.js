@@ -8,10 +8,15 @@ const sellerHelpers = require('../database/seller-helpers');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.sellerLoggedIn) {
-    next()
-  } else {
-    res.redirect('/seller/login')
+    return next()
   }
+  if (req.method === 'POST') {
+    req.session.returnTo = req.get('Referrer') || '/'
+  } else {
+    req.session.returnTo = req.originalUrl
+  }
+
+  res.redirect('/seller/login')
 }
 
 /* GET sellers page. */
@@ -21,7 +26,8 @@ router.get('/', verifyLogin, function (req, res, next) {
       res.render('seller/manage-products', { seller: req.session.seller, products });
     })
     .catch((err) => {
-      console.log('Error getting products :', err)
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -38,14 +44,18 @@ router.post('/signup', (req, res) => {
     .then((seller) => {
       req.session.sellerLoggedIn = true
       req.session.seller = seller
-      res.redirect('/seller')
+
+      const redirectURL = req.session.returnTo || '/'
+      delete req.session.returnTo
+
+      res.redirect(redirectURL)
     })
     .catch((err) => {
-      if (err = 'Email already exists') {
+      if (err === 'Email already exists') {
         req.session.sellerLoginErr = 'Email already exist! 🤩, Please login here:'
         res.redirect('/seller/login')
       }
-      else if (err = 'Passwords do not match') {
+      else if (err === 'Passwords do not match') {
         req.session.sellerLoginErr = 'Passwords do not match! ⚠️'
         res.redirect('/seller/signup')
       }
@@ -71,7 +81,11 @@ router.post('/login', (req, res) => {
     .then((seller) => {
       req.session.sellerLoggedIn = true
       req.session.seller = seller
-      res.redirect('/seller')
+
+      const redirectURL = req.session.returnTo || '/'
+      delete req.session.returnTo
+
+      res.redirect(redirectURL)
     })
     .catch((err) => {
       req.session.sellerLoginErr = 'Invalid email or password! 😞'
@@ -146,6 +160,7 @@ router.post('/change-password', (req, res) => {
       res.render('seller/profile', { seller: req.session.seller, message: 'Password Updated Successfully ✅' })
     })
     .catch((err) => {
+      req.flash('error', err.message)
       res.render('seller/profile', { error: err })
     })
 })
@@ -198,7 +213,8 @@ router.post('/add-product', async (req, res) => {
   }
   catch (err) {
     console.error('Error in /add-product:', err)
-    res.render('seller/add-product', { seller: req.session.seller, error: 'Failed to upload product images or save product.' })
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -208,8 +224,8 @@ router.get('/edit-product/:id', (req, res) => {
       res.render('seller/edit-product', { product, seller: req.session.seller })
     })
     .catch((err) => {
-      console.log(err)
-      res.redirect('/seller')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -231,8 +247,8 @@ router.post('/submit-update/:id', (req, res) => {
       })
     })
     .catch((err) => {
-      console.log(err)
-      res.redirect('/seller')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -242,8 +258,8 @@ router.get('/delete-product', (req, res) => {
       res.redirect('/seller')
     })
     .catch((err) => {
-      console.log(err)
-      res.redirect('/seller')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 
@@ -253,8 +269,8 @@ router.get('/orders', verifyLogin, async (req, res) => {
     res.render('seller/orders', { orders, seller: req.session.seller })
   }
   catch (err) {
-    console.log(err)
-    res.redirect('/seller')
+    req.flash('error', err.message)
+    res.redirect('back')
   }
 })
 
@@ -264,8 +280,8 @@ router.post('/change-order-status', (req, res) => {
       res.json(updatedOrder)
     })
     .catch((err) => {
-      console.log(err)
-      res.redirect('/')
+      req.flash('error', err.message)
+      res.redirect('back')
     })
 })
 

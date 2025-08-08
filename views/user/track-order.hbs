@@ -85,7 +85,12 @@
             <div class="status-msg">
                 <p class="qstn">What happened to my order?</p>
 
-                {{#if (eq order.orderStatus 'placed')}}
+                {{#if (eq order.orderStatus 'cancelled')}}
+                <p>Your order has been cancelled. Refund is expected by
+                    <span class="exp-del-date">{{order.date.refundExpected}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'placed')}}
                 <p>Your order has been successfully placed and is now being prepared for packaging.
                     Expected delivery on <span class="exp-del-date"> {{order.date.expectedDelivery}}</span>.
                 </p>
@@ -112,12 +117,12 @@
             </div>
 
             <div class="cancel">
-                {{#if (or (neq order.orderStatus 'delivered') (neq order.orderStatus 'cancelled'))}}
-                <a class="btn cancel-btn" href="/cancel-order={{order.orderId}}&productId={{order.product._id}}"
+                {{#if (and (neq order.orderStatus 'delivered') (neq order.orderStatus 'cancelled'))}}
+                <a class="btn cancel-btn" href="/cancel-order?orderId={{order.orderId}}&productId={{product._id}}"
                     onclick=" return confirm('Are you sure you want to cancel this order?')">Cancel Order</a>
                 {{/if}}
             </div>
-            
+
         </div>
     </div>
 
