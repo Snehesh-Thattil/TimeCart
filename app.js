@@ -9,6 +9,8 @@ var { engine } = require('express-handlebars')
 var fileUpload = require('express-fileupload')
 var db = require('./database/connection')
 
+var cartCountMW = require('./middlewares/cartCount')
+
 var usersRouter = require('./routes/users');
 var sellersRouter = require('./routes/sellers');
 
@@ -68,6 +70,8 @@ app.use((req, res, next) => {
   delete req.session.error
   next()
 })
+
+app.use(cartCountMW)
 
 app.use(fileUpload())
 db.connect((err) => {

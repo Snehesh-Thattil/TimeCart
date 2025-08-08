@@ -15,12 +15,7 @@ const verifyLogin = (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const products = await productHelpers.getProducts()
-
-    let cartCount = null
-    if (req.session.user) {
-      cartCount = await userHelpers.getCartCount(req.session.user._id)
-    }
-    res.render('landing', { user: req.session.user, cartCount, products })
+    res.render('landing', { user: req.session.user, products })
   }
   catch (err) {
     console.log(err)
@@ -354,19 +349,21 @@ router.get('/orders', verifyLogin, (req, res) => {
     })
 })
 
-router.get('/track-order', async (req, res) => {
+router.get('/track-order', verifyLogin, async (req, res) => {
   try {
     const orderDetails = await userHelpers.getProductOrder(req.query.orderId, req.query.productId)
     const productDetails = await productHelpers.getProductDetails(req.query.productId)
-
-    console.log('ORDER DETAILS :', orderDetails)
-    console.log('PRODUCT DETAILS :', productDetails)
 
     res.render('user/track-order', { order: orderDetails, product: productDetails })
   }
   catch (err) {
     res.render('landing', { error: err.message })
   }
+})
+
+router.get('/cancel-order', (req, res) => {
+
+  console.log('CANCEL ORDER CALL :', req.query)
 })
 
 router.get('/review-product/:productId', verifyLogin, (req, res) => {
