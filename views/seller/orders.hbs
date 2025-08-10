@@ -4,6 +4,7 @@
 <div class="orders_page">
     <div class="cards">
         <p class="title">Orders</p>
+        {{#if orders.length}}
         {{#each orders}}
         <div class="card">
             <a href="/view-item/{{this.productDetails._id}}"> <img
@@ -17,7 +18,8 @@
                     <h4>₹{{this.productInfo.price}} <span>₹{{this.productDetails.original_price}}</span></h4>
                     <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
                 </div>
-                <div class="order-status" id="{{this._id}}">
+
+                <div class="status" id="{{this._id}}">
                     <p>Order placed on : {{this.date.orderDate}} 🛍️</p>
 
                     {{#if (eq this.orderStatus 'placed')}}
@@ -43,11 +45,24 @@
                     {{else if (eq this.orderStatus 'delivered')}}
                     <p>Item shipped on : {{this.date.shipped}} 🏪</p>
                     <p>Item delivered on : {{this.date.delivered}} ✅</p>
+
+                    {{else if (eq this.orderStatus 'cancelled')}}
+                    <h3 class="date">✖️ This order has been cancelled</h3>
+                    <p>Order cancelled on : {{this.date.cancelled}}.</p>
+                    <p>Refund expected by : {{this.date.cancelled}}.</p>
+
                     {{/if}}
                 </div>
+
             </div>
         </div>
         {{/each}}
+
+        {{else}}
+        <div class="empty-list">
+            <p>You don't have any pending orders 🤗</p>
+        </div>
+        {{/if}}
     </div>
 </div>
 

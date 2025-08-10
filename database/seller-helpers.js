@@ -129,7 +129,7 @@ module.exports = {
     changeOrderStatus: (_id, action) => {
         return new Promise(async (resolve, reject) => {
 
-            // Identify order date and expected delivery date:
+            // Identify order status change date :
             const formatOptions = {
                 weekday: 'long',
                 day: 'numeric',
@@ -140,16 +140,29 @@ module.exports = {
             const now = new Date()
             const date = now.toLocaleDateString('en-IN', formatOptions)
 
+            const updateFields = {
+                orderStatus: action,
+                [`date.${action}`]: date
+            }
+
+            // If delivered, store return dates
+            if (action === 'delivered') {
+                const deliveryMidnight = new Date()
+                deliveryMidnight.setHours(0, 0, 0, 0) // reset to midnight
+                updateFields['date.deliveredTimestamp'] = deliveryMidnight.getTime()
+
+                const returnBeforeDate = new Date(deliveryMidnight)
+                returnBeforeDate.setDate(returnBeforeDate.getDate() + 7)
+                updateFields['date.returnBefore'] = returnBeforeDate.toLocaleDateString('en-IN', formatOptions)
+            }
+
             try {
                 await db.get().collection(collections.ORDERS_COLLECTION).updateOne(
                     {
                         _id: ObjectId.createFromHexString(_id)
                     },
                     {
-                        $set: {
-                            'orderStatus': action,
-                            [`date.${action}`]: date
-                        }
+                        $set: updateFields
                     }
                 )
 

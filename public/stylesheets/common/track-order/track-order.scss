@@ -228,7 +228,7 @@
             gap: 1rem;
 
             .status-msg {
-                max-width: 70%;
+                max-width: 65%;
                 text-align: justify;
 
                 p {
@@ -246,9 +246,19 @@
 
             .cancel {
                 display: flex;
+                flex-direction: column;
+                gap: 10px;
                 flex: 1;
-                justify-content: flex-end;
+                justify-content: center;
                 align-items: end;
+
+                .return-msg {
+                    opacity: .8;
+                    color: gray;
+                    font-weight: bold;
+                    font-size: 12px;
+                    text-align: right;
+                }
 
                 .cancel-btn {
                     background-color: rgb(150, 100, 40);

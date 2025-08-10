@@ -86,7 +86,6 @@
                     .box {
                         display: flex;
                         align-items: center;
-                        // flex-direction: column;
                         justify-content: center;
                         width: max-content;
                         border-radius: 5px;
@@ -125,6 +124,36 @@
                             border: 1px solid rgb(172, 169, 169);
                         }
                     }
+                }
+            }
+        }
+
+        .empty-list {
+            outline: 1px solid peru;
+            color: rgb(250, 175, 100);
+            width: 100%;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            a {
+                display: block;
+                text-decoration: none;
+                color: rgb(43, 42, 42);
+                padding: .5rem .75rem;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+                background-color: #af892a;
+                transition: .2s ease-in-out;
+                font-weight: 700;
+                cursor: pointer;
+                
+                &:hover {
+                    background-color: #CBA74E;
                 }
             }
         }

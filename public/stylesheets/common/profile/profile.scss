@@ -199,7 +199,7 @@
             padding: 1rem;
         }
 
-        .wrapper {
+        .profile-wrapper {
             flex-direction: column;
             padding: 1rem;
             height: unset;
@@ -236,11 +236,7 @@
     .profile_page {
         padding: 2rem;
 
-        .password-wrapper {
-            padding: 1rem;
-        }
-
-        .wrapper {
+        .profile-wrapper {
             padding: 1rem;
             height: 45rem;
 
@@ -263,6 +259,10 @@
                     padding: 1rem;
                 }
             }
+        }
+
+        .password-wrapper {
+            padding: 1rem;
         }
     }
 }

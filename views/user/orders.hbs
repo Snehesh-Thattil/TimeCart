@@ -4,6 +4,7 @@
 <div class="orders_page">
     <div class="cards">
         <p class="title">Orders</p>
+        {{#if orders.length}}
         {{#each orders}}
         <div class="card">
             <a href="/view-item/{{this.product._id}}" class="image-link"> <img
@@ -63,10 +64,28 @@
                     <a href="/track-order?orderId={{this.orderId}}&productId={{this.product._id}}"
                         class="actions-btn">Track Order</a>
 
+                    {{else if (eq this.orderStatus 'returnReq')}}
+                    <h3 class="date">🚚 Return request has been successfully placed</h3>
+                    <p class="order-status">Expect collection agent on : {{this.date.returnExp}}.</p>
+                    <a href="/track-order?orderId={{this.orderId}}&productId={{this.product._id}}"
+                        class="actions-btn">Track Order</a>
+
+                    {{else if (eq this.orderStatus 'returnCompleted')}}
+                    <h3 class="date">Product returned successfully 🔙</h3>
+                    <p class="order-status">Refund expected within 7 days of return.</p>
+                    <a href="/track-order?orderId={{this.orderId}}&productId={{this.product._id}}"
+                        class="actions-btn">Track Order</a>
+
                     {{/if}}
                 </div>
             </div>
         </div>
         {{/each}}
+        {{else}}
+        <div class="empty-list">
+            <p>You have no orders yet 🛒</p>
+            <a href="/">Order one now 🛍️</a>
+        </div>
+        {{/if}}
     </div>
 </div>

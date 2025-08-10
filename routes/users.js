@@ -374,7 +374,18 @@ router.get('/track-order', verifyLogin, async (req, res) => {
     const orderDetails = await userHelpers.getProductOrder(req.query.orderId, req.query.productId)
     const productDetails = await productHelpers.getProductDetails(req.query.productId)
 
-    res.render('user/track-order', { order: orderDetails, product: productDetails })
+    // Check return eligibility  
+    const deliveredTimestamp = orderDetails?.date?.deliveredTimestamp
+    let returnPossible = false
+
+    if (deliveredTimestamp) {
+      const nowMidnight = new Date()
+      nowMidnight.setHours(0, 0, 0, 0)
+      const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000
+      returnPossible = nowMidnight.getTime() - deliveredTimestamp <= sevenDaysInMs
+    }
+
+    res.render('user/track-order', { order: orderDetails, product: productDetails, returnPossible })
   }
   catch (err) {
     req.flash('error', err.message)
@@ -392,6 +403,31 @@ router.get('/cancel-order', (req, res) => {
       req.flash('error', err.message)
       res.redirect('back')
     })
+})
+
+router.get('/return-product', (req, res) => {
+  userHelpers.returnProduct(req.query.orderId, req.query.productId)
+    .then(() => {
+      req.flash('success', 'Return request has been successfully placed 🚚')
+      res.redirect('back')
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
+    })
+})
+
+router.get('/cancel-return', verifyLogin, (req, res) => {
+  userHelpers.cancelReturn(req.query.orderId, req.query.productId)
+    .then(() => {
+      req.flash('success', 'Successfully abandoned returning of the product 😄')
+      res.redirect('back')
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
+    })
+
 })
 
 router.get('/review-product/:productId', verifyLogin, (req, res) => {

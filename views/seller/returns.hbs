@@ -1,0 +1,48 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/seller/orders/orders.css">
+
+<div class="orders_page">
+    <div class="cards">
+        <p class="title">Orders</p>
+        {{#each orders}}
+        {{#if (or (eq this.orderStatus 'returnReq') (eq this.orderStatus 'returnCompleted'))}}
+        <div class="card">
+            <a href="/view-item/{{this.productDetails._id}}"> <img
+                    src="/images/products/{{this.productDetails.coverImg}}" alt=""></a>
+            <div class="details">
+                <div class="name">
+                    <p class="brand-name">{{this.productDetails.brand_name}}</p>
+                    <p class="product-name">{{this.productDetails.product_name}}</p>
+                </div>
+                <div class="price">
+                    <h4>₹{{this.productInfo.price}} <span>₹{{this.productDetails.original_price}}</span></h4>
+                    <p class="quantity">quantity : {{this.productInfo.quantity}}</p>
+                </div>
+                <div class="status" id="{{this._id}}">
+
+                    {{#if (eq this.orderStatus 'returnReq')}}
+                    <h4 class="date">🚚 Requested for return</h4>
+                    <p class="order-status">Return expected before :
+                        <span class="exp-del-date">{{this.date.returnExp}}</span>.
+                    </p>
+                    <button class="actions-btn" onclick="orderStatusChange('{{this._id}}','returnCompleted')">Mark as
+                        Returned 📦</button>
+
+                    {{else if (eq this.orderStatus 'returnCompleted')}}
+                    <h4 class="date">✅ Product has been successfully returned</h4>
+                    <p class="order-status">Return completed on :
+                        <span class="exp-del-date">{{this.date.returnCompleted}}</span>.
+                    </p>
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        {{/each}}
+    </div>
+</div>
+
+
+{{!-- JS --}}
+<script src="/javascripts/seller/orders.js"></script>

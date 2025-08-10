@@ -264,20 +264,33 @@ router.get('/delete-product', (req, res) => {
 })
 
 router.get('/orders', verifyLogin, async (req, res) => {
-  try {
-    const orders = await sellerHelpers.getOrders(req.session.seller._id)
-    res.render('seller/orders', { orders, seller: req.session.seller })
-  }
-  catch (err) {
-    req.flash('error', err.message)
-    res.redirect('back')
-  }
+  sellerHelpers.getOrders(req.session.seller._id)
+    .then((data) => {
+      const orders = data.filter((item) => item.orderStatus !== 'returnReq' && item.orderStatus !== 'returnCompleted')
+      res.render('seller/orders', { orders, seller: req.session.seller })
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
+    })
 })
 
 router.post('/change-order-status', (req, res) => {
   sellerHelpers.changeOrderStatus(req.body._id, req.body.action)
     .then((updatedOrder) => {
       res.json(updatedOrder)
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+      res.redirect('back')
+    })
+})
+
+router.get('/returns', verifyLogin, (req, res) => {
+  sellerHelpers.getOrders(req.session.seller._id)
+    .then((data) => {
+      const orders = data.filter((item) => item.orderStatus === 'returnReq' || item.orderStatus === 'returnCompleted')
+      res.render('seller/returns', { orders, seller: req.session.seller })
     })
     .catch((err) => {
       req.flash('error', err.message)

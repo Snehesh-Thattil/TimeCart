@@ -693,6 +693,57 @@ module.exports = {
             ).then((result) => resolve(result)).catch((err) => reject(err))
         })
     },
+    returnProduct: (orderId, productId) => {
+        return new Promise((resolve, reject) => {
+
+            // Identify and set return date:
+            const now = new Date()
+            const formatOptions = {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                timeZone: 'Asia/Kolkata'
+            }
+
+            const returnReq = now.toLocaleDateString('en-IN', formatOptions)
+            const expectedReturn = new Date(now)
+            expectedReturn.setDate(now.getDate() + 7) // return within 7 days
+            const returnExp = expectedReturn.toLocaleDateString('en-IN', formatOptions)
+
+            db.get().collection(collections.ORDERS_COLLECTION).updateOne(
+                {
+                    orderId: ObjectId.createFromHexString(orderId),
+                    'productInfo.productId': ObjectId.createFromHexString(productId)
+                },
+                {
+                    $set: {
+                        orderStatus: 'returnReq',
+                        'date.returnReq': returnReq,
+                        'date.returnExp': returnExp
+                    }
+                }
+            ).then((result) => resolve(result)).catch((err) => reject(err))
+        })
+    },
+    cancelReturn: (orderId, productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.ORDERS_COLLECTION).updateOne(
+                {
+                    orderId: ObjectId.createFromHexString(orderId),
+                    'productInfo.productId': ObjectId.createFromHexString(productId)
+                },
+                {
+                    $set: {
+                        orderStatus: 'delivered'
+                    },
+                    $unset: {
+                        'date.returnReq': "",
+                        'date.returnExp': ""
+                    }
+                }
+            ).then((result) => resolve(result)).catch((err) => reject(err));
+        })
+    },
     editUserAddress: (formData, email) => {
         return new Promise(async (resolve, reject) => {
             try {

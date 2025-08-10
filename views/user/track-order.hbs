@@ -113,13 +113,38 @@
                 {{else if (eq order.orderStatus 'delivered')}}
                 <p>Your order has been successfully delivered. Thank you for shopping with us!</p>
 
+                {{else if (eq order.orderStatus 'returnReq')}}
+                <p>Your request for returning the product has been successfully placed.
+                    Expect collection agent on : <span class="exp-del-date"> {{order.date.returnExp}}</span>.
+                </p>
+
+                {{else if (eq order.orderStatus 'returnCompleted')}}
+                <p>Your product has been successfully returned to us on :
+                    <span class="exp-del-date">{{order.date.returnExp}}</span>.
+                </p>
+                <p>Refund expected within next 7 days</p>
+
                 {{/if}}
             </div>
 
             <div class="cancel">
-                {{#if (and (neq order.orderStatus 'delivered') (neq order.orderStatus 'cancelled'))}}
+                {{#if (and (eq order.orderStatus 'delivered') returnPossible)}}
+                <p class="return-msg">Your return period is valid until :
+                    <br> <span>{{order.date.returnBefore}}</span>
+                </p>
+                <a class="btn cancel-btn" href="/return-product?orderId={{order.orderId}}&productId={{product._id}}"
+                    onclick=" return confirm('Are you sure you want to return this product?')">Return Product</a>
+
+                {{else if (eq order.orderStatus 'returnReq')}}
+                <a class="btn cancel-btn" href="/cancel-return?orderId={{order.orderId}}&productId={{product._id}}"
+                    onclick=" return confirm('Are you sure you want to abandon the return?')">Cancel Return</a>
+
+                {{else if (eq order.orderStatus 'returnCompleted')}}
+                
+                {{else if (and (neq order.orderStatus 'delivered') (neq order.orderStatus 'cancelled'))}}
                 <a class="btn cancel-btn" href="/cancel-order?orderId={{order.orderId}}&productId={{product._id}}"
                     onclick=" return confirm('Are you sure you want to cancel this order?')">Cancel Order</a>
+
                 {{/if}}
             </div>
 
