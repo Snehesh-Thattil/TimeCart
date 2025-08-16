@@ -288,13 +288,13 @@ router.post('/place-order', async (req, res) => {
       res.json({ paymentMethod: 'COD', orderId })
     }
     else if (req.body.orderDetails.paymentMethod === 'ONLINE') {
-      const rzpayOrder = await userHelpers.generateRazorpay(orderId, cartTotal.final_payable)
+      const rzpayOrder = await userHelpers.generateRazorpay(orderId, cartInfo.final_payable)
 
       res.json({ paymentMethod: 'ONLINE', rzpayOrder })
     }
   }
   catch (err) {
-    req.flash('error', err.message)
+    req.flash('error', 'Oops! Something wrong happened 😱')
     res.redirect('back')
   }
 })
@@ -315,6 +315,7 @@ router.post('/verify-payment', async (req, res) => {
 router.get('/order-success-msg', (req, res) => {
   userHelpers.getOrderDetails(req.query.orderId)
     .then((data) => {
+      req.flash('success', 'Order successfully placed ✅')
       res.render('user/order-success', { order: data, user: req.session.user })
     })
     .catch((err) => {

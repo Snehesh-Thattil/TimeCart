@@ -81,7 +81,6 @@ function verifyPayment(response, rzpayOrder) {
         success: (response) => {
             if (response.status) {
                 location.href = '/order-success-msg?orderId=' + rzpayOrder.receipt
-                alert('Order placed successfully')
             } else {
                 alert('Somthing went wrong! Try again later.')
             }

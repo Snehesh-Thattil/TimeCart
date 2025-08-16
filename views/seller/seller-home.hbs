@@ -1,0 +1,93 @@
+{{!-- CSS --}}
+<link rel="stylesheet" href="/stylesheets/seller/seller-home/seller-home.css">
+
+<div class="seller-home_page">
+
+    <div class="top-section">
+        <div class="banner">
+            <img src="/images/resources/TimeCart Seller Banner.png" alt="">
+        </div>
+
+        <div class="seller-infos">
+            <div class="seller-photo">
+                {{#if seller.photo}}
+                <img src="/images/sellers/{{seller.photo}}" alt="">
+                {{else}}
+                <img src="/images/resources/No-Profile-photo.png" alt="">
+                {{/if}}
+            </div>
+
+            <div class="location">
+                <p class="heading"><i class="fa-solid fa-location-dot"></i>Location</p>
+                <p class="content">Address: {{seller.location.addressLine1}}, <br>
+                    {{seller.location.addressLine2}},
+                    <br>
+                    {{seller.location.landmark}}, <br>
+                    {{seller.location.district}}-{{seller.location.pincode}}, INDIA
+                </p>
+            </div>
+
+            <div class="contact">
+                <p class="heading"><i class="fa-solid fa-phone"></i>Contact</p>
+                <p class="content">Name: {{seller.name}} <br> Phone: +91 {{seller.phone}}
+                    <br> Email: {{seller.email}}
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="orders-overview">
+        <div class="recent-orders">
+            <p class="heading"><i class="fa-solid fa-truck"></i>Recent orders</p>
+
+            <div class="cards">
+                {{#if orders.length}}
+                {{#each orders}}
+                <div class="card">
+                    <p class="num">{{addition @index 1}}</p>
+                    <p class="name">
+                        {{this.productDetails.product_name}}
+                    </p>
+                    <p class="price">Rs.{{this.productInfo.total}}<br>
+                        <span>quantity : {{this.productInfo.quantity}}</span>
+                    </p>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="empty-list">
+                    <p>Hey! <br>🧐 There are no pending orders for you</p>
+                </div>
+                {{/if}}
+            </div>
+
+            <a href="/seller/orders" class="button">Go to all <i class="fa-solid fa-truck"></i> orders</a>
+        </div>
+
+        <div class="recent-returns">
+            <p class="heading"><i class="fa-solid fa-rotate-left"></i>Recent return requests</p>
+
+            <div class="cards">
+                {{#if returns.length}}
+                {{#each returns}}
+                <div class="card">
+                    <p class="num">{{addition @index 1}}</p>
+                    <p class="name">
+                        {{this.productDetails.product_name}}
+                    </p>
+                    <p class="price">Rs.{{this.productInfo.total}}<br>
+                        <span>quantity : {{this.productInfo.quantity}}</span>
+                    </p>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="empty-list">
+                    <p>Hey! <br>🧐 Seems like you don't have any return obligations</p>
+                </div>
+                {{/if}}
+            </div>
+
+            <a href="/seller/returns" class="button">Go to all <i class="fa-solid fa-arrow-rotate-left"></i> returns</a>
+        </div>
+    </div>
+</div>

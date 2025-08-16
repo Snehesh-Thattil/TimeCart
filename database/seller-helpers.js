@@ -116,6 +116,11 @@ module.exports = {
                     },
                     {
                         $unwind: '$productDetails'
+                    },
+                    {
+                        $sort: {
+                            "date.timestamp": -1
+                        }
                     }
                 ]).toArray()
 

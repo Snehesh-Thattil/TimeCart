@@ -576,6 +576,11 @@ module.exports = {
                             quantity: '$products.quantity',
                             product: '$productDetails'
                         }
+                    },
+                    {
+                        $sort: {
+                            "date.timestamp": -1
+                        }
                     }
                 ]).toArray()
 

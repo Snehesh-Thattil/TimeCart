@@ -4,8 +4,8 @@
 <div class="orders_page">
     <div class="cards">
         <p class="title">Orders</p>
-        {{#each orders}}
-        {{#if (or (eq this.orderStatus 'returnReq') (eq this.orderStatus 'returnCompleted'))}}
+        {{#if returns.length}}
+        {{#each returns}}
         <div class="card">
             <a href="/view-item/{{this.productDetails._id}}"> <img
                     src="/images/products/{{this.productDetails.coverImg}}" alt=""></a>
@@ -38,8 +38,12 @@
                 </div>
             </div>
         </div>
-        {{/if}}
         {{/each}}
+        {{else}}
+        <div class="empty-list">
+            <p>You don't have any pending return requests 🤗</p>
+        </div>
+        {{/if}}
     </div>
 </div>
 

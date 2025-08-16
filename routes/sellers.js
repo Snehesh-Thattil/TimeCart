@@ -21,6 +21,29 @@ const verifyLogin = (req, res, next) => {
 
 /* GET sellers page. */
 router.get('/', verifyLogin, function (req, res, next) {
+  sellerHelpers.getOrders(req.session.seller._id)
+    .then((data) => {
+      let { orders, returns } = data.reduce((acc, item) => {
+        if (item.orderStatus === 'returnReq' || item.orderStatus === 'returnCompleted') {
+          acc.returns.push(item)
+        }
+        else {
+          acc.orders.push(item)
+        }
+        return acc
+      }, { orders: [], return: [] })
+
+      orders = orders?.slice(0, 5)
+      returns = returns?.slice(0, 5)
+
+      res.render('seller/seller-home', { orders, returns, seller: req.session.seller })
+    })
+    .catch((err) => {
+      req.flash('error', err.message)
+    })
+})
+
+router.get('/products', verifyLogin, (req, res) => {
   productHelpers.getSellerProducts(req.session.seller._id)
     .then((products) => {
       res.render('seller/manage-products', { seller: req.session.seller, products });
@@ -289,25 +312,13 @@ router.post('/change-order-status', (req, res) => {
 router.get('/returns', verifyLogin, (req, res) => {
   sellerHelpers.getOrders(req.session.seller._id)
     .then((data) => {
-      const orders = data.filter((item) => item.orderStatus === 'returnReq' || item.orderStatus === 'returnCompleted')
-      res.render('seller/returns', { orders, seller: req.session.seller })
+      const returns = data.filter((item) => item.orderStatus === 'returnReq' || item.orderStatus === 'returnCompleted')
+      res.render('seller/returns', { returns, seller: req.session.seller })
     })
     .catch((err) => {
       req.flash('error', err.message)
       res.redirect('back')
     })
-})
-
-router.get('/products', (req, res) => {
-  res.render('seller/products', { seller: req.session.seller })
-})
-
-router.get('/stats', (req, res) => {
-  res.render('seller/stats', { seller: req.session.seller })
-})
-
-router.get('/users', (req, res) => {
-  res.render('seller/users', { seller: req.session.seller })
 })
 
 module.exports = router;
