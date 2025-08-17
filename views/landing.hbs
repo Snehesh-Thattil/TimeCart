@@ -11,8 +11,7 @@
         <p class="scroll-note">Scroll to view more →</p>
 
         <div class="cards">
-            {{#each products}}
-            {{#if (eq this.type 'analog')}}
+            {{#each products.analog}}
             <a href="/view-item/{{this._id}}" class="card">
                 <div class="details">
                     <img src="/images/products/{{this.coverImg}}" alt="product-photo">
@@ -27,7 +26,6 @@
                     </div>
                 </div>
             </a>
-            {{/if}}
             {{/each}}
         </div>
 
@@ -39,8 +37,7 @@
         <p class="scroll-note">Scroll to view more →</p>
 
         <div class="cards">
-            {{#each products}}
-            {{#if (eq this.type 'smartwatch')}}
+            {{#each products.smartwatch}}
             <a href="/view-item/{{this._id}}" class="card">
                 <div class="details">
                     <img src="/images/products/{{this.coverImg}}" alt="product-photo">
@@ -55,7 +52,6 @@
                     </div>
                 </div>
             </a>
-            {{/if}}
             {{/each}}
         </div>
 
@@ -67,8 +63,7 @@
         <p class="scroll-note">Scroll to view more →</p>
 
         <div class="cards">
-            {{#each products}}
-            {{#if (lt this.selling_price 5000)}}
+            {{#each products.under5k}}
             <a href="/view-item/{{this._id}}" class="card">
                 <div class="details">
                     <img src="/images/products/{{this.coverImg}}" alt="product-photo">
@@ -83,7 +78,6 @@
                     </div>
                 </div>
             </a>
-            {{/if}}
             {{/each}}
         </div>
 

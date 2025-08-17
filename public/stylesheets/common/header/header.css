@@ -93,10 +93,7 @@
   border-radius: 5px;
   border: none;
 }
-.header_component .search-products a {
-  text-decoration: none;
-}
-.header_component .search-products a button {
+.header_component .search-products button {
   height: 100%;
   width: 5rem;
   border-radius: 5px;
@@ -109,9 +106,10 @@
   background-color: #bb9533;
   color: #0A0A0A;
 }
-.header_component .search-products a button:hover {
+.header_component .search-products button:hover {
   color: rgba(10, 10, 10, 0.7960784314);
   background-color: #aa8529;
+  color: rgb(230, 230, 230);
 }
 .header_component .seller {
   color: #bb9533;

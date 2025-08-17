@@ -4,7 +4,17 @@
 <div class="edit-profileInfo_page">
     <h2 class="title">Edit Profile Informations</h2>
 
-    <form action="/submit-profileInfo" method="post">
+    <form action="/submit-profileInfo" enctype="multipart/form-data" method="post">
+        <div class="photo">
+            <input type="file" id="imgInput" accept="image/*" name="userPhoto" style="display: none;">
+
+            {{#if user.photo}}
+            <img src="/images/users/{{user.photo}}" id="image" alt="">
+            {{else}}
+            <img src="/images/resources/No-Profile-photo.png" id="image" alt="">
+            {{/if}}
+        </div>
+
         <input class="fixed-input" type="text" placeholder="Name" name="name" value="{{user.name}}" required readonly>
         <input class="fixed-input" type="email" placeholder="Email address" name="email" value="{{user.email}}" required
             readonly>
@@ -19,17 +29,20 @@
 
             <div class="radio-items">
                 <div class="radio-item">
-                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <input type="radio" id="male" name="gender" value="Male" required {{#if (eq user.gender 'Male' )}}
+                        checked {{/if}}>
                     <label for="male">Male</label>
                 </div>
 
                 <div class="radio-item">
-                    <input type="radio" id="female" name="gender" value="Female">
+                    <input type="radio" id="female" name="gender" value="Female" {{#if (eq user.gender 'Female' )}}
+                        checked {{/if}}>
                     <label for="female">Female</label>
                 </div>
 
                 <div class="radio-item">
-                    <input type="radio" id="other" name="gender" value="Other">
+                    <input type="radio" id="other" name="gender" value="Other" {{#if (eq user.gender 'Other' )}} checked
+                        {{/if}}>
                     <label for="other">Others</label>
                 </div>
             </div>
@@ -38,3 +51,6 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+
+{{!-- JS --}}
+<script src="/javascripts/common/edit-profileInfo.js"></script>

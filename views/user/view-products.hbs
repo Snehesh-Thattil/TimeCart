@@ -3,6 +3,9 @@
 
 {{!-- HBS --}}
 <section class="view-products">
+    {{#if products.length}}
+    <p class="title">Search Results :</p>
+
     <div class="cards">
         {{#each products}}
         <a href="/view-item/{{this._id}}" class="card">
@@ -21,4 +24,9 @@
         </a>
         {{/each}}
     </div>
+    {{else}}
+    <div class="empty-list">
+        <p> <span>Sorry!</span> <br> No matching watches found in our catalog.</p>
+    </div>
+    {{/if}}
 </section>

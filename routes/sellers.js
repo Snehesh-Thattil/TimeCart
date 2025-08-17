@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path')
-var productHelpers = require('../database/product-helpers');
 const { Timestamp } = require('mongodb');
 const fs = require('fs');
+var productHelpers = require('../database/product-helpers');
 const sellerHelpers = require('../database/seller-helpers');
 
 const verifyLogin = (req, res, next) => {
@@ -165,15 +165,39 @@ router.get('/edit-profile-info', verifyLogin, (req, res) => {
   res.render('seller/edit-profileInfo', { seller: req.session.seller })
 })
 
-router.post('/submit-profileInfo', (req, res) => {
-  sellerHelpers.editProfileInfo(req.body, req.session.seller._id)
-    .then((newSellerData) => {
-      req.session.seller = newSellerData
-      res.render('seller/profile', { seller: req.session.seller, message: 'Profile Updated Successfully ✅' })
-    })
-    .catch((err) => {
-      res.render('seller/profile', { error: 'Somtheing Went Wrong! ⚠️. Try again' })
-    })
+router.post('/submit-profileInfo', async (req, res) => {
+  try {
+    let fileName
+
+    if (req.files && req.files.sellerPhoto) {
+      const sellerImagePath = path.join(__dirname, '../public/images/sellers/')
+
+      if (!fs.existsSync(sellerImagePath)) {
+        fs.mkdirSync(sellerImagePath)
+      }
+
+      const sellerPhoto = req.files.sellerPhoto
+      const ext = path.extname(sellerPhoto.name)
+      fileName = 'seller-' + req.session.seller._id + ext
+      const fullPath = path.join(sellerImagePath, fileName)
+
+      await new Promise((resolve, reject) => {
+        sellerPhoto.mv(fullPath, (err) => {
+          if (err) reject(err)
+          else resolve()
+        })
+      })
+    }
+
+    const newSellerData = await sellerHelpers.editProfileInfo(req.body, fileName, req.session.seller._id)
+    req.session.seller = newSellerData
+
+    res.render('seller/profile', { seller: req.session.seller, message: 'Profile Updated Successfully ✅' })
+  }
+  catch (err) {
+    console.error(err)
+    res.render('seller/profile', { error: 'Something Went Wrong! ⚠️. Try again' })
+  }
 })
 
 router.post('/change-password', (req, res) => {

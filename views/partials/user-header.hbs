@@ -34,10 +34,9 @@
         </li>
     </div>
 
-    <form action="" class="search-products">
-        <input class="form-control me-2" type="search" placeholder="Search watches, brands, types, etc..."
-            aria-label="Search">
-        <a href=""> <button class="btn btn-outline-success">Search</button></a>
+    <form action="/search-products" method="get" class="search-products">
+        <input type="search" name="search" placeholder="Search watches, brands, types, etc...">
+        <button type="submit">Search</button>
     </form>
 
     <a href="/seller" class="seller">Seller Home <i class="fa-solid fa-store"></i> </a>

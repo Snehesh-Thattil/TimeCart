@@ -32,7 +32,6 @@ function renderPreviews() {
         const reader = new FileReader()
 
         reader.onload = function (e) {
-            //When file is read successfully:
             const wrapper = document.createElement('div')
             wrapper.classList.add('wrapper')
 

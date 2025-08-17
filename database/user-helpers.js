@@ -58,19 +58,24 @@ module.exports = {
                 })
         })
     },
-    editProfileInfo: (formData, userId) => {
+    editProfileInfo: (formData, fileName, userId) => {
         return new Promise(async (resolve, reject) => {
             try {
+                const updateData = { ...formData }
+                if (fileName) {
+                    updateData.photo = fileName
+                }
+
                 await db.get().collection(collections.USERS_COLLECTION).updateOne(
                     {
                         _id: ObjectId.createFromHexString(userId)
                     },
                     {
-                        $set: { ...formData }
+                        $set: { ...updateData }
                     }
                 )
 
-                const newUserData = db.get().collection(collections.USERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(userId) })
+                const newUserData = await db.get().collection(collections.USERS_COLLECTION).findOne({ _id: ObjectId.createFromHexString(userId) })
 
                 resolve(newUserData)
             }

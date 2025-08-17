@@ -3,8 +3,18 @@
 
 <div class="edit-profileInfo_page">
     <h3 class="title">Edit Profile Informations</h3>
-    
-    <form action="/seller/submit-profileInfo" method="post">
+
+    <form action="/seller/submit-profileInfo" method="post" enctype="multipart/form-data">
+        <div class="photo">
+            <input type="file" id="imgInput" accept="image/*" name="sellerPhoto" style="display: none;">
+
+            {{#if seller.photo}}
+            <img src="/images/sellers/{{seller.photo}}" id="image" alt="">
+            {{else}}
+            <img src="/images/resources/No-Profile-photo.png" id="image" alt="">
+            {{/if}}
+        </div>
+
         <input class="fixed-input" type="text" placeholder="Name" name="name" value="{{seller.name}}" required readonly>
         <input class="fixed-input" type="email" placeholder="Email address" name="email" value="{{seller.email}}"
             required readonly>
@@ -16,8 +26,11 @@
             value="{{seller.phone}}" required>
 
         <input type="number" min=0000000001 max=9999999999 placeholder="Alternative Phone" name="phone_alt"
-            value="{{seller.phone}}">
+            value="{{seller.phone_alt}}">
 
         <button type="submit">Submit</button>
     </form>
 </div>
+
+{{!-- JS --}}
+<script src="/javascripts/common/edit-profileInfo.js"></script>

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const productHelpers = require('../database/product-helpers')
 const userHelpers = require('../database/user-helpers')
+const fs = require('fs')
+const path = require('path')
 
 const verifyLogin = (req, res, next) => {
   if (req.session.userLoggedIn) {
@@ -20,8 +22,51 @@ const verifyLogin = (req, res, next) => {
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
-    const products = await productHelpers.getProducts()
+    const allProducts = await productHelpers.getProducts()
+
+    let { analog, smartwatch, under5k } = allProducts.reduce((acc, item) => {
+      if (item.type === 'analog') {
+        acc.analog.push(item)
+      }
+      if (item.type === 'smartwatch') {
+        acc.smartwatch.push(item)
+      }
+      if (parseInt(item.selling_price) <= 5000) {
+        acc.under5k.push(item)
+      }
+
+      return acc = {
+        analog: acc.analog.slice(0, 10),
+        smartwatch: acc.smartwatch.slice(0, 10),
+        under5k: acc.under5k.slice(0, 10)
+      }
+
+    }, { analog: [], smartwatch: [], under5k: [] })
+
+    const products = { analog, smartwatch, under5k }
+
     res.render('landing', { user: req.session.user, products })
+  }
+  catch (err) {
+    req.flash('error', err.message)
+    res.redirect('back')
+  }
+})
+
+router.get('/search-products', async (req, res) => {
+  try {
+    let products = await productHelpers.getProducts()
+    const searchTerm = req.query.search?.toLowerCase() || ''
+
+    if (searchTerm) {
+      products = products.filter((item) =>
+        item.product_name.toLowerCase().includes(searchTerm) ||
+        item.brand_name.toLowerCase().includes(searchTerm) ||
+        item.type.toLowerCase().includes(searchTerm)
+      )
+    }
+
+    res.render('user/view-products', { products })
   }
   catch (err) {
     req.flash('error', err.message)
@@ -138,15 +183,39 @@ router.get('/edit-profile-info', verifyLogin, (req, res) => {
   res.render('user/edit-profileInfo', { user: req.session.user })
 })
 
-router.post('/submit-profileInfo', (req, res) => {
-  userHelpers.editProfileInfo(req.body, req.session.user._id)
-    .then((newUserData) => {
-      req.session.user = newUserData
-      res.render('user/profile', { message: 'Profile Updated Successfully ✅' })
-    })
-    .catch((err) => {
-      res.render('user/profile', { error: 'Something Went Wrong! ⚠️. Try again' })
-    })
+router.post('/submit-profileInfo', async (req, res) => {
+  try {
+    let fileName
+
+    if (req.files && req.files.userPhoto) {
+      const userImagePath = path.join(__dirname, '../public/images/users/')
+
+      if (!fs.existsSync(userImagePath)) {
+        fs.mkdirSync(userImagePath)
+      }
+
+      const userPhoto = req.files.userPhoto
+      const ext = path.extname(userPhoto.name)
+      fileName = 'user-' + req.session.user._id + ext
+      const fullPath = path.join(userImagePath, fileName)
+
+      await new Promise((resolve, reject) => {
+        userPhoto.mv(fullPath, (err) => {
+          if (err) reject(err)
+          else resolve()
+        })
+      })
+    }
+
+    const newUserData = await userHelpers.editProfileInfo(req.body, fileName, req.session.user._id)
+    req.session.user = newUserData
+
+    res.render('user/profile', { user: req.session.user, message: 'Profile Updated Successfully ✅' })
+  }
+  catch (err) {
+    console.log('Error editing profileInfos :', err.message)
+    res.render('user/profile', { error: 'Something Went Wrong! ⚠️. Try again' })
+  }
 })
 
 router.post('/change-password', (req, res) => {
@@ -160,15 +229,11 @@ router.post('/change-password', (req, res) => {
     })
 })
 
-router.get('/products', async (req, res) => {
+router.get('/display-all-products', async (req, res) => {
   try {
     const products = await productHelpers.getProducts()
 
-    let cartCount = null
-    if (req.session.user) {
-      cartCount = await userHelpers.getCartCount(req.session.user._id)
-    }
-    res.render('user/view-products', { products, cartCount, user: req.session.user, admin: false })
+    res.render('user/view-products', { products, user: req.session.user })
   }
   catch (err) {
     req.flash('error', err.message)
@@ -315,8 +380,7 @@ router.post('/verify-payment', async (req, res) => {
 router.get('/order-success-msg', (req, res) => {
   userHelpers.getOrderDetails(req.query.orderId)
     .then((data) => {
-      req.flash('success', 'Order successfully placed ✅')
-      res.render('user/order-success', { order: data, user: req.session.user })
+      res.render('user/order-success', { order: data, user: req.session.user, success_msg: 'Order successfully placed ✅' })
     })
     .catch((err) => {
       req.flash('error', err.message)
