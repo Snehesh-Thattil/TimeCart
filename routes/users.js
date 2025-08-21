@@ -53,6 +53,56 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/display-all-products', async (req, res) => {
+  try {
+    const products = await productHelpers.getProducts()
+
+    res.render('user/view-products', { products, user: req.session.user })
+  }
+  catch (err) {
+    req.flash('error', err.message)
+    res.redirect('back')
+  }
+})
+
+router.get('/search-suggestions', async (req, res) => {
+  try {
+    const query = req.query.search?.toLowerCase().trim() || ""
+    if (!query) return res.json({ brandmatches: [], typematches: [], matches: [] })
+
+    const products = await productHelpers.getProducts()
+
+    let { brandmatches, typematches, matches } = products.reduce((acc, item) => {
+      const brand = item.brand_name?.toLowerCase()
+      const type = item.type?.toLowerCase()
+      const name = item.product_name?.toLowerCase()
+
+      if (brand && brand.includes(query)) {
+        acc.brandmatches.add(item.brand_name)
+      }
+      if (type && type.includes(query)) {
+        acc.typematches.add(item.type)
+      }
+      if (name && name.includes(query)) {
+        item.product_name.split(" ").forEach(word => {
+          if (word.toLowerCase().includes(query)) acc.matches.add(word)
+        })
+      }
+
+      return acc
+    }, { brandmatches: new Set(), typematches: new Set(), matches: new Set() })
+
+    res.json({
+      brandmatches: Array.from(brandmatches).slice(0, 3),
+      typematches: Array.from(typematches).slice(0, 2),
+      matches: Array.from(matches).slice(0, 5)
+    })
+  }
+  catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 router.get('/search-products', async (req, res) => {
   try {
     let products = await productHelpers.getProducts()
@@ -227,18 +277,6 @@ router.post('/change-password', (req, res) => {
       req.flash('error', err.message)
       res.render('user/profile', { error: err })
     })
-})
-
-router.get('/display-all-products', async (req, res) => {
-  try {
-    const products = await productHelpers.getProducts()
-
-    res.render('user/view-products', { products, user: req.session.user })
-  }
-  catch (err) {
-    req.flash('error', err.message)
-    res.redirect('back')
-  }
 })
 
 router.get('/view-item/:id', async (req, res) => {

@@ -85,6 +85,7 @@
   display: flex;
   gap: 10px;
   height: 2.75rem;
+  position: relative;
 }
 .header_component .search-products input {
   height: 100%;
@@ -110,6 +111,59 @@
   color: rgba(10, 10, 10, 0.7960784314);
   background-color: #aa8529;
   color: rgb(230, 230, 230);
+}
+.header_component .search-products #suggestions {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  width: 100%;
+  background: #1a1a1a;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  z-index: 10;
+  overflow-y: auto;
+  border: 1px solid #bb9533;
+}
+.header_component .search-products #suggestions.visible {
+  display: unset;
+}
+.header_component .search-products #suggestions .suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+.header_component .search-products #suggestions .suggestion-item.category {
+  font-weight: bold;
+}
+.header_component .search-products #suggestions .suggestion-item.category i {
+  color: #ffd65c;
+}
+.header_component .search-products #suggestions .suggestion-item.category .category-name {
+  font-size: small;
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1rem;
+  font-style: italic;
+  color: #ffd65c;
+}
+.header_component .search-products #suggestions .suggestion-item i {
+  color: #bb9533;
+  font-size: 1rem;
+}
+.header_component .search-products #suggestions .suggestion-item:hover {
+  background-color: #2a2a2a;
+  color: #ffd65c;
+}
+.header_component .search-products #suggestions .suggestion-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 215, 85, 0.1);
 }
 .header_component .seller {
   color: #bb9533;

@@ -35,8 +35,11 @@
     </div>
 
     <form action="/search-products" method="get" class="search-products">
-        <input type="search" name="search" placeholder="Search watches, brands, types, etc...">
+        <input type="search" name="search" id="search-input" placeholder="Search watches, brands, types, etc..."
+            autocomplete="off">
         <button type="submit">Search</button>
+
+        <div id="suggestions"></div>
     </form>
 
     <a href="/seller" class="seller">Seller Home <i class="fa-solid fa-store"></i> </a>

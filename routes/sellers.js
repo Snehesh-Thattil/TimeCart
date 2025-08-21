@@ -11,7 +11,7 @@ const verifyLogin = (req, res, next) => {
     return next()
   }
   if (req.method === 'POST') {
-    req.session.returnTo = req.get('Referrer') || '/'
+    req.session.returnTo = req.get('Referrer') || '/seller'
   } else {
     req.session.returnTo = req.originalUrl
   }
