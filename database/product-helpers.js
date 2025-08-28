@@ -36,14 +36,17 @@ module.exports = {
         })
     },
     getSellerProducts: (sellerId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).find({ 'seller._id': ObjectId.createFromHexString(sellerId) }).toArray()
-                .then((products) => {
-                    resolve(products)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const products = await db.get().collection(collections.PRODUCTS_COLLECTION).find({ 'seller._id': ObjectId.createFromHexString(sellerId) })
+                    .sort({ _id: -1 })
+                    .toArray()
+
+                resolve(products)
+            }
+            catch (err) {
+                reject(err)
+            }
         })
     },
     getProductDetails: (productId) => {
@@ -60,30 +63,41 @@ module.exports = {
                 })
         })
     },
-    updateProduct: (productId, update, newImages, sellerId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCTS_COLLECTION).updateOne(
-                {
+    updateProduct: (productId, update, newImages, deleteImages, sellerId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const product = await db.get().collection(collections.PRODUCTS_COLLECTION).findOne({
                     _id: ObjectId.createFromHexString(productId),
                     'seller._id': ObjectId.createFromHexString(sellerId)
-                },
-                {
-                    $set: {
-                        brand_name: update.brand_name,
-                        product_name: update.product_name,
-                        type: update.type,
-                        selling_price: parseInt(update.selling_price),
-                        original_price: parseInt(update.original_price),
-                        description: update.description,
-                        imgNames: newImages.map((_, i) => `${productId}_${i}.jpeg`)
+                })
+
+                if (!product) return reject(new Error("Product not found or unauthorized"))
+
+                // Keep old images except deleted ones and add new ones
+                let updatedImages = product.imgNames.filter(img => !deleteImages.includes(img))
+                updatedImages = updatedImages.concat(newImages)
+
+                await db.get().collection(collections.PRODUCTS_COLLECTION).updateOne(
+                    { _id: ObjectId.createFromHexString(productId), 'seller._id': ObjectId.createFromHexString(sellerId) },
+                    {
+                        $set: {
+                            brand_name: update.brand_name,
+                            product_name: update.product_name,
+                            type: update.type,
+                            selling_price: parseInt(update.selling_price),
+                            original_price: parseInt(update.original_price),
+                            description: update.description,
+                            imgNames: updatedImages,
+                            coverImg: updatedImages[0]
+                        }
                     }
-                })
-                .then(() => {
-                    resolve(true)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
+                )
+
+                resolve(true)
+            }
+            catch (err) {
+                reject(err)
+            }
         })
     },
     deleteProduct: (productId, sellerId) => {

@@ -64,8 +64,8 @@
 
         <div class="form-group">
             <label for="image">Images</label>
-            
-            <div class="img-upload" >
+
+            <div class="img-upload" id="imgUploadTrigger">
                 <img src="/images/resources/image-upload-icon.png" alt="">
                 <div class="upload-right">
                     <h4>UPLOAD YOUR PRODUCT IMAGES</h4>
@@ -75,13 +75,17 @@
 
             <div class="preview-container" id="imagePreviewContainer">
                 {{#each product.imgNames}}
-                <div class="wrapper">
+                <div class="wrapper" data-existing="true" data-filename="{{this}}">
                     <img src="/images/products/{{this}}" alt="watch-photo">
-                    <span>❌</span>
+                    <span class="remove-btn">❌</span>
                 </div>
                 {{/each}}
             </div>
 
+            <!-- Hidden field to collect images marked for deletion -->
+            <input type="hidden" name="deleteImages" id="deleteImages">
+
+            <!-- Upload input -->
             <input type="file" name="image" accept="image/*" multiple id="imgInput" style="display: none;">
         </div>
 

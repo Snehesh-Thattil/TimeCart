@@ -235,16 +235,16 @@ router.post('/add-product', async (req, res) => {
     }
 
     // Ensure upload directory exists
-    const productImagePath = path.join(__dirname, '../public/images/products/')
-    if (!fs.existsSync(productImagePath)) {
-      fs.mkdirSync(productImagePath, { recursive: true })
+    const productDir = path.join(__dirname, '../public/images/products/')
+    if (!fs.existsSync(productDir)) {
+      fs.mkdirSync(productDir, { recursive: true })
     }
 
     // Upload all images
     const uploadPromises = images.map((img) => {
       const imgName = createName(img.name)
       const ext = path.extname(img.name)
-      const fullPath = path.join(productImagePath, imgName + ext)
+      const fullPath = path.join(productDir, imgName + ext)
 
       return new Promise((resolve, reject) => {
         img.mv(fullPath, (err) => {
@@ -256,7 +256,9 @@ router.post('/add-product', async (req, res) => {
 
     const uploadedImages = await Promise.all(uploadPromises)
     await productHelpers.addProduct(req.body, uploadedImages, req.session.seller)
-    res.redirect('/seller')
+    
+    req.flash('success', 'Product added successfully 🤩')
+    res.redirect('/seller/products')
   }
   catch (err) {
     console.error('Error in /add-product:', err)
@@ -276,27 +278,57 @@ router.get('/edit-product/:id', (req, res) => {
     })
 })
 
-router.post('/submit-update/:id', (req, res) => {
-  let newImages = req.files.image
-  newImages = Array.isArray(images) ? images : [images]
+router.post('/submit-update/:id', async (req, res) => {
+  try {
+    // Ensure upload directory exists
+    const productDir = path.join(__dirname, '../public/images/products/')
+    if (!fs.existsSync(productDir)) fs.mkdirSync(productDir, { recursive: true })
 
-  productHelpers.updateProduct(req.params.id, req.body, newImages, req.session.seller._id)
-    .then(() => {
-      let imagePath = path.join(__dirname, '../public/images/products/', req.params.id + '.jpeg')
+    let deleteImages = []
+    if (req.body.deleteImages) deleteImages = JSON.parse(req.body.deleteImages)
 
-      newImages.mv(imagePath, (mvErr) => {
-        if (!mvErr) {
-          res.redirect('/seller')
-        } else {
-          console.log('Uploading image failed!')
-          res.redirect('/seller')
-        }
+    // Delete images marked for removal
+    deleteImages.forEach((filename) => {
+      const filePath = path.join(productDir, filename)
+      if (filename.length > 1 && fs.existsSync(filePath)) fs.unlinkSync(filePath)
+    })
+
+    let newImages = req.files?.image || []
+    if (!Array.isArray(newImages)) newImages = [newImages]
+
+    // Helper function for unique filenames
+    const createName = (imgName) => {
+      const randomNum = Math.floor(Math.random() * 9999)
+      const timestamp = Math.floor(Date.now() / 1000)
+      const nameWithoutExt = path.parse(imgName).name
+      const cleanName = nameWithoutExt.replace(/\s+/g, '_')
+      return `${cleanName}-${timestamp}_${randomNum}`
+    }
+
+    // Upload all images
+    const uploadPromises = newImages.map((img) => {
+      const imgName = createName(img.name)
+      const ext = path.extname(img.name)
+      const fullPath = path.join(productDir, imgName + ext)
+
+      return new Promise((resolve, reject) => {
+        img.mv(fullPath, (err) => {
+          if (err) reject({ name: img.name, error: err })
+          else resolve(imgName + ext)
+        })
       })
     })
-    .catch((err) => {
-      req.flash('error', err.message)
-      res.redirect('back')
-    })
+
+    const newUploadedImages = await Promise.all(uploadPromises)
+    await productHelpers.updateProduct(req.params.id, req.body, newUploadedImages, deleteImages, req.session.seller._id)
+
+    req.flash('success', 'Product updated successfully')
+    res.redirect('/seller/products')
+  }
+  catch (err) {
+    req.flash('error', err.message)
+    res.redirect('back')
+  }
 })
 
 router.get('/delete-product', (req, res) => {

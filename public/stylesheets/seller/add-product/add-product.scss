@@ -93,7 +93,7 @@
                         border-radius: 2px;
                     }
 
-                    span {
+                    .remove-btn {
                         position: absolute;
                         top: 2px;
                         right: 2px;
@@ -101,6 +101,16 @@
                         border-radius: 10%;
                         padding: 2px;
                         cursor: pointer;
+                    }
+
+                    .cover {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        background-color: peru;
+                        text-align: center;
+                        font-style: italic;
                     }
                 }
             }
@@ -121,7 +131,71 @@
                 }
             }
         }
+    }
+}
 
 
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:767px) {
+    .product-form_component {
+        padding: 1rem;
+
+        form {
+            width: 100%;
+
+            .form-group {
+                input {
+                    width: 100%;
+                }
+
+                .radios {
+                    flex-wrap: wrap;
+
+                    .radio {
+                        flex-wrap: wrap;
+
+                        input {
+                            width: unset;
+                        }
+                    }
+                }
+
+                .img-upload {
+                    gap: 1rem;
+
+                    .upload-right {
+                        padding: 0 .5rem;
+
+                        h4 {
+                            font-size: 14px;
+                        }
+
+                        p {
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+                .preview-container {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 768px)and (max-width:1024px) {
+    .product-form_component {
+        padding: 2rem;
+
+        form {
+            width: 75%;
+
+            .form-group {
+                .preview-container {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+        }
     }
 }

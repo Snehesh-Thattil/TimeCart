@@ -212,4 +212,9 @@
   .seller-home_page .orders-overview .recent-returns {
     padding: 0.75rem;
   }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .seller-home_page .top-section {
+    height: 80vh;
+  }
 }/*# sourceMappingURL=seller-home.css.map */

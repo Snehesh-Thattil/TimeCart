@@ -40,7 +40,10 @@ function renderPreviews() {
             imgElement.alt = 'Preview'
 
             const delBtn = document.createElement('span')
+            delBtn.classList.add('remove-btn')
             delBtn.textContent = '❌'
+
+            if (index === 0) wrapper.innerHTML += `<span class='cover'>Cover</span>`
 
             delBtn.onclick = () => {
                 selectedFiles.splice(index, 1)
